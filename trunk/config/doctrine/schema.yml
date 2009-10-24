@@ -1,0 +1,149 @@
+actAs: [Timestampable]
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+
+
+User:
+  actAs:
+    Timestampable:
+    Sluggable:
+      fields: [username]
+  columns:
+    username:
+      notnull: true
+      type: string(255)
+    password:
+      notnull: true
+      type: string(255)
+    salt:
+      notnull: true
+      type: string(255)
+    email:
+      notnull: true
+      type: string(255)
+  relations:
+    Categories:
+      class: Category
+      local: user_id
+      foreign: category_id
+      refClass: UserCategory
+    Documents:
+      class: Document
+      local: user_id
+      foreign: document_id
+      refClass: UserDocument
+
+Category:
+  actAs:
+    Sluggable:
+      fields: [title]
+    Timestampable:
+  columns:
+    title:
+      notnull: true
+      type: string(255)
+    description: string(255)
+  relations:
+    Users:
+      class: User
+      local: category_id
+      foreign: user_id
+      refClass: UserCategory
+    Documents:
+      class: Document
+      local: category_id
+      foreign: document_id
+      refClass: DocumentCategory
+
+UserCategory:
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    category_id:
+      type: integer
+      primary: true
+      
+Document:
+  actAs:
+    Timestampable:
+    Versionable:
+      actAs:
+        Timestampable:
+      versionColumn: version
+      className: %CLASS%Version
+      auditLog: true
+      deleteVersions: false
+    Sluggable:
+      fields: [title]
+    Searchable:
+      fields: [title, description, file]
+  columns:
+    title:
+      notnull: true
+      type: string(255)
+    description: clob
+    file:
+      notnull: true
+      type: string(255)
+  relations:
+    Categories:
+      class: Category
+      local: document_id
+      foreign: category_id
+      refClass: DocumentCategory
+    Tags:
+      class: Tag
+      local: document_id
+      foreign: tag_id
+      refClass: DocumentTag
+    Users:
+      class: User
+      local: document_id
+      foreign: user_id
+      refClass: UserDocument
+    
+DocumentCategory:
+  columns:
+    document_id:
+      type: integer
+      primary: true
+    category_id:
+      type: integer
+      primary: true
+
+Tag:
+  actAs:
+    Timestampable:
+    Sluggable:
+      fields: [title]
+  columns:
+    title:
+      notnull: true
+      type: string(255)
+  relations:
+    Documents:
+      class: Document
+      local: tag_id
+      foreign: document_id
+      refClass: DocumentTag
+
+DocumentTag:
+  columns:
+    document_id:
+      type: integer
+      primary: true
+    tag_id:
+      type: integer
+      primary: true
+
+UserDocument:
+  columns:
+    document_id:
+      type: integer
+      primary: true
+    user_id:
+      type: integer
+      primary: true
