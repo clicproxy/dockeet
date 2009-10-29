@@ -65,6 +65,7 @@ UserCategory:
     category_id:
       type: integer
       primary: true
+    subscribe: boolean
       
 Document:
   actAs:
