@@ -9,6 +9,12 @@
     <?php include_javascripts() ?>
   </head>
   <body>
-    <?php echo $sf_content ?>
+    <?php include_partial('navigation/top'); ?>
+    
+    <div id="sf_content">
+      <?php include_partial('navigation/left');?>
+      <?php echo $sf_content ?>
+    </div>
+    
   </body>
 </html>
