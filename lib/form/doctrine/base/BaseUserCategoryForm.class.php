@@ -17,6 +17,7 @@ class BaseUserCategoryForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'user_id'     => new sfWidgetFormInputHidden(),
       'category_id' => new sfWidgetFormInputHidden(),
+      'subscribe'   => new sfWidgetFormInputCheckbox(),
       'created_at'  => new sfWidgetFormDateTime(),
       'updated_at'  => new sfWidgetFormDateTime(),
     ));
@@ -24,6 +25,7 @@ class BaseUserCategoryForm extends BaseFormDoctrine
     $this->setValidators(array(
       'user_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_id', 'required' => false)),
       'category_id' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'category_id', 'required' => false)),
+      'subscribe'   => new sfValidatorBoolean(array('required' => false)),
       'created_at'  => new sfValidatorDateTime(),
       'updated_at'  => new sfValidatorDateTime(),
     ));
