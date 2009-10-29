@@ -7,6 +7,7 @@
  * 
  * @property integer $user_id
  * @property integer $category_id
+ * @property boolean $subscribe
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -25,6 +26,9 @@ abstract class BaseUserCategory extends sfDoctrineRecord
         $this->hasColumn('category_id', 'integer', null, array(
              'type' => 'integer',
              'primary' => true,
+             ));
+        $this->hasColumn('subscribe', 'boolean', null, array(
+             'type' => 'boolean',
              ));
 
         $this->option('type', 'INNODB');
