@@ -17,6 +17,49 @@ class documentActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('default', 'module');
+  	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slud', ''));
+  	
+  	$this->document = $document;
+  }
+  
+ /**
+  * Executes add action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeAdd(sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slud', ''));
+    
+  	$form = new DocumentFrontendAddForm($document);
+  	
+  	if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
+  	{
+  		$this->redirect('document/edit?id=' . $document->id);
+  	}
+  	$this->form = $form;
+  }
+  
+ /**
+  * Executes edit action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeEdit(sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->find($request->getParameter('id', ''));
+    
+    if (!$document instanceof Document)
+    {
+    	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slud', ''));
+    }
+    
+    $form = new DocumentFrontendForm($document);
+    if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getParameter($form->getName())))
+    {
+    	
+    }
+    
+    $this->document = $document;
   }
 }

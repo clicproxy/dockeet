@@ -19,7 +19,7 @@
 <div id="admin_box">
   <ul>
     <li><a href="<?php echo url_for('category/edit');?>"><span><?php echo __('Add a category')?></span></a></li>
-    <li><a href="<?php echo url_for('document/edit');?>"><span><?php echo __('Add a document')?></span></a></li>
+    <li><a href="<?php echo url_for('document/add');?>"><span><?php echo __('Add a document')?></span></a></li>
     <li><a href="<?php echo url_for('contact/edit');?>"><span><?php echo __('Add a contact')?></span></a></li>
   </ul>
 </div>
