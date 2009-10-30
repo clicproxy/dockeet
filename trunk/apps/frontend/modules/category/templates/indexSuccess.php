@@ -27,7 +27,7 @@
 
 <div id="category_document_box">
   <?php foreach ($documents as $document): ?>
-    <a href="<?php echo url_for('document/index?slud=' . $document->slug); ?>"><?php echo $document->title; ?></a>
+    <a href="<?php echo url_for('document/index?slug=' . $document->slug); ?>"><?php echo $document->title; ?></a>
   <?php endforeach; ?>
   
   <?php echo count($documents) . ' ' . ((1 < count($documents)) ? __('documents') : __('document')) . '.'; ?>

@@ -12,5 +12,7 @@ class DocumentForm extends BaseDocumentForm
 {
   public function configure()
   {
+    unset($this->widgetSchema['slug'], $this->validatorSchema['slug']);
+    unset($this->widgetSchema['version'], $this->validatorSchema['version']);
   }
 }
