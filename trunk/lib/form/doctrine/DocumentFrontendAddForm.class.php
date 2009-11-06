@@ -12,18 +12,12 @@ class DocumentFrontendAddForm extends DocumentForm
 {
   public function configure()
   {
+  	$this->useFields(array('file', 'categories_list'));
+  	
   	$this->widgetSchema['file'] = new sfWidgetFormInputFile();
   	$this->validatorSchema['file'] = new sfValidatorFile();
   	
   	$this->widgetSchema['categories_list'] = new sfWidgetFormDoctrineChoice(array('model' => 'Category'));
-  	
-  	unset($this->widgetSchema['title'], $this->validatorSchema['title']);
-  	unset($this->widgetSchema['description'], $this->validatorSchema['description']);
-  	unset($this->widgetSchema['tags_list'], $this->validatorSchema['tags_list']);
-  	unset($this->widgetSchema['users_list'], $this->validatorSchema['users_list']);
-  	parent::configure();
-  	
-  	$this->widgetSchema->setNameFormat("tto[%s]");
   }
 
   /**
@@ -37,7 +31,8 @@ class DocumentFrontendAddForm extends DocumentForm
   protected function doSave($con = null)
   {
   	$file = $this->getValue('file');
-  	$filename =  sha1($file->getOriginalName()) . $file->getExtension($file->getOriginalExtension());
+  	$filename =  sha1(date('U') . $file->getOriginalName()) . $file->getExtension($file->getOriginalExtension());
+  	
   	$path = $this->getObject()->getFilePath();
   	if (! is_dir($path))
   	{

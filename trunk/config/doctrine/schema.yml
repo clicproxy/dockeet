@@ -44,7 +44,7 @@ Category:
     title:
       notnull: true
       type: string(255)
-    description: string(255)
+    description: clob
   relations:
     Users:
       class: User

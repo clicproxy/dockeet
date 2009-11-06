@@ -1,9 +1,9 @@
-<h2><?php echo ($category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->title : __('Homepage'); ?></h2>
+<h2><?php echo $title; ?></h2>
 
-<?php if ($category->getRawValue() instanceof Category): ?>
+<?php if (false !==  $category && $category->getRawValue() instanceof Category): ?>
 	<div id="category_control_box">
 	  <ul>
-	    <li><a href="<?php echo url_for('category/subscribe'); ?>"><?php echo __('Subscribe'); ?></a></li>
+	    <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
 	    <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
 	  </ul>
 	</div>
