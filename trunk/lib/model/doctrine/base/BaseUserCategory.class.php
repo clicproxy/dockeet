@@ -9,10 +9,17 @@
  * @property integer $category_id
  * @property boolean $subscribe
  * 
+ * @method integer      getUserId()      Returns the current record's "user_id" value
+ * @method integer      getCategoryId()  Returns the current record's "category_id" value
+ * @method boolean      getSubscribe()   Returns the current record's "subscribe" value
+ * @method UserCategory setUserId()      Sets the current record's "user_id" value
+ * @method UserCategory setCategoryId()  Sets the current record's "category_id" value
+ * @method UserCategory setSubscribe()   Sets the current record's "subscribe" value
+ * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
+ * @version    SVN: $Id: Builder.php 6670 2009-11-04 19:52:45Z jwage $
  */
 abstract class BaseUserCategory extends sfDoctrineRecord
 {

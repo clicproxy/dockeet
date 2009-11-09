@@ -8,10 +8,15 @@
  * @property string $title
  * @property Doctrine_Collection $Documents
  * 
+ * @method string              getTitle()     Returns the current record's "title" value
+ * @method Doctrine_Collection getDocuments() Returns the current record's "Documents" collection
+ * @method Tag                 setTitle()     Sets the current record's "title" value
+ * @method Tag                 setDocuments() Sets the current record's "Documents" collection
+ * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
+ * @version    SVN: $Id: Builder.php 6670 2009-11-04 19:52:45Z jwage $
  */
 abstract class BaseTag extends sfDoctrineRecord
 {
