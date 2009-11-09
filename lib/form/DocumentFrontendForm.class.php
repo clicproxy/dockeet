@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -13,7 +12,6 @@ class DocumentFrontendForm extends DocumentForm
 {
   public function configure()
   {
-    unset($this->widgetSchema['file'], $this->validatorSchema['file']);
-    parent::configure();
+  	$this->useFields(array('title', 'description', 'public'));
   }
 }

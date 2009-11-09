@@ -89,6 +89,7 @@ Document:
     file:
       notnull: true
       type: string(255)
+    public: boolean
   relations:
     Categories:
       class: Category

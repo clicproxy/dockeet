@@ -8,10 +8,15 @@
  * @property integer $document_id
  * @property integer $user_id
  * 
+ * @method integer      getDocumentId()  Returns the current record's "document_id" value
+ * @method integer      getUserId()      Returns the current record's "user_id" value
+ * @method UserDocument setDocumentId()  Sets the current record's "document_id" value
+ * @method UserDocument setUserId()      Sets the current record's "user_id" value
+ * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
+ * @version    SVN: $Id: Builder.php 6670 2009-11-04 19:52:45Z jwage $
  */
 abstract class BaseUserDocument extends sfDoctrineRecord
 {

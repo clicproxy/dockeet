@@ -12,10 +12,23 @@
  * @property Doctrine_Collection $Categories
  * @property Doctrine_Collection $Documents
  * 
+ * @method string              getUsername()   Returns the current record's "username" value
+ * @method string              getPassword()   Returns the current record's "password" value
+ * @method string              getSalt()       Returns the current record's "salt" value
+ * @method string              getEmail()      Returns the current record's "email" value
+ * @method Doctrine_Collection getCategories() Returns the current record's "Categories" collection
+ * @method Doctrine_Collection getDocuments()  Returns the current record's "Documents" collection
+ * @method User                setUsername()   Sets the current record's "username" value
+ * @method User                setPassword()   Sets the current record's "password" value
+ * @method User                setSalt()       Sets the current record's "salt" value
+ * @method User                setEmail()      Sets the current record's "email" value
+ * @method User                setCategories() Sets the current record's "Categories" collection
+ * @method User                setDocuments()  Sets the current record's "Documents" collection
+ * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
  * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
+ * @version    SVN: $Id: Builder.php 6670 2009-11-04 19:52:45Z jwage $
  */
 abstract class BaseUser extends sfDoctrineRecord
 {

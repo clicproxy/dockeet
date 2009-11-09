@@ -35,7 +35,7 @@ class documentActions extends sfActions
   	
   	if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
   	{
-  		$this->redirect('document/edit?id=' . $document->id);
+  		$this->redirect('document/edit?id=' . $form->getObject()->id);
   	}
   	$this->form = $form;
   }
@@ -55,11 +55,11 @@ class documentActions extends sfActions
     }
     
     $form = new DocumentFrontendForm($document);
-    if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getParameter($form->getName())))
+    if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName())))
     {
     	
     }
     
-    $this->document = $document;
+    $this->form = $form;
   }
 }
