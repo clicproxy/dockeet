@@ -18,6 +18,22 @@ class Document extends BaseDocument
 	 */
 	public function getFilePath()
 	{
-    return sfConfig::get('sf_upload_dir') . '/documents/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+    return sfConfig::get('sf_upload_dir') . '/documents/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/' . $this->file;
+	}
+	
+	/**
+	 * Retourne le type mime du fichier
+	 * @return string
+	 */
+	public function getMimeType()
+	{
+		$finfo = new finfo();
+		
+		if (!$finfo)
+		{
+			throw new sfException("Opening fileinfo database failed");
+		}
+		
+		return $finfo->file($this->getFilePath());
 	}
 }
