@@ -11,6 +11,12 @@
   <body>
     <?php include_partial('navigation/top'); ?>
     
+    <?php if ($sf_user->hasFlash('notice')): ?>
+      <div class="notice">
+		    <?php echo $sf_user->getFlash('notice') ?>
+      </div>
+		<?php endif; ?>
+    
     <div id="sf_content">
       <?php include_partial('navigation/left');?>
       <?php echo $sf_content ?>

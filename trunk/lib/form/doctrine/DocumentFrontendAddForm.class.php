@@ -33,18 +33,6 @@ class DocumentFrontendAddForm extends DocumentForm
   	$file = $this->getValue('file');
   	$filename =  sha1(date('U') . $file->getOriginalName()) . $file->getExtension($file->getOriginalExtension());
   	
-  	$path = $this->getObject()->getFilePath();
-  	if (! is_dir($path))
-  	{
-  		mkdir($path, 0777, true);
-  	}
-  	
-  	if (! is_writable($path))
-  	{
-  		throw new sfException("Write directory access denied");
-  	}
-  	
-  	$file->save($path . $filename);
   	$this->values['file'] = $filename;
   	  	
   	if ($this->getObject()->isNew() || in_array($this->values['title'], array(null, ''), true))
@@ -53,5 +41,18 @@ class DocumentFrontendAddForm extends DocumentForm
   	}
   	 
   	parent::doSave($con);
+  	
+    $path = dirname($this->getObject()->getFilePath());
+    if (! is_dir($path))
+    {
+      mkdir($path, 0777, true);
+    }
+    
+    if (! is_writable($path))
+    {
+      throw new sfException("Write directory access denied");
+    }
+    
+    $file->save($path . $filename);
   }
 }
