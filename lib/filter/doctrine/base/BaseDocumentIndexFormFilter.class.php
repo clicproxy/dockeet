@@ -6,9 +6,9 @@
  * @package    dockeet
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id$
+ * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseDocumentIndexFormFilter extends BaseFormFilterDoctrine
+abstract class BaseDocumentIndexFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {

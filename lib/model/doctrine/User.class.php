@@ -12,4 +12,29 @@
  */
 class User extends BaseUser
 {
+  /**
+   * Secure password
+   *
+   * @param Doctrine_Event $event
+   */
+  public function preSave($event)
+  {
+    if (in_array('password', $this->_modified))
+    {
+       $this->salt = sha1(date('r'));
+       $this->password = sha1($this->salt . $this->password);
+    }
+  }
+  /**
+   * compare given password
+   *
+   * @param string $password
+   * @return boolean
+   */
+  public function authentification ($password)
+  {
+    return (sha1($this->salt . $password) === $this->password);
+  }
+  
+  
 }

@@ -8,9 +8,9 @@
  * @package    dockeet
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id$
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
  */
-class BaseUserForm extends BaseFormDoctrine
+abstract class BaseUserForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -95,7 +95,7 @@ class BaseUserForm extends BaseFormDoctrine
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }
@@ -133,7 +133,7 @@ class BaseUserForm extends BaseFormDoctrine
       return;
     }
 
-    if (is_null($con))
+    if (null === $con)
     {
       $con = $this->getConnection();
     }
