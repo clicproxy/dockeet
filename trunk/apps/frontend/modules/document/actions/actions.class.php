@@ -19,6 +19,8 @@ class documentActions extends sfActions
   {
   	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
   	
+  	$this->forward404Unless($document instanceof Document, "Unknown document.");
+  	
   	$this->document = $document;
   }
   
@@ -78,8 +80,6 @@ class documentActions extends sfActions
     $this->redirect('@homepage');
   }
   
-  
-  
   public function executeDownload (sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
@@ -106,5 +106,24 @@ class documentActions extends sfActions
 	  $this->getResponse()->setContent(readfile($document->getFilePath()));
 	
 	  return sfView::NONE;
+  }
+  
+  public function executeSearch (sfWebRequest $request)
+  {
+    $form = new DocumentSearchForm();
+    
+    $form->bind(array('q' => $request->getParameter('q')));
+    $this->getUser()->setFlash('q', $request->getParameter('q'));
+    
+    $documents = array();
+    
+    if ($form->isValid())
+    {
+      $search = new Doctrine_Search(array('table' => 'Document'));
+      $documents = $search->search($form->getValue('q'));
+    }
+    
+    $this->documents = $documents;
+    $this->form = $form;
   }
 }
