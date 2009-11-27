@@ -17,6 +17,37 @@ class navigationActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-    $this->forward('default', 'module');
+    $this->redirect('@homepage');
+  }
+  
+  /**
+   * Execute login action
+   * @param sfWebRequest $request
+   */
+  public function executeLogin (sfWebRequest $request)
+  {
+    $form = new UserLoginForm();
+    if ($request->isMethod('post'))
+    {
+      $form->bind($request->getParameter($form->getName()));
+      if ($form->isValid())
+      {
+        $this->getUser()->login($form->getValue('user'));
+        $this->redirect($request->getReferer());
+      }
+    }
+    
+    $this->getUser()->setFlash('login', $request->getParameter($form->getName() . '[login]'));
+    $this->form = $form;
+  }
+  
+  /**
+   * Execute logout
+   * @param sfWebRequest $request
+   */
+  public function executeLogout (sfWebRequest $request)
+  {
+    $this->getUser()->logout();
+    $this->redirect('@homepage');
   }
 }

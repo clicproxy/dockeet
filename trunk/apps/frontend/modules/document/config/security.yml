@@ -1,0 +1,6 @@
+editSuccess:
+  is_secure:   true
+  credentials: admin
+addSuccess:
+  is_secure:   true
+  credentials: admin

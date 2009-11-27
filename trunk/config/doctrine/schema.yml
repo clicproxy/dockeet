@@ -23,6 +23,8 @@ User:
     email:
       notnull: true
       type: string(255)
+    admin:
+      type: boolean
   relations:
     Categories:
       class: Category

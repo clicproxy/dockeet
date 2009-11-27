@@ -9,7 +9,7 @@ class UserLoginForm extends BaseForm
     ));
 
     $this->setValidators(array(
-      'login' => new sfValidatorDoctrineChoice(array('model' => 'User', 'column' => 'identifiant')),
+      'login' => new sfValidatorDoctrineChoice(array('model' => 'User', 'column' => 'username', 'required' => true)),
       'password' => new sfValidatorString(array('required' => true))
     ));
 

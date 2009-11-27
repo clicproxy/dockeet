@@ -1,12 +1,14 @@
 <h2><?php echo $title; ?></h2>
 
 <?php if (false !==  $category && $category->getRawValue() instanceof Category): ?>
-	<div id="category_control_box">
-	  <ul>
-	    <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
-	    <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
-	  </ul>
-	</div>
+  <div id="category_control_box">
+    <ul>
+      <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+      <?php if($sf_user->hasCredential('admin')): ?>
+        <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
+      <?php endif; ?>
+    </ul>
+  </div>
 <?php endif; ?>
 
 <div id="category_view_box">
