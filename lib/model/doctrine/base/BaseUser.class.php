@@ -9,6 +9,7 @@
  * @property string $password
  * @property string $salt
  * @property string $email
+ * @property boolean $admin
  * @property Doctrine_Collection $Categories
  * @property Doctrine_Collection $Documents
  * 
@@ -16,12 +17,14 @@
  * @method string              getPassword()   Returns the current record's "password" value
  * @method string              getSalt()       Returns the current record's "salt" value
  * @method string              getEmail()      Returns the current record's "email" value
+ * @method boolean             getAdmin()      Returns the current record's "admin" value
  * @method Doctrine_Collection getCategories() Returns the current record's "Categories" collection
  * @method Doctrine_Collection getDocuments()  Returns the current record's "Documents" collection
  * @method User                setUsername()   Sets the current record's "username" value
  * @method User                setPassword()   Sets the current record's "password" value
  * @method User                setSalt()       Sets the current record's "salt" value
  * @method User                setEmail()      Sets the current record's "email" value
+ * @method User                setAdmin()      Sets the current record's "admin" value
  * @method User                setCategories() Sets the current record's "Categories" collection
  * @method User                setDocuments()  Sets the current record's "Documents" collection
  * 
@@ -54,6 +57,9 @@ abstract class BaseUser extends sfDoctrineRecord
              'notnull' => true,
              'type' => 'string',
              'length' => '255',
+             ));
+        $this->hasColumn('admin', 'boolean', null, array(
+             'type' => 'boolean',
              ));
 
         $this->option('type', 'INNODB');

@@ -31,7 +31,7 @@ class User extends BaseUser
    * @param string $password
    * @return boolean
    */
-  public function authentification ($password)
+  public function login ($password)
   {
     return (sha1($this->salt . $password) === $this->password);
   }

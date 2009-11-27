@@ -11,7 +11,7 @@ class DocumentSearchForm extends BaseForm
   	  'q' => new sfValidatorString(array('min_length' => 3))
   	));
   	
-  	$this->disableCSRFProtection();
+  	$this->disableLocalCSRFProtection();
   	$this->widgetSchema->setNameFormat('%s');
   }
 }

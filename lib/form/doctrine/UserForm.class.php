@@ -12,7 +12,7 @@ class UserForm extends BaseUserForm
 {
   public function configure()
   {
-    $this->useFields(array('username', 'password', 'email'));
+    $this->useFields(array('username', 'password', 'email', 'admin'));
     $this->widgetSchema['password'] = new sfWidgetFormInputPassword();
     
     $this->validatorSchema['email'] = new sfValidatorEmail();
