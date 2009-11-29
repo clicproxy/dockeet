@@ -27,6 +27,7 @@ class Document extends BaseDocument
 	 */
 	public function getMimeType()
 	{
+	  /*
 		$finfo = new finfo();
 		
 		if (!$finfo)
@@ -35,6 +36,12 @@ class Document extends BaseDocument
 		}
 		
 		return $finfo->file($this->getFilePath());
+		*/
+	  /*
+	  $finfo = finfo_open(FILEINFO_MIME);
+	  return finfo_file($finfo, $this->getFilePath());
+	  */
+	  return mime_content_type($this->getFilePath());
 	}
 	
 	/**
