@@ -36,4 +36,17 @@ class Document extends BaseDocument
 		
 		return $finfo->file($this->getFilePath());
 	}
+	
+	/**
+	 * Supprime le fichier
+	 * @param unknown_type $event
+	 */
+  public function postDelete($event)
+  {
+    if (file_exists($this->getFilePath()))
+    {
+      unlink($this->getFilePath());
+    }
+  }
+	
 }

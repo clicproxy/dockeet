@@ -53,6 +53,6 @@ class DocumentFrontendAddForm extends DocumentForm
       throw new sfException("Write directory access denied");
     }
     
-    $file->save($path . $filename);
+    $file->save($path . '/' . $filename);
   }
 }
