@@ -7,11 +7,17 @@
  * 
  * @property integer $document_id
  * @property integer $user_id
+ * @property Document $Document
+ * @property User $User
  * 
  * @method integer      getDocumentId()  Returns the current record's "document_id" value
  * @method integer      getUserId()      Returns the current record's "user_id" value
+ * @method Document     getDocument()    Returns the current record's "Document" value
+ * @method User         getUser()        Returns the current record's "User" value
  * @method UserDocument setDocumentId()  Sets the current record's "document_id" value
  * @method UserDocument setUserId()      Sets the current record's "user_id" value
+ * @method UserDocument setDocument()    Sets the current record's "Document" value
+ * @method UserDocument setUser()        Sets the current record's "User" value
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -40,6 +46,18 @@ abstract class BaseUserDocument extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('Document', array(
+             'local' => 'document_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
+        $this->hasOne('User', array(
+             'local' => 'user_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);
     }

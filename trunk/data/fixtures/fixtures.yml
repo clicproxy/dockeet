@@ -15,3 +15,12 @@
 #     password: changeme
 #     name:     Kris Wallsmith
 #     email:    kris.wallsmith@symfony-project.com
+User:
+  User_1:
+    username: david
+    password: pass
+    email: david@willou.net
+    admin: true
+    created_at: '2009-11-29 16:31:31'
+    updated_at: '2009-11-29 16:31:31'
+    slug: david
