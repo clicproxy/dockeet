@@ -24,6 +24,7 @@ class Document extends BaseDocument
 	/**
 	 * Retourne le type mime du fichier
 	 * @return string
+	 * @todo plan tu use finfo for next PHP versions
 	 */
 	public function getMimeType()
 	{
