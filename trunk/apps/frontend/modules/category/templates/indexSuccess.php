@@ -1,5 +1,6 @@
 <h2><?php echo $title; ?></h2>
 
+
 <?php if (null !==  $category && $category->getRawValue() instanceof Category): ?>
   <div id="category_control_box">
     <ul>
