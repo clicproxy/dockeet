@@ -17,21 +17,15 @@ class categoryActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-  	$category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
+  	$category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
   	$title = sfContext::getInstance()->getI18N()->__('Homepage');
   	
-  	$documents_query = Doctrine_Query::create()->from('document d');
-    $documents_query->addOrderBy((($this->getUser()->hasAttribute('order_by', 'document')) ? $this->getUser()->getAttribute('order_by', 'document') : 'created_at') . ' DESC');
+	  $pager = new sfDoctrinePager('Document');
+    $pager->setQuery($this->getUser()->getDocumentsQuery($category));
+    $pager->setPage($request->getParameter('page', 1));
+    $pager->init();
     
-    if ($category instanceof Category)
-    {
-    	$documents_query->innerJoin('d.Categories c WITH c.id = ?', $category->id);
-    	$title = sfContext::getInstance()->getI18N()->__('Category') . ' ' . $category->title;
-    }
-    
-    // TODO : rajouter les droits à terme
-    
-    $this->documents = $documents_query->execute();
+    $this->pager = $pager;
   	$this->title = $title;
   	$this->category = $category;
   }
