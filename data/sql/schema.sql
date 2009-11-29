@@ -10,11 +10,11 @@ CREATE TABLE user_category (user_id BIGINT, category_id BIGINT, subscribe TINYIN
 CREATE TABLE user_document (document_id BIGINT, user_id BIGINT, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(document_id, user_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = INNODB;
 ALTER TABLE document_version ADD CONSTRAINT document_version_id_document_id FOREIGN KEY (id) REFERENCES document(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE document_index ADD CONSTRAINT document_index_id_document_id FOREIGN KEY (id) REFERENCES document(id) ON UPDATE CASCADE ON DELETE CASCADE;
-ALTER TABLE document_category ADD CONSTRAINT document_category_document_id_document_id FOREIGN KEY (document_id) REFERENCES document(id);
-ALTER TABLE document_category ADD CONSTRAINT document_category_category_id_category_id FOREIGN KEY (category_id) REFERENCES category(id);
+ALTER TABLE document_category ADD CONSTRAINT document_category_document_id_document_id FOREIGN KEY (document_id) REFERENCES document(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE document_category ADD CONSTRAINT document_category_category_id_category_id FOREIGN KEY (category_id) REFERENCES category(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE document_tag ADD CONSTRAINT document_tag_tag_id_tag_id FOREIGN KEY (tag_id) REFERENCES tag(id);
 ALTER TABLE document_tag ADD CONSTRAINT document_tag_document_id_document_id FOREIGN KEY (document_id) REFERENCES document(id);
-ALTER TABLE user_category ADD CONSTRAINT user_category_user_id_user_id FOREIGN KEY (user_id) REFERENCES user(id);
-ALTER TABLE user_category ADD CONSTRAINT user_category_category_id_category_id FOREIGN KEY (category_id) REFERENCES category(id);
-ALTER TABLE user_document ADD CONSTRAINT user_document_user_id_user_id FOREIGN KEY (user_id) REFERENCES user(id);
-ALTER TABLE user_document ADD CONSTRAINT user_document_document_id_document_id FOREIGN KEY (document_id) REFERENCES document(id);
+ALTER TABLE user_category ADD CONSTRAINT user_category_user_id_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_category ADD CONSTRAINT user_category_category_id_category_id FOREIGN KEY (category_id) REFERENCES category(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_document ADD CONSTRAINT user_document_user_id_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE user_document ADD CONSTRAINT user_document_document_id_document_id FOREIGN KEY (document_id) REFERENCES document(id) ON UPDATE CASCADE ON DELETE CASCADE;

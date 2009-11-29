@@ -73,7 +73,8 @@ class documentActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
-    
+    ;
+    $this->logMessage("#### passage dans l'action de suppresion pour le document avec l'id : " . $document->id);
     $document->delete();
     
     $this->getUser()->setFlash('notice', 'File has been deleted.');

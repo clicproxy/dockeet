@@ -7,11 +7,17 @@
  * 
  * @property integer $document_id
  * @property integer $category_id
+ * @property Document $Document
+ * @property Category $Category
  * 
  * @method integer          getDocumentId()  Returns the current record's "document_id" value
  * @method integer          getCategoryId()  Returns the current record's "category_id" value
+ * @method Document         getDocument()    Returns the current record's "Document" value
+ * @method Category         getCategory()    Returns the current record's "Category" value
  * @method DocumentCategory setDocumentId()  Sets the current record's "document_id" value
  * @method DocumentCategory setCategoryId()  Sets the current record's "category_id" value
+ * @method DocumentCategory setDocument()    Sets the current record's "Document" value
+ * @method DocumentCategory setCategory()    Sets the current record's "Category" value
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -40,6 +46,18 @@ abstract class BaseDocumentCategory extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('Document', array(
+             'local' => 'document_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
+        $this->hasOne('Category', array(
+             'local' => 'category_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);
     }

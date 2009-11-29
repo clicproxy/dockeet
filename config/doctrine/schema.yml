@@ -68,6 +68,17 @@ UserCategory:
       type: integer
       primary: true
     subscribe: boolean
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
+    Category:
+      local: category_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
       
 Document:
   actAs:
@@ -117,6 +128,18 @@ DocumentCategory:
     category_id:
       type: integer
       primary: true
+  relations:
+    Document:
+      local: document_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
+    Category:
+      local: category_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
+      
 
 Tag:
   actAs:
@@ -151,3 +174,14 @@ UserDocument:
     user_id:
       type: integer
       primary: true
+  relations:
+    Document:
+      local: document_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
+    User:
+      local: user_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade

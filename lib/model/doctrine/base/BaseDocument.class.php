@@ -12,21 +12,27 @@
  * @property Doctrine_Collection $Categories
  * @property Doctrine_Collection $Tags
  * @property Doctrine_Collection $Users
+ * @property Doctrine_Collection $DocumentCategory
+ * @property Doctrine_Collection $UserDocument
  * 
- * @method string              getTitle()       Returns the current record's "title" value
- * @method clob                getDescription() Returns the current record's "description" value
- * @method string              getFile()        Returns the current record's "file" value
- * @method boolean             getPublic()      Returns the current record's "public" value
- * @method Doctrine_Collection getCategories()  Returns the current record's "Categories" collection
- * @method Doctrine_Collection getTags()        Returns the current record's "Tags" collection
- * @method Doctrine_Collection getUsers()       Returns the current record's "Users" collection
- * @method Document            setTitle()       Sets the current record's "title" value
- * @method Document            setDescription() Sets the current record's "description" value
- * @method Document            setFile()        Sets the current record's "file" value
- * @method Document            setPublic()      Sets the current record's "public" value
- * @method Document            setCategories()  Sets the current record's "Categories" collection
- * @method Document            setTags()        Sets the current record's "Tags" collection
- * @method Document            setUsers()       Sets the current record's "Users" collection
+ * @method string              getTitle()            Returns the current record's "title" value
+ * @method clob                getDescription()      Returns the current record's "description" value
+ * @method string              getFile()             Returns the current record's "file" value
+ * @method boolean             getPublic()           Returns the current record's "public" value
+ * @method Doctrine_Collection getCategories()       Returns the current record's "Categories" collection
+ * @method Doctrine_Collection getTags()             Returns the current record's "Tags" collection
+ * @method Doctrine_Collection getUsers()            Returns the current record's "Users" collection
+ * @method Doctrine_Collection getDocumentCategory() Returns the current record's "DocumentCategory" collection
+ * @method Doctrine_Collection getUserDocument()     Returns the current record's "UserDocument" collection
+ * @method Document            setTitle()            Sets the current record's "title" value
+ * @method Document            setDescription()      Sets the current record's "description" value
+ * @method Document            setFile()             Sets the current record's "file" value
+ * @method Document            setPublic()           Sets the current record's "public" value
+ * @method Document            setCategories()       Sets the current record's "Categories" collection
+ * @method Document            setTags()             Sets the current record's "Tags" collection
+ * @method Document            setUsers()            Sets the current record's "Users" collection
+ * @method Document            setDocumentCategory() Sets the current record's "DocumentCategory" collection
+ * @method Document            setUserDocument()     Sets the current record's "UserDocument" collection
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -77,6 +83,14 @@ abstract class BaseDocument extends sfDoctrineRecord
              'refClass' => 'UserDocument',
              'local' => 'document_id',
              'foreign' => 'user_id'));
+
+        $this->hasMany('DocumentCategory', array(
+             'local' => 'id',
+             'foreign' => 'document_id'));
+
+        $this->hasMany('UserDocument', array(
+             'local' => 'id',
+             'foreign' => 'document_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $versionable0 = new Doctrine_Template_Versionable(array(

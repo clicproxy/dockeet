@@ -9,15 +9,21 @@
  * @property clob $description
  * @property Doctrine_Collection $Users
  * @property Doctrine_Collection $Documents
+ * @property Doctrine_Collection $UserCategory
+ * @property Doctrine_Collection $DocumentCategory
  * 
- * @method string              getTitle()       Returns the current record's "title" value
- * @method clob                getDescription() Returns the current record's "description" value
- * @method Doctrine_Collection getUsers()       Returns the current record's "Users" collection
- * @method Doctrine_Collection getDocuments()   Returns the current record's "Documents" collection
- * @method Category            setTitle()       Sets the current record's "title" value
- * @method Category            setDescription() Sets the current record's "description" value
- * @method Category            setUsers()       Sets the current record's "Users" collection
- * @method Category            setDocuments()   Sets the current record's "Documents" collection
+ * @method string              getTitle()            Returns the current record's "title" value
+ * @method clob                getDescription()      Returns the current record's "description" value
+ * @method Doctrine_Collection getUsers()            Returns the current record's "Users" collection
+ * @method Doctrine_Collection getDocuments()        Returns the current record's "Documents" collection
+ * @method Doctrine_Collection getUserCategory()     Returns the current record's "UserCategory" collection
+ * @method Doctrine_Collection getDocumentCategory() Returns the current record's "DocumentCategory" collection
+ * @method Category            setTitle()            Sets the current record's "title" value
+ * @method Category            setDescription()      Sets the current record's "description" value
+ * @method Category            setUsers()            Sets the current record's "Users" collection
+ * @method Category            setDocuments()        Sets the current record's "Documents" collection
+ * @method Category            setUserCategory()     Sets the current record's "UserCategory" collection
+ * @method Category            setDocumentCategory() Sets the current record's "DocumentCategory" collection
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -55,6 +61,14 @@ abstract class BaseCategory extends sfDoctrineRecord
              'refClass' => 'DocumentCategory',
              'local' => 'category_id',
              'foreign' => 'document_id'));
+
+        $this->hasMany('UserCategory', array(
+             'local' => 'id',
+             'foreign' => 'category_id'));
+
+        $this->hasMany('DocumentCategory', array(
+             'local' => 'id',
+             'foreign' => 'category_id'));
 
         $sluggable0 = new Doctrine_Template_Sluggable(array(
              'fields' => 
