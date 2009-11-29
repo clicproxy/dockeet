@@ -80,6 +80,11 @@ class documentActions extends sfActions
     $this->redirect('@homepage');
   }
   
+ /**
+  * Executes download action
+  *
+  * @param sfRequest $request A request object
+  */
   public function executeDownload (sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
@@ -108,6 +113,11 @@ class documentActions extends sfActions
 	  return sfView::NONE;
   }
   
+  /*
+  * Executes search action
+  *
+  * @param sfRequest $request A request object
+  */
   public function executeSearch (sfWebRequest $request)
   {
     $form = new DocumentSearchForm();
@@ -115,15 +125,22 @@ class documentActions extends sfActions
     $form->bind(array('q' => $request->getParameter('q')));
     $this->getUser()->setFlash('q', $request->getParameter('q'));
     
-    $documents = array();
-    
     if ($form->isValid())
     {
-      $search = new Doctrine_Search(array('table' => 'Document'));
-      $documents = $search->search($form->getValue('q'));
+      $documents_query = $this->getUser()->getDocumentsQuery();
+      $documents_query = Doctrine_Core::getTable('Document')->search($form->getValue('q'), $documents_query);
+      
+      $pager = new sfDoctrinePager('Document');
+      $pager->setQuery($documents_query);
+      $pager->setPage($request->getParameter('page', 1));
+      $pager->init();
+    }
+    else
+    {
+      $pager = null;
     }
     
-    $this->documents = $documents;
+    $this->pager = $pager;
     $this->form = $form;
   }
 }

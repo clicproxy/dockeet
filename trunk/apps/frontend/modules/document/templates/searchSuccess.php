@@ -8,7 +8,5 @@
   <?php echo $form['q']; ?>
   <input type="submit" value="<?php echo __('search'); ?>">
 </form>
-<pre>
-<?php var_export($documents->getRawValue()); ?>
-</pre>
-<em><?php echo 'X' . ' ' . __('documents founds')?>.</em>
+
+<?php include_partial('document/list', array('pager' => $pager)); ?>
