@@ -1,6 +1,6 @@
 <h2><?php echo $title; ?></h2>
 
-<?php if (false !==  $category && $category->getRawValue() instanceof Category): ?>
+<?php if (null !==  $category && $category->getRawValue() instanceof Category): ?>
   <div id="category_control_box">
     <ul>
       <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
@@ -28,10 +28,10 @@
 </div>
 
 <div id="category_document_box">
-  <?php foreach ($documents as $document): ?>
+  <?php foreach ($pager->getResults() as $document): ?>
     <a href="<?php echo url_for('document/index?slug=' . $document->slug); ?>"><?php echo $document->title; ?></a>
   <?php endforeach; ?>
   
-  <?php echo count($documents) . ' ' . ((1 < count($documents)) ? __('documents') : __('document')) . '.'; ?>
+  <?php echo $pager->count() . ' ' . ((1 < $pager->count()) ? __('documents') : __('document')) . '.'; ?>
   <?php // TODO: pagination; ?>
 </div>

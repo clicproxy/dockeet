@@ -25,6 +25,7 @@ class User extends BaseUser
        $this->password = sha1($this->salt . $this->password);
     }
   }
+  
   /**
    * compare given password
    *
@@ -35,6 +36,4 @@ class User extends BaseUser
   {
     return (sha1($this->salt . $password) === $this->password);
   }
-  
-  
 }
