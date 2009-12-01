@@ -12,6 +12,7 @@
  * @property Doctrine_Collection $Categories
  * @property Doctrine_Collection $Tags
  * @property Doctrine_Collection $Users
+ * @property Doctrine_Collection $Versions
  * @property Doctrine_Collection $DocumentCategory
  * @property Doctrine_Collection $UserDocument
  * 
@@ -22,6 +23,7 @@
  * @method Doctrine_Collection getCategories()       Returns the current record's "Categories" collection
  * @method Doctrine_Collection getTags()             Returns the current record's "Tags" collection
  * @method Doctrine_Collection getUsers()            Returns the current record's "Users" collection
+ * @method Doctrine_Collection getVersions()         Returns the current record's "Versions" collection
  * @method Doctrine_Collection getDocumentCategory() Returns the current record's "DocumentCategory" collection
  * @method Doctrine_Collection getUserDocument()     Returns the current record's "UserDocument" collection
  * @method Document            setTitle()            Sets the current record's "title" value
@@ -31,6 +33,7 @@
  * @method Document            setCategories()       Sets the current record's "Categories" collection
  * @method Document            setTags()             Sets the current record's "Tags" collection
  * @method Document            setUsers()            Sets the current record's "Users" collection
+ * @method Document            setVersions()         Sets the current record's "Versions" collection
  * @method Document            setDocumentCategory() Sets the current record's "DocumentCategory" collection
  * @method Document            setUserDocument()     Sets the current record's "UserDocument" collection
  * 
@@ -84,6 +87,10 @@ abstract class BaseDocument extends sfDoctrineRecord
              'local' => 'document_id',
              'foreign' => 'user_id'));
 
+        $this->hasMany('DocumentVersion as Versions', array(
+             'local' => 'id',
+             'foreign' => 'document_id'));
+
         $this->hasMany('DocumentCategory', array(
              'local' => 'id',
              'foreign' => 'document_id'));
@@ -93,14 +100,6 @@ abstract class BaseDocument extends sfDoctrineRecord
              'foreign' => 'document_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
-        $versionable0 = new Doctrine_Template_Versionable(array(
-             'versionColumn' => 'version',
-             'className' => '%CLASS%Version',
-             'auditLog' => true,
-             'deleteVersions' => false,
-             ));
-        $timestampable1 = new Doctrine_Template_Timestampable();
-        $versionable0->addChild($timestampable1);
         $sluggable0 = new Doctrine_Template_Sluggable(array(
              'fields' => 
              array(
@@ -116,7 +115,6 @@ abstract class BaseDocument extends sfDoctrineRecord
              ),
              ));
         $this->actAs($timestampable0);
-        $this->actAs($versionable0);
         $this->actAs($sluggable0);
         $this->actAs($searchable0);
     }

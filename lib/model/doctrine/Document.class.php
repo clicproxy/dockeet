@@ -22,31 +22,17 @@ class Document extends BaseDocument
 	}
 	
 	/**
-	 * Retourne le type mime du fichier
+	 * Get the mime type of the file
 	 * @return string
 	 * @todo plan tu use finfo for next PHP versions
 	 */
 	public function getMimeType()
 	{
-	  /*
-		$finfo = new finfo();
-		
-		if (!$finfo)
-		{
-			throw new sfException("Opening fileinfo database failed");
-		}
-		
-		return $finfo->file($this->getFilePath());
-		*/
-	  /*
-	  $finfo = finfo_open(FILEINFO_MIME);
-	  return finfo_file($finfo, $this->getFilePath());
-	  */
 	  return mime_content_type($this->getFilePath());
 	}
 	
 	/**
-	 * Supprime le fichier
+	 * Delete document and files
 	 * @param unknown_type $event
 	 */
   public function postDelete($event)
@@ -54,6 +40,18 @@ class Document extends BaseDocument
     if (file_exists($this->getFilePath()))
     {
       unlink($this->getFilePath());
+    }
+  }
+  
+  /**
+   * Save old file
+   * @param unknown_type $event
+   */
+  public function preSave($event)
+  {
+    if (!$this->isNew() && in_array('file', $this->_modified, true))
+    {
+      $this->Versions[]->file = $this->_oldValues['file']; 
     }
   }
 	
