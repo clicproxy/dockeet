@@ -57,9 +57,9 @@ class documentActions extends sfActions
     }
     
     $form = new DocumentFrontendForm($document);
-    if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName())))
+    if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
     {
-    	
+      
     }
     
     $this->form = $form;

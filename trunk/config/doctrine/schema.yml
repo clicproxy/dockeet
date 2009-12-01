@@ -83,13 +83,6 @@ UserCategory:
 Document:
   actAs:
     Timestampable:
-    Versionable:
-      actAs:
-        Timestampable:
-      versionColumn: version
-      className: %CLASS%Version
-      auditLog: true
-      deleteVersions: false
     Sluggable:
       fields: [title]
     Searchable:
@@ -119,6 +112,27 @@ Document:
       local: document_id
       foreign: user_id
       refClass: UserDocument
+    Versions:
+      type: many
+      class: DocumentVersion
+      local: id
+      foreign: document_id
+      
+
+DocumentVersion:
+  columns:
+    document_id:
+      notnull: true
+      type: integer
+    file:
+      notnull: true
+      type: string(255)
+  relations:
+    Document:
+      local: document_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
     
 DocumentCategory:
   columns:

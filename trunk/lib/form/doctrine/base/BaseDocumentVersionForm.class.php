@@ -16,24 +16,18 @@ abstract class BaseDocumentVersionForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'          => new sfWidgetFormInputHidden(),
-      'title'       => new sfWidgetFormInputText(),
-      'description' => new sfWidgetFormTextarea(),
+      'document_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Document'), 'add_empty' => false)),
       'file'        => new sfWidgetFormInputText(),
-      'public'      => new sfWidgetFormInputCheckbox(),
       'created_at'  => new sfWidgetFormDateTime(),
       'updated_at'  => new sfWidgetFormDateTime(),
-      'version'     => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
       'id'          => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'title'       => new sfValidatorString(array('max_length' => 255)),
-      'description' => new sfValidatorString(array('required' => false)),
+      'document_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Document'))),
       'file'        => new sfValidatorString(array('max_length' => 255)),
-      'public'      => new sfValidatorBoolean(array('required' => false)),
       'created_at'  => new sfValidatorDateTime(),
       'updated_at'  => new sfValidatorDateTime(),
-      'version'     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'version', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('document_version[%s]');
