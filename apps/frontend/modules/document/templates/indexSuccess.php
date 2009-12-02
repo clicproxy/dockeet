@@ -9,3 +9,14 @@
     <li><a href="<?php echo url_for('document/download?slug=' . $document->slug); ?>"><?php echo __('Download'); ?></a></li>
   </ul>
 </div>
+
+<div id="document_versions">
+  <ul>
+    <?php foreach($document->Versions as $version): ?>
+      <?php if ($version->created_at === $document->updated_at) continue;?>
+      <li>
+        <a href="<?php echo url_for('document/download?slud=' . $document->slug . '&id=' . $version->id); ?>"><?php echo date('d/m/Y', strtotime($version->created_at)); ?></a>
+      </li>
+    <?php endforeach; ?>
+  </ul>
+</div>
