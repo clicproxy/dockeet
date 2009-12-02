@@ -14,21 +14,33 @@ class Document extends BaseDocument
 {
 	/**
 	 * Path where files are saved
+   * @param integer $version_id
 	 * @return string
 	 */
-	public function getFilePath()
+	public function getFilePath($version_id = null)
 	{
-    return sfConfig::get('sf_upload_dir') . '/documents/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/' . $this->file;
+	  $file_path = sfConfig::get('sf_upload_dir') . '/documents/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+	  if (null === $version_id)
+	  {
+	    $file_path .= $this->file;
+	  }
+	  else
+	  {
+	    $version = Doctrine::getTable('DocumentVersion')->find($version_id);
+	    $file_path .= $version->file;
+	  }
+    return $file_path;
 	}
 	
 	/**
 	 * Get the mime type of the file
+   * @param integer $version_id
 	 * @return string
 	 * @todo plan tu use finfo for next PHP versions
 	 */
-	public function getMimeType()
+	public function getMimeType($version_id = null)
 	{
-	  return mime_content_type($this->getFilePath());
+	  return mime_content_type($this->getFilePath($version_id));
 	}
 	
 	/**
@@ -49,9 +61,9 @@ class Document extends BaseDocument
    */
   public function preSave($event)
   {
-    if (!$this->isNew() && in_array('file', $this->_modified, true))
+    if (in_array('file', $this->_modified, true))
     {
-      $this->Versions[]->file = $this->_oldValues['file']; 
+      $this->Versions[]->file = $this->file;  
     }
   }
 	
