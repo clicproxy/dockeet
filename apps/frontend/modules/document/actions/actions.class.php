@@ -94,22 +94,26 @@ class documentActions extends sfActions
     {
       throw new sfException("Bad slug.");
     }
+    
+    $version = ($request->hasParameter('version')) ? Doctrine::getTable('DocumentVersion')->find($request->getParameter('version')) : null;
   
     $this->setLayout(false);
 	  sfConfig::set('sf_web_debug', false);
 	  
-	  if (! file_exists($document->getFilePath()) || ! is_readable($document->getFilePath()))
+	  $file_path = ($version instanceof DocumentVersion) ? $document->getFilePath($version->id) : $document->getFilePath();
+	  if (! file_exists($file_path) || ! is_readable($file_path))
 	  {
 	  	throw new sfException(sprintf("File %s doesn't exist or read access denied.", $document->getFilePath()));
 	  }
-	
+	  
+	  
 	  // Adding the file to the Response object
 	  $this->getResponse()->clearHttpHeaders();
 	  $this->getResponse()->setHttpHeader('Pragma: public', true);
-	  $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=' . $document->file);
-	  $this->getResponse()->setContentType($document->getMimeType());
+	  $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=' . (($version instanceof DocumentVersion) ? $version->file : $document->file));
+	  $this->getResponse()->setContentType(($version instanceof DocumentVersion) ? $document->getMimeType($version->id) : $document->getMimeType());
 	  $this->getResponse()->sendHttpHeaders();
-	  $this->getResponse()->setContent(readfile($document->getFilePath()));
+	  $this->getResponse()->setContent(readfile($file_path));
 	
 	  return sfView::NONE;
   }
