@@ -34,7 +34,10 @@ class userActions extends sfActions
     // Only for admin and the user himself
     $this->redirectUnless($this->getUser()->hasCredential('admin') || $user === $this->getUser()->getUser(), sfConfig::get('sf_secure_action') . '/' . sfConfig::get('sf_secure_module'));
     
-    $form = new UserForm($user);
+    if ($this->getUser()->hasCredential('admin'))
+      $form = new UserAdminForm($user);
+    else
+      $form = new UserForm($user);
     if ($request->isMethod('post'))
     {
       if ($form->bindAndSave($request->getParameter($form->getName())))
