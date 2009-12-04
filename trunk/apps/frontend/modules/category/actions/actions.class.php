@@ -11,14 +11,13 @@
 class categoryActions extends sfActions
 {
  /**
-  * Executes index action
-  *
+  * Show a category or homepage
   * @param sfRequest $request A request object
   */
   public function executeIndex(sfWebRequest $request)
   {
   	$category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
-  	$title = sfContext::getInstance()->getI18N()->__('Homepage');
+  	$title = ($category instanceof Category) ? sfContext::getInstance()->getI18N()->__('Category') . ' ' . $category->title : sfContext::getInstance()->getI18N()->__('Homepage');
   	
 	  $pager = new sfDoctrinePager('Document');
     $pager->setQuery($this->getUser()->getDocumentsQuery($category));
@@ -31,8 +30,7 @@ class categoryActions extends sfActions
   }
   
  /**
-  * Executes add action
-  *
+  * Edit a category
   * @param sfRequest $request A request object
   */
   public function executeEdit(sfWebRequest $request)
@@ -40,10 +38,19 @@ class categoryActions extends sfActions
   	$category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
   	
   	$form = new CategoryFrontendForm($category);
-  	if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName())))
+  	if ($request->isMethod('post'))
   	{
-  		$this->redirect('category/index?slug=' . $form->getObject()->slug);
-  	}
+  	  if ($form->bindAndSave($request->getParameter($form->getName())))
+      {
+        $this->getUser()->setFlash('notice', 'Category successfully saved');
+        $this->redirect('category/index?slug=' . $form->getObject()->slug);
+      }
+      else
+      {
+        $this->getUser()->setFlash('error', 'An error occurred during the saving of the category');
+      }
+    }
+    
   	$this->form = $form;
   }
 }

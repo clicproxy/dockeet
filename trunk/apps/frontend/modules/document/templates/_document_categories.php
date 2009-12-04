@@ -1,8 +1,6 @@
 <h3><?php echo __('In categories'); ?></h3>
 
-<?php if ($sf_user->hasFlash('notice_document_category')):?>
-  <div id="notice"><?php echo $sf_user->getFlash('notice_document_category'); ?></div>
-<?php endif;?>
+<?php include_partial('navigation/notice'); ?>
 
 
 <?php if (0 < count($form->getObject()->Categories)): ?>

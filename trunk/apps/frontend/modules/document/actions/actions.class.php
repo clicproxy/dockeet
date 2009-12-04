@@ -35,9 +35,15 @@ class documentActions extends sfActions
     
   	$form = new DocumentFrontendAddForm($document);
   	
-  	if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
+  	if ($request->isMethod('post'))
   	{
-  		$this->redirect('document/edit?id=' . $form->getObject()->id);
+  	  if ($form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
+  	  {
+  	    $this->getUser()->setFlash('notice', 'File successfully uploaded');
+  	    $this->redirect('document/edit?id=' . $form->getObject()->id);
+  	  }
+  	  else
+  	   $this->getUser()->setFlash('error', 'An error occurred during the uploading of the file');
   	}
   	$this->form = $form;
   }
@@ -56,9 +62,12 @@ class documentActions extends sfActions
     }
     
     $form = new DocumentFrontendForm($document);
-    if ($request->isMethod('post') && $form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
+    if ($request->isMethod('post'))
     {
-      
+      if ($form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
+        $this->getUser()->setFlash('notice', 'Document successfully saved');
+      else
+        $this->getUser()->setFlash('error', 'An error occurred during the saving of the document');
     }
     
     $this->form = $form;
@@ -72,11 +81,10 @@ class documentActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
-    ;
-    $this->logMessage("#### passage dans l'action de suppresion pour le document avec l'id : " . $document->id);
+    
     $document->delete();
     
-    $this->getUser()->setFlash('notice', 'File has been deleted.');
+    $this->getUser()->setFlash('notice', 'Document successfully deleted');
     $this->redirect('@homepage');
   }
   
@@ -160,11 +168,10 @@ class documentActions extends sfActions
     }
     
     $form = new DocumentCategoryAddForm($document);
-    //if ($request->isMethod('post') && 
     if ($form->bindAndSave($request->getParameter($form->getName())))
-    {
-      $this->getUser()->setFlash('notice_document_category', 'Document successfully added in category');
-    }
+      $this->getUser()->setFlash('notice', 'Document successfully added in category');
+    else
+      $this->getUser()->setFlash('error', 'An error occurred during the saving of the document');
     
     $this->renderPartial('document_categories', array('form' => $form));
     return sfView::NONE;
@@ -185,12 +192,11 @@ class documentActions extends sfActions
     if (1 < count($document->Categories))
     {
       $document->unlink('Categories', array($request->getParameter('category_id')), true);
-      $this->getUser()->setFlash('notice_document_category', 'Document successfully removed from category');
+      $this->getUser()->setFlash('notice', 'Document successfully removed from category');
     }
     else
-    {
-      $this->getUser()->setFlash('notice_document_category', 'Forbidden : the document must be present at least in one category.');
-    }
+      $this->getUser()->setFlash('error', 'An error occurred during the saving of the document');
+
     $this->renderPartial('document_categories', array('form' => new DocumentCategoryAddForm($document)));
     return sfView::NONE;
   }

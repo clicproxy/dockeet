@@ -55,7 +55,4 @@
   </div>
 <?php endif; ?>
 
-
-<?php if ($sf_user->hasFlash('notice')):?>
-  <div id="notice"><?php echo $sf_user->getFlash('notice'); ?></div>
-<?php endif;?>
+<?php include_partial('navigation/notice'); ?>
