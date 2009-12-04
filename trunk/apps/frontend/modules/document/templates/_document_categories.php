@@ -8,7 +8,7 @@
     <?php foreach($form->getObject()->Categories as $category):?>
       <li id="category_<?php echo $category->id; ?>">
         <?php echo $category->title; ?>
-        <a href="<?php echo url_for('document/deleteCategory?slug=' . $form->getObject()->slug . '&category_id=' . $category->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeCategory(this); return false;">
+        <a href="<?php echo url_for('document/removeCategory?slug=' . $form->getObject()->slug . '&category_id=' . $category->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeCategory(this); return false;">
           <?php echo __('remove'); ?>
         </a>
       </li>

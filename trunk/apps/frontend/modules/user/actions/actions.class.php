@@ -50,6 +50,12 @@ class userActions extends sfActions
    */
   public function executeDelete (sfWebRequest $request)
   {
+    $user = Doctrine::getTable('User')->find($request->getParameter('id'));
+    $this->forward404Unless($user instanceof User, 'Incorrect user ID.');
     
+    $user->delete();
+    $this->getUser()->setFlash('notice', 'User successfully deleted');
+    
+    $this->redirect('user/index');
   }
 }
