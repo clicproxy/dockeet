@@ -181,7 +181,7 @@ class documentActions extends sfActions
    * 
    * @param sfWebRequest $request
    */
-  public function executeDeleteCategory (sfWebRequest $request)
+  public function executeRemoveCategory (sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
     if (!$document instanceof Document)
