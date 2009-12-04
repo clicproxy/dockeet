@@ -37,6 +37,7 @@ class DocumentFrontendForm extends DocumentForm
     {
       $this->values['title'] = sfInflector::humanize($file->getOriginalName());
     }
+    $this->getObject()->mime_type = $file->getType();
      
     parent::doSave($con);
     

@@ -18,6 +18,7 @@ abstract class BaseDocumentVersionForm extends BaseFormDoctrine
       'id'          => new sfWidgetFormInputHidden(),
       'document_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Document'), 'add_empty' => false)),
       'file'        => new sfWidgetFormInputText(),
+      'mime_type'   => new sfWidgetFormInputText(),
       'created_at'  => new sfWidgetFormDateTime(),
       'updated_at'  => new sfWidgetFormDateTime(),
     ));
@@ -26,6 +27,7 @@ abstract class BaseDocumentVersionForm extends BaseFormDoctrine
       'id'          => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'document_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Document'))),
       'file'        => new sfValidatorString(array('max_length' => 255)),
+      'mime_type'   => new sfValidatorString(array('max_length' => 255)),
       'created_at'  => new sfValidatorDateTime(),
       'updated_at'  => new sfValidatorDateTime(),
     ));

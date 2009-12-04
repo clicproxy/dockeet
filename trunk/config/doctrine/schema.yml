@@ -98,6 +98,9 @@ Document:
     file:
       notnull: true
       type: string(255)
+    mime_type:
+      notnull: true
+      type: string(255)
     public: boolean
   relations:
     Categories:
@@ -128,6 +131,9 @@ DocumentVersion:
       notnull: true
       type: integer
     file:
+      notnull: true
+      type: string(255)
+    mime_type:
       notnull: true
       type: string(255)
   relations:
