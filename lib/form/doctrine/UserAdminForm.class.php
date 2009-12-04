@@ -8,7 +8,7 @@
  * @author     Your name here
  * @version    SVN: $Id$
  */
-class UserForm extends BaseUserForm
+class UserAdminForm extends BaseUserForm
 {
   public function configure()
   {
