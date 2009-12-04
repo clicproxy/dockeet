@@ -50,7 +50,6 @@ class documentActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->find($request->getParameter('id', ''));
-    
     if (!$document instanceof Document)
     {
     	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
@@ -89,7 +88,6 @@ class documentActions extends sfActions
   public function executeDownload (sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
-    
     if (!$document instanceof Document)
     {
       throw new sfException("Bad slug.");
@@ -134,7 +132,7 @@ class documentActions extends sfActions
     {
       $documents_query = $this->getUser()->getDocumentsQuery();
       $documents_query = Doctrine_Core::getTable('Document')->search($form->getValue('q'), $documents_query);
-      
+
       $pager = new sfDoctrinePager('Document');
       $pager->setQuery($documents_query);
       $pager->setPage($request->getParameter('page', 1));
@@ -147,5 +145,53 @@ class documentActions extends sfActions
     
     $this->pager = $pager;
     $this->form = $form;
+  }
+  
+  /**
+   * 
+   * @param sfWebRequest $request
+   */
+  public function executeAddCategory (sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->find($request->getParameter('document[id]', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Bad slug.");
+    }
+    
+    $form = new DocumentCategoryAddForm($document);
+    //if ($request->isMethod('post') && 
+    if ($form->bindAndSave($request->getParameter($form->getName())))
+    {
+      $this->getUser()->setFlash('notice_document_category', 'Document successfully added in category');
+    }
+    
+    $this->renderPartial('document_categories', array('form' => $form));
+    return sfView::NONE;
+  }
+  
+  /**
+   * 
+   * @param sfWebRequest $request
+   */
+  public function executeDeleteCategory (sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Bad slug.");
+    }
+    
+    if (1 < count($document->Categories))
+    {
+      $document->unlink('Categories', array($request->getParameter('category_id')), true);
+      $this->getUser()->setFlash('notice_document_category', 'Document successfully removed from category');
+    }
+    else
+    {
+      $this->getUser()->setFlash('notice_document_category', 'Forbidden : the document must be present at least in one category.');
+    }
+    $this->renderPartial('document_categories', array('form' => new DocumentCategoryAddForm($document)));
+    return sfView::NONE;
   }
 }

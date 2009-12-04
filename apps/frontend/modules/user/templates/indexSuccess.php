@@ -12,6 +12,7 @@
       <tr>
         <td><a href="<?php echo url_for('user/edit?id=' . $user->id); ?>"><?php echo $user->username; ?></a></td>
         <td><?php echo $user->email; ?></td>
+        <td><a href="<?php echo url_for('user/delete?id=' . $user->id);?>" onclick="return confirm('<?php echo __('Are you sure ?'); ?>');"><?php echo __('delete'); ?></a></td>
       </tr>
     <?php endforeach; ?>
   </tbody>

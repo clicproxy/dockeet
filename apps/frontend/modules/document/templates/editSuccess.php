@@ -7,15 +7,7 @@
   <input type="submit" value="<?php echo __('Save'); ?>" />
 </form>
 
-<h3><?php echo __('In categories'); ?></h3>
 
-<?php if (0 > count($form->getObject()->Categories)): ?>
-  <ul id="document_categories">
-    <?php foreach($form->getObject()->Categories as $category):?>
-      <li id="category_<?php echo $category->id; ?>">
-        <?php echo $category->nom; ?>
-        <a href="<?php echo url_for('document/deleteCategory?category_id=' . $category->id); ?>" onclick="documentCtrl.deleteCategory(this), return false;"><?php echo __('delete'); ?></a>
-      </li>
-    <?php endforeach; ?>
-  </ul>
-<?php endif; ?>
+<div id="document_categories">
+  <?php include_partial('document_categories', array('form' => new DocumentCategoryAddForm($form->getObject()))); ?>
+</div>
