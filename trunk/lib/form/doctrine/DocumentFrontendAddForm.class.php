@@ -37,7 +37,13 @@ class DocumentFrontendAddForm extends DocumentForm
   	  	
   	if ($this->getObject()->isNew() || in_array($this->values['title'], array(null, ''), true))
   	{
-  		$this->values['title'] = sfInflector::humanize($file->getOriginalName());
+  		$title = sfInflector::humanize($file->getOriginalName());
+      $this->values['title'] = $title;
+      $i = 0;
+  		while (0 !== Doctrine::getTable('Document')->createQuery('d')->where('d.title = ?', $this->values['title'])->count())
+  		{
+  		  $this->values['title'] = $title . ' (' . ++$i .')';
+  		}
   	}
   	 
   	parent::doSave($con);

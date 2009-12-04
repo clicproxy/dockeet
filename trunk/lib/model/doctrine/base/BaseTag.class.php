@@ -26,6 +26,7 @@ abstract class BaseTag extends sfDoctrineRecord
         $this->hasColumn('title', 'string', 255, array(
              'notnull' => true,
              'type' => 'string',
+             'unique' => true,
              'length' => '255',
              ));
 

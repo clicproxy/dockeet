@@ -43,7 +43,10 @@ abstract class BaseDocumentForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorDoctrineUnique(array('model' => 'Document', 'column' => array('slug')))
+      new sfValidatorAnd(array(
+        new sfValidatorDoctrineUnique(array('model' => 'Document', 'column' => array('title'))),
+        new sfValidatorDoctrineUnique(array('model' => 'Document', 'column' => array('slug'))),
+      ))
     );
 
     $this->widgetSchema->setNameFormat('document[%s]');

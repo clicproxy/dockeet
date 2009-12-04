@@ -33,7 +33,10 @@ abstract class BaseTagForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorDoctrineUnique(array('model' => 'Tag', 'column' => array('slug')))
+      new sfValidatorAnd(array(
+        new sfValidatorDoctrineUnique(array('model' => 'Tag', 'column' => array('title'))),
+        new sfValidatorDoctrineUnique(array('model' => 'Tag', 'column' => array('slug'))),
+      ))
     );
 
     $this->widgetSchema->setNameFormat('tag[%s]');

@@ -37,7 +37,10 @@ abstract class BaseCategoryForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorDoctrineUnique(array('model' => 'Category', 'column' => array('slug')))
+      new sfValidatorAnd(array(
+        new sfValidatorDoctrineUnique(array('model' => 'Category', 'column' => array('title'))),
+        new sfValidatorDoctrineUnique(array('model' => 'Category', 'column' => array('slug'))),
+      ))
     );
 
     $this->widgetSchema->setNameFormat('category[%s]');
