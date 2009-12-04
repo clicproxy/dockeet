@@ -45,7 +45,9 @@ class DocumentFrontendAddForm extends DocumentForm
   		  $this->values['title'] = $title . ' (' . ++$i .')';
   		}
   	}
-  	 
+  	$this->getObject()->mime_type = $file->getType();
+  	
+  	// Save to obtain ID
   	parent::doSave($con);
   	
     $path = dirname($this->getObject()->getFilePath());

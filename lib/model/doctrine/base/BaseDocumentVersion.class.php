@@ -7,13 +7,16 @@
  * 
  * @property integer $document_id
  * @property string $file
+ * @property string $mime_type
  * @property Document $Document
  * 
  * @method integer         getDocumentId()  Returns the current record's "document_id" value
  * @method string          getFile()        Returns the current record's "file" value
+ * @method string          getMimeType()    Returns the current record's "mime_type" value
  * @method Document        getDocument()    Returns the current record's "Document" value
  * @method DocumentVersion setDocumentId()  Sets the current record's "document_id" value
  * @method DocumentVersion setFile()        Sets the current record's "file" value
+ * @method DocumentVersion setMimeType()    Sets the current record's "mime_type" value
  * @method DocumentVersion setDocument()    Sets the current record's "Document" value
  * 
  * @package    ##PACKAGE##
@@ -31,6 +34,11 @@ abstract class BaseDocumentVersion extends sfDoctrineRecord
              'type' => 'integer',
              ));
         $this->hasColumn('file', 'string', 255, array(
+             'notnull' => true,
+             'type' => 'string',
+             'length' => '255',
+             ));
+        $this->hasColumn('mime_type', 'string', 255, array(
              'notnull' => true,
              'type' => 'string',
              'length' => '255',

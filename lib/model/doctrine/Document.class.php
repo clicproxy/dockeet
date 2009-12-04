@@ -33,17 +33,6 @@ class Document extends BaseDocument
 	}
 	
 	/**
-	 * Get the mime type of the file
-   * @param integer $version_id
-	 * @return string
-	 * @todo plan tu use finfo for next PHP versions
-	 */
-	public function getMimeType($version_id = null)
-	{
-	  return mime_content_type($this->getFilePath($version_id));
-	}
-	
-	/**
 	 * Delete document and files
 	 * @param unknown_type $event
 	 */
@@ -63,7 +52,9 @@ class Document extends BaseDocument
   {
     if (in_array('file', $this->_modified, true))
     {
-      $this->Versions[]->file = $this->file;  
+      $i = count($this->Versions);
+      $this->Versions[$i]->file = $this->file;  
+      $this->Versions[$i]->mime_type = $this->mime_type;  
     }
   }
 	
