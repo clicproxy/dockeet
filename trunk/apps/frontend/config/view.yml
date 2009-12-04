@@ -3,7 +3,7 @@ default:
     content-type: text/html
 
   metas:
-    #title:        symfony project
+    title:         Ressources management
     #description:  symfony project
     #keywords:     symfony, project
     #language:     en
@@ -11,7 +11,7 @@ default:
 
   stylesheets:    [main.css]
 
-  javascripts:    []
+  javascripts:    [jquery]
 
   has_layout:     true
   layout:         layout
