@@ -23,8 +23,11 @@
 <div id="user_box">
   <?php if($sf_user->isAuthenticated()): ?>
     <?php echo $sf_user->getUser()->username . ' ' . __('is connected'); ?>
-    <div id="user_info">
-      <a href="<?php echo url_for('navigation/logout'); ?>"><?php echo __('Logout'); ?></a>
+    <div id="user_panel">
+      <ul>
+        <li><a href="<?php echo url_for('user/edit?id=' . $sf_user->getUser()->id); ?>"><?php echo __('Profile'); ?></a></li>
+        <li><a href="<?php echo url_for('navigation/logout'); ?>"><?php echo __('Logout'); ?></a></li>
+      </ul>
     </div>
   <?php else: ?>
     <a href="#"><?php echo __('login')?></a>

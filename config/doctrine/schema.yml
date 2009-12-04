@@ -14,6 +14,7 @@ User:
     username:
       notnull: true
       type: string(255)
+      unique: true
     password:
       notnull: true
       type: string(255)
@@ -46,6 +47,7 @@ Category:
     title:
       notnull: true
       type: string(255)
+      unique: true
     description: clob
   relations:
     Users:
@@ -91,6 +93,7 @@ Document:
     title:
       notnull: true
       type: string(255)
+      unique: true
     description: clob
     file:
       notnull: true
@@ -164,6 +167,7 @@ Tag:
     title:
       notnull: true
       type: string(255)
+      unique: true
   relations:
     Documents:
       class: Document
