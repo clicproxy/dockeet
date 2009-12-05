@@ -1,7 +1,6 @@
 <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->title : __('Homepage'); ?></h2>
 
-
-<?php if (null !==  $category && $category->getRawValue() instanceof Category): ?>
+<?php if ($sf_user->isAuthenticated() && null !==  $category && $category->getRawValue() instanceof Category): ?>
   <div id="category_control_box">
     <ul>
       <?php if ($sf_user->hasSubscribed($category->getRawValue())): ?>

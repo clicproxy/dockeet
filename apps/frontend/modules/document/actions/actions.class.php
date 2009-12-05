@@ -200,4 +200,36 @@ class documentActions extends sfActions
     $this->renderPartial('document_categories', array('form' => new DocumentCategoryAddForm($document)));
     return sfView::NONE;
   }
+  
+ /**
+  * Subscribe to a document
+  * @param sfRequest $request A request object
+  */
+  public function executeSubscribe (sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Wrong Document slug.");
+    }
+    
+    $document->subscribe($this->getUser()->getUser());
+    $this->redirect('document/index?slug=' . $document->slug);
+  }
+  
+ /**
+  * Subscribe to a document
+  * @param sfRequest $request A request object
+  */
+  public function executeUnsubscribe (sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Wrong Document slug.");
+    }
+    
+    $document->unsubscribe($this->getUser()->getUser());
+    $this->redirect('document/index?slug=' . $document->slug);
+  }
 }

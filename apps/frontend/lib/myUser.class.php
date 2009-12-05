@@ -91,8 +91,23 @@ class myUser extends sfBasicSecurityUser
    * @param Category $category
    * @return boolean
    */
-  public function hasSubscribed (Category $category)
+  public function hasSubscribed ($object)
   {
-    return 1 === Doctrine::getTable('UserCategory')->createQuery('u')->where('u.user_id = ? AND u.category_id = ? AND u.subscribe = ?', array($this->getUser()->id, $category->id, 1))->count();
+    if ($object instanceof sfOutputEscaperIteratorDecorator)
+    {
+      $object = $object->getRawValue();
+    }
+    
+    $has_subscribed = false;
+    if (!$object instanceof Document && !$object instanceof Category)
+    {
+      throw new sfException("Wrong parameter, Category or Document object expected, " . get_class($object) . " given");
+    }
+    
+    if ($this->getUser() instanceof User)
+    {
+      $has_subscribed = $object->hasSubscribed($this->getUser());
+    }
+    return $has_subscribed;
   }
 }
