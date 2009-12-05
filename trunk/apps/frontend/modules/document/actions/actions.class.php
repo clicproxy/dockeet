@@ -117,7 +117,7 @@ class documentActions extends sfActions
 	  $this->getResponse()->clearHttpHeaders();
 	  $this->getResponse()->setHttpHeader('Pragma: public', true);
 	  $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=' . (($version instanceof DocumentVersion) ? $version->file : $document->file));
-	  $this->getResponse()->setContentType(($version instanceof DocumentVersion) ? $document->getMimeType($version->id) : $document->getMimeType());
+	  $this->getResponse()->setContentType(($version instanceof DocumentVersion) ? $version->mime_type : $document->mime_type);
 	  $this->getResponse()->sendHttpHeaders();
 	  $this->getResponse()->setContent(readfile($file_path));
 	

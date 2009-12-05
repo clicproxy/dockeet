@@ -29,29 +29,34 @@ class DocumentFrontendForm extends DocumentForm
   protected function doSave($con = null)
   {
     $file = $this->getValue('file');
-    $filename =  sha1(date('U') . $file->getOriginalName()) . $file->getExtension($file->getOriginalExtension());
-    
-    $this->values['file'] = $filename;
-        
-    if ($this->getObject()->isNew() || in_array($this->values['title'], array(null, ''), true))
+    if (null !== $file)
     {
-      $this->values['title'] = sfInflector::humanize($file->getOriginalName());
+      $filename =  sha1(date('U') . $file->getOriginalName()) . $file->getExtension($file->getOriginalExtension());
+
+      $this->values['file'] = $filename;
+
+      if ($this->getObject()->isNew() || in_array($this->values['title'], array(null, ''), true))
+      {
+        $this->values['title'] = sfInflector::humanize($file->getOriginalName());
+      }
+      $this->getObject()->mime_type = $file->getType();
     }
-    $this->getObject()->mime_type = $file->getType();
-     
     parent::doSave($con);
     
-    $path = dirname($this->getObject()->getFilePath());
-    if (! is_dir($path))
+    if (null !== $file)
     {
-      mkdir($path, 0777, true);
+      $path = dirname($this->getObject()->getFilePath());
+      if (! is_dir($path))
+      {
+        mkdir($path, 0777, true);
+      }
+      
+      if (! is_writable($path))
+      {
+        throw new sfException("Write directory access denied");
+      }
+      
+      $file->save($path . '/' . $filename);
     }
-    
-    if (! is_writable($path))
-    {
-      throw new sfException("Write directory access denied");
-    }
-    
-    $file->save($path . '/' . $filename);
   }
 }

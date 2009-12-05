@@ -52,9 +52,12 @@ class Document extends BaseDocument
   {
     if (in_array('file', $this->_modified, true))
     {
-      $i = count($this->Versions);
-      $this->Versions[$i]->file = $this->file;  
-      $this->Versions[$i]->mime_type = $this->mime_type;  
+      $document_version = new DocumentVersion();
+      $document_version->document_id = $this->id;
+      $document_version->file = $this->file;
+      $document_version->mime_type = $this->mime_type;
+      
+      $this->Versions[] = $document_version;  
     }
   }
 	
