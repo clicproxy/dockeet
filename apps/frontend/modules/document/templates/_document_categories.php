@@ -4,7 +4,7 @@
 
 
 <?php if (0 < count($form->getObject()->Categories)): ?>
-  <ul id="document_categories">
+  <ul>
     <?php foreach($form->getObject()->Categories as $category):?>
       <li id="category_<?php echo $category->id; ?>">
         <?php echo $category->title; ?>

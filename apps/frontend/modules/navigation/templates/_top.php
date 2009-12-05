@@ -48,6 +48,7 @@
     </form>
   <?php endif;?>
 </div>
+
 <?php if($sf_user->hasCredential('admin')): ?>
   <div id="admin_box">
     <ul>
