@@ -13,10 +13,10 @@
  * @method DocumentTag setDocumentId()  Sets the current record's "document_id" value
  * @method DocumentTag setTagId()       Sets the current record's "tag_id" value
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
- * @version    SVN: $Id: Builder.php 6716 2009-11-12 19:26:28Z jwage $
+ * @package    dockeet
+ * @subpackage model
+ * @author     Your name here
+ * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class BaseDocumentTag extends sfDoctrineRecord
 {

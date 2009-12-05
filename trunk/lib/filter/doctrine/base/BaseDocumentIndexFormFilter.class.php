@@ -35,10 +35,10 @@ abstract class BaseDocumentIndexFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'       => 'Number',
       'keyword'  => 'Text',
       'field'    => 'Text',
       'position' => 'Number',
+      'id'       => 'Number',
     );
   }
 }
