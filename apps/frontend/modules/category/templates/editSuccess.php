@@ -4,3 +4,8 @@
 	<?php echo $form; ?>
 	<input type="submit" value="<?php echo __('Save'); ?>">
 </form>
+
+
+<div id="categoru_users">
+  <?php include_partial('category_users', array('form' => new UserCategoryAddForm($form->getObject()))); ?>
+</div>

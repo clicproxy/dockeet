@@ -8,7 +8,7 @@
     <?php foreach($form->getObject()->Users as $user):?>
       <li id="category_<?php echo $user->id; ?>">
         <?php echo $user->username; ?>
-        <a href="<?php echo url_for('document/removeUser?slug=' . $form->getObject()->slug . '&user_id=' . $->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) categoryCtrl.removeUser(this); return false;">
+        <a href="<?php echo url_for('document/removeUser?slug=' . $form->getObject()->slug . '&user_id=' . $user->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) categoryCtrl.removeUser(this); return false;">
           <?php echo __('remove'); ?>
         </a>
       </li>

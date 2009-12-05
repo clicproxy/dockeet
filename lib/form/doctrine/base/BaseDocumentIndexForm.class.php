@@ -15,17 +15,17 @@ abstract class BaseDocumentIndexForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'       => new sfWidgetFormInputHidden(),
       'keyword'  => new sfWidgetFormInputHidden(),
       'field'    => new sfWidgetFormInputHidden(),
       'position' => new sfWidgetFormInputHidden(),
+      'id'       => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
-      'id'       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
       'keyword'  => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'keyword', 'required' => false)),
       'field'    => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'field', 'required' => false)),
       'position' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'position', 'required' => false)),
+      'id'       => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('document_index[%s]');

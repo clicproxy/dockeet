@@ -13,20 +13,18 @@
 class User extends BaseUser
 {
   /**
-   * Secure password
-   *
-   * @param Doctrine_Event $event
+   * Return the username of the User
+   * @return string
    */
-  /*
-  public function preSave($event)
+  public function __toString ()
   {
-    if (in_array('password', $this->_modified))
-    {
-       $this->salt = sha1(date('r'));
-       $this->password = sha1($this->salt . $this->password);
-    }
-  }*/
+    return $this->username;
+  }
   
+  /**
+   * Encrypte the password
+   * @param string $password
+   */
   public function setPassword ($password)
   {
     if (!$password && 0 == strlen($password))

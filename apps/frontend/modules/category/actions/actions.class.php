@@ -73,7 +73,7 @@ class categoryActions extends sfActions
     else
       $this->getUser()->setFlash('error', 'An error occurred during the saving of the category');
     
-    $this->renderPartial('user_categories', array('form' => $form));
+    $this->renderPartial('category_users', array('form' => $form));
     return sfView::NONE;
   }
   
@@ -92,7 +92,7 @@ class categoryActions extends sfActions
     $category->unlink('Categories', array($request->getParameter('category_id')), true);
     $this->getUser()->setFlash('notice', 'User access successfully removed from category');
 
-    $this->renderPartial('user_categories', array('form' => new UserCategoryAddForm($category)));
+    $this->renderPartial('category_users', array('form' => new UserCategoryAddForm($category)));
     return sfView::NONE;
   }
 }
