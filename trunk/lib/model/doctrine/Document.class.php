@@ -105,4 +105,9 @@ class Document extends BaseDocument
     
     $user_document->delete();
   }
+  
+  public function getThumbnailDirectory ()
+  {
+    return sfConfig::get('sf_upload_dir') . '/thumbnail/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+  }
 }

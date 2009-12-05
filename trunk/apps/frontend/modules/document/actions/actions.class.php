@@ -109,7 +109,7 @@ class documentActions extends sfActions
 	  $file_path = ($version instanceof DocumentVersion) ? $document->getFilePath($version->id) : $document->getFilePath();
 	  if (! file_exists($file_path) || ! is_readable($file_path))
 	  {
-	  	throw new sfException(sprintf("File %s doesn't exist or read access denied.", $document->getFilePath()));
+	  	throw new sfException(sprintf("File %s doesn't exist or read access denied.", $file_path));
 	  }
 	  
 	  

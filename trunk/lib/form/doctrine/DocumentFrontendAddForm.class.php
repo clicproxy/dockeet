@@ -31,49 +31,5 @@ class DocumentFrontendAddForm extends DocumentForm
     $document_category = new DocumentCategory();
     $document_category->Document = $this->getObject();
     return new DocumentCategoryForm($document_category);
-  } 
-
-  /**
-   * Updates and saves the current object.
-   *
-   * If you want to add some logic before saving or save other associated
-   * objects, this is the method to override.
-   *
-   * @param mixed $con An optional connection object
-   */
-  protected function doSave($con = null)
-  {
-  	$file = $this->getValue('file');
-  	$filename =  sha1(date('U') . $file->getOriginalName()) . $file->getExtension($file->getOriginalExtension());
-  	
-  	$this->values['file'] = $filename;
-  	  	
-  	if ($this->getObject()->isNew() || in_array($this->values['title'], array(null, ''), true))
-  	{
-  		$title = sfInflector::humanize($file->getOriginalName());
-      $this->values['title'] = $title;
-      $i = 0;
-  		while (0 !== Doctrine::getTable('Document')->createQuery('d')->where('d.title = ?', $this->values['title'])->count())
-  		{
-  		  $this->values['title'] = $title . ' (' . ++$i .')';
-  		}
-  	}
-  	$this->getObject()->mime_type = $file->getType();
-  	
-  	// Save to obtain ID
-  	parent::doSave($con);
-  	
-    $path = dirname($this->getObject()->getFilePath());
-    if (! is_dir($path))
-    {
-      mkdir($path, 0777, true);
-    }
-    
-    if (! is_writable($path))
-    {
-      throw new sfException("Write directory access denied");
-    }
-    
-    $file->save($path . '/' . $filename);
   }
 }
