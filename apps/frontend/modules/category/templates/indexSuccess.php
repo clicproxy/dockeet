@@ -1,4 +1,4 @@
-<h2><?php echo $title; ?></h2>
+<h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->title : __('Homepage'); ?></h2>
 
 
 <?php if (null !==  $category && $category->getRawValue() instanceof Category): ?>
