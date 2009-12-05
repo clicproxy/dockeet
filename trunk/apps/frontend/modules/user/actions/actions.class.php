@@ -32,7 +32,7 @@ class userActions extends sfActions
     $user = Doctrine::getTable('User')->find($request->getParameter('id'));
     
     // Only for admin and the user himself
-    $this->redirectUnless($this->getUser()->hasCredential('admin') || $user === $this->getUser()->getUser(), sfConfig::get('sf_secure_action') . '/' . sfConfig::get('sf_secure_module'));
+    $this->redirectUnless($this->getUser()->hasCredential('admin') || $user === $this->getUser()->getUser(), sfConfig::get('sf_secure_module') . '/' . sfConfig::get('sf_secure_action'));
     
     if ($this->getUser()->hasCredential('admin'))
       $form = new UserAdminForm($user);
