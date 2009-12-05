@@ -53,4 +53,45 @@ class categoryActions extends sfActions
     
   	$this->form = $form;
   }
+  
+  /**
+   * 
+   * @param sfWebRequest $request
+   */
+  public function executeAddUser (sfWebRequest $request)
+  {
+    $category = Doctrine::getTable('Category')->find($request->getParameter('category[id]', ''));
+    if (!$category instanceof Document)
+    {
+      throw new sfException("Bad ID.");
+    }
+    
+    $form = new UserCategoryAddForm($category);
+    if ($form->bindAndSave($request->getParameter($form->getName())))
+      $this->getUser()->setFlash('notice', 'User access successfully added in category');
+    else
+      $this->getUser()->setFlash('error', 'An error occurred during the saving of the category');
+    
+    $this->renderPartial('user_categories', array('form' => $form));
+    return sfView::NONE;
+  }
+  
+  /**
+   * 
+   * @param sfWebRequest $request
+   */
+  public function executeRemoveUser (sfWebRequest $request)
+  {
+    $category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$category instanceof Document)
+    {
+      throw new sfException("Bad slug.");
+    }
+    
+    $category->unlink('Categories', array($request->getParameter('category_id')), true);
+    $this->getUser()->setFlash('notice', 'User access successfully removed from category');
+
+    $this->renderPartial('user_categories', array('form' => new UserCategoryAddForm($category)));
+    return sfView::NONE;
+  }
 }
