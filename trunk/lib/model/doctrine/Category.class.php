@@ -47,4 +47,15 @@ class Category extends BaseCategory
     $user_category->subscribe = false;
     $user_category->save();
   }
+  
+  /**
+   * Test if the user has subscribed to this category update
+   * @param User $user
+   * @return boolean
+   */
+  public function hasSubscribed (User $user)
+  {
+    $query_has_subscribed  = Doctrine::getTable('UserCategory')->createQuery('u')->where('u.user_id = ? AND u.category_id = ? AND u.subscribe = ?');
+    return 1 === $query_has_subscribed->count(array($user->id, $this->id, 1));
+  }
 }

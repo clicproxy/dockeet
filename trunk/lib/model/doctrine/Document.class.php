@@ -60,5 +60,49 @@ class Document extends BaseDocument
       $this->Versions[] = $document_version;  
     }
   }
-	
+  
+  /**
+   * Test if the user has subscribed to this document update
+   * @param User $user
+   * @return boolean
+   */
+  public function hasSubscribed (User $user)
+  {
+    $query_has_subscribed  = Doctrine::getTable('UserDocument')->createQuery('u')->where('u.user_id = ? AND u.document_id = ?');
+    return 1 === $query_has_subscribed->count(array($user->id, $this->id));
+  }
+  
+  /**
+   * User subscription
+   * @param User $user
+   */
+  public function subscribe (User $user)
+  {
+    $user_document = Doctrine::getTable('UserDocument')->createQuery('u')->where('document_id = ? AND user_id = ?', array($this->id, $user->id))->fetchOne();
+    
+    if (!$user_document instanceof UserDocument)
+    {
+      $user_document = new UserDocument();
+      $user_document->Document= $this;
+      $user_document->User = $user;
+    }
+    
+    $user_document->save();
+  }
+  
+  /**
+   * User unsubscription
+   * @param User $user
+   */
+  public function unsubscribe (User $user)
+  {
+    $user_document = Doctrine::getTable('UserDocument')->createQuery('u')->where('document_id = ? AND user_id = ?', array($this->id, $user->id))->fetchOne();
+    
+    if (!$user_document instanceof UserDocument)
+    {
+      throw new sfException('No relation between Document ' . $this->title . ' and user ' . $user->username);
+    }
+    
+    $user_document->delete();
+  }
 }
