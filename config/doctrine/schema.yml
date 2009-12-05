@@ -105,6 +105,9 @@ Document:
     mime_type:
       notnull: true
       type: string(255)
+    size:
+      notnull: true
+      type: string(255)
     public: boolean
   relations:
     Categories:

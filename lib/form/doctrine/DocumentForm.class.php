@@ -37,6 +37,7 @@ class DocumentForm extends BaseDocumentForm
         $this->values['title'] = sfInflector::humanize($file->getOriginalName());
       }
       $this->getObject()->mime_type = $file->getType();
+      $this->getObject()->size = $file->getSize(); 
       
     }
     parent::doSave($con);

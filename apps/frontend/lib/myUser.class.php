@@ -46,7 +46,7 @@ class myUser extends sfBasicSecurityUser
   {
     $user = $this->getUser();
     $documents_query = Doctrine::getTable('Document')->createQuery('d');
-    $documents_query->addOrderBy((($this->hasAttribute('order_by', 'document')) ? $this->getAttribute('order_by', 'document') : 'created_at') . ' DESC');
+    $documents_query->addOrderBy($this->getAttribute('order_by', 'updated_at DESC', 'frontend'));
     
     if ($category instanceof Category)
     {
