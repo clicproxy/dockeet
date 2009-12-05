@@ -12,4 +12,39 @@
  */
 class Category extends BaseCategory
 {
+  /**
+   * User subscription
+   * @param User $user
+   */
+  public function subscribe (User $user)
+  {
+    $user_category = Doctrine::getTable('UserCategory')->createQuery('u')->where('category_id = ? AND user_id = ?', array($this->id, $user->id))->fetchOne();
+    
+    if (!$user_category instanceof UserCategory)
+    {
+      $user_category = new UserCategory();
+      $user_category->Category = $this;
+      $user_category->User = $user;
+    }
+    
+    $user_category->subscribe = true;
+    $user_category->save();
+  }
+  
+  /**
+   * User unsubscription
+   * @param User $user
+   */
+  public function unsubscribe (User $user)
+  {
+    $user_category = Doctrine::getTable('UserCategory')->createQuery('u')->where('category_id = ? AND user_id = ?', array($this->id, $user->id))->fetchOne();
+    
+    if (!$user_category instanceof UserCategory)
+    {
+      throw new sfException('No relation between Category ' . $this->title . ' and user ' . $user->username);
+    }
+    
+    $user_category->subscribe = false;
+    $user_category->save();
+  }
 }

@@ -85,4 +85,14 @@ class myUser extends sfBasicSecurityUser
     
     return $categories_query->execute();
   }
+  
+  /**
+   * Test if the User logged has suscribed to the category
+   * @param Category $category
+   * @return boolean
+   */
+  public function hasSubscribed (Category $category)
+  {
+    return 1 === Doctrine::getTable('UserCategory')->createQuery('u')->where('u.user_id = ? AND u.category_id = ? AND u.subscribe = ?', array($this->getUser()->id, $category->id, 1))->count();
+  }
 }
