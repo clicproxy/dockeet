@@ -51,28 +51,21 @@ class myUser extends sfBasicSecurityUser
     if ($category instanceof Category)
     {
       $documents_query->innerJoin('d.Categories c WITH c.id = ?', $category->id);
-      $title = sfContext::getInstance()->getI18N()->__('Category') . ' ' . $category->title;
-      if (!$user instanceof User || !$user->admin)
-      {
-        $documents_query->where('d.public = ?', 1);
-      }
-      if ($user instanceof User && !$user->admin)
+    }
+    
+    if (! $user instanceof User || !$user->admin) $documents_query->where('d.public = ?', 1);
+    
+    if ($user instanceof User && !$user->admin)
+    {
+      if ($category instanceof Category)
       {
         $documents_query->leftJoin('c.Users u');
         $documents_query->orWhere('u.id = ?', $user->id);
       }
-    }
-    else
-    {
-      if (!$user instanceof User || !$user->admin)
-      {
-        $documents_query->where('d.public = ?', 1);
-      }
-      if ($user instanceof User && !$user->admin)
+      else
       {
         $documents_query->leftJoin('d.Categories c');
-        $documents_query->leftJoin('c.Users u');
-        $documents_query->orWhere('u.id = ?', $user->id);
+        $documents_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
       }
     }
     
@@ -87,15 +80,8 @@ class myUser extends sfBasicSecurityUser
     $categories_query->select('c.slug, count(d.id) AS count_documents');
     $categories_query->addGroupBy('c.id');
     
-    if (!$user instanceof User || !$user->admin)
-    {
-      $categories_query->where('d.public = ?', 1);
-    }
-    if ($user instanceof User && !$user->admin)
-    {
-      $categories_query->leftJoin('c.Users u');
-      $categories_query->orWhere('u.id = ?', $user->id);
-    }
+    if (! $user instanceof User || !$user->admin) $categories_query->where('d.public = ?', 1);
+    if ($user instanceof User && !$user->admin) $categories_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
     
     return $categories_query->execute();
   }
