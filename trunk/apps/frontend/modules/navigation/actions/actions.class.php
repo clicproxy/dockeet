@@ -83,4 +83,30 @@ class navigationActions extends sfActions
     }
     $this->redirect($request->getReferer());
   }
+  
+  /**
+   * Set order to display document
+   * @param sfWebRequest $request
+   */
+  public function executeSetOrder(sfWebRequest $request)
+  {
+    if (!$request->hasParameter('order_by') && !in_array($request->getParameter('order_by'), array('thumbnail', 'mixed', 'detail')))
+    {
+      $this->getUser()->setFlash('error', 'An error occured, display change failed');
+    }
+    else
+    {
+      $order_by = $this->getUser()->getAttribute('order_by', 'frontend');
+      if (strpos($order_by, $request->getParameter('order_by')))
+      {
+        $order_by = $request->getParameter('order_by') . ' ' . (strpos($order_by, 'ASC') ? 'DESC' : 'ASC');
+      }
+      else
+      {
+        $order_by = $request->getParameter('order_by') . ' ASC';
+      }
+      $this->getUser()->setAttribute('order_by', $order_by, 'frontend');
+    }
+    $this->redirect($request->getReferer());
+  }
 }

@@ -9,6 +9,7 @@
  * @property clob $description
  * @property string $file
  * @property string $mime_type
+ * @property string $size
  * @property boolean $public
  * @property Doctrine_Collection $Categories
  * @property Doctrine_Collection $Tags
@@ -21,6 +22,7 @@
  * @method clob                getDescription()      Returns the current record's "description" value
  * @method string              getFile()             Returns the current record's "file" value
  * @method string              getMimeType()         Returns the current record's "mime_type" value
+ * @method string              getSize()             Returns the current record's "size" value
  * @method boolean             getPublic()           Returns the current record's "public" value
  * @method Doctrine_Collection getCategories()       Returns the current record's "Categories" collection
  * @method Doctrine_Collection getTags()             Returns the current record's "Tags" collection
@@ -32,6 +34,7 @@
  * @method Document            setDescription()      Sets the current record's "description" value
  * @method Document            setFile()             Sets the current record's "file" value
  * @method Document            setMimeType()         Sets the current record's "mime_type" value
+ * @method Document            setSize()             Sets the current record's "size" value
  * @method Document            setPublic()           Sets the current record's "public" value
  * @method Document            setCategories()       Sets the current record's "Categories" collection
  * @method Document            setTags()             Sets the current record's "Tags" collection
@@ -65,6 +68,11 @@ abstract class BaseDocument extends sfDoctrineRecord
              'length' => '255',
              ));
         $this->hasColumn('mime_type', 'string', 255, array(
+             'notnull' => true,
+             'type' => 'string',
+             'length' => '255',
+             ));
+        $this->hasColumn('size', 'string', 255, array(
              'notnull' => true,
              'type' => 'string',
              'length' => '255',

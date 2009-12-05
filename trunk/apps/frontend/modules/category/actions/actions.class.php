@@ -16,16 +16,14 @@ class categoryActions extends sfActions
   */
   public function executeIndex(sfWebRequest $request)
   {
-  	$category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
-  	$title = ($category instanceof Category) ? sfContext::getInstance()->getI18N()->__('Category') . ' ' . $category->title : sfContext::getInstance()->getI18N()->__('Homepage');
-  	
-	  $pager = new sfDoctrinePager('Document');
+    $category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
+
+    $pager = new sfDoctrinePager('Document');
     $pager->setQuery($this->getUser()->getDocumentsQuery($category));
     $pager->setPage($request->getParameter('page', 1));
     $pager->init();
     
     $this->pager = $pager;
-  	$this->title = $title;
   	$this->category = $category;
   }
   

@@ -24,11 +24,19 @@
 </div>
 
 <div id="sort_box">
-  <select onchange="alert('sort action'); return false;">
-    <option value="date"><?php echo __("Date"); ?></option>
-    <option value="alpha"><?php echo __("Alpha"); ?></option>
-    <option value="size"><?php echo __("Size"); ?></option>
-  </select>
+  <form action="<?php echo url_for('navigation/setOrder'); ?>" method="get">
+    <select onchange="jQuery(jQuery(this).parent()).submit(); return false;" name="order_by">
+      <option value="updated_at" <?php echo 0 === strpos($sf_user->getAttribute('order_by', 'updated_at DESC', 'frontend'), 'updated_at') ? 'selected="selected"' : ''; ?>>
+        <?php echo __("Date"); ?>
+      </option>
+      <option value="title" <?php echo 0 === strpos($sf_user->getAttribute('order_by', 'updated_at DESC', 'frontend'), 'title') ? 'selected="selected"' : ''; ?>>
+      <?php echo __("Alpha"); ?>
+      </option>
+      <option value="size" <?php echo 0 === strpos($sf_user->getAttribute('order_by', 'updated_at DESC', 'frontend'), 'size') ? 'selected="selected"' : ''; ?>>
+      <?php echo __("Size"); ?>
+      </option>
+    </select>
+  </form>
 </div>
 
 <div id="document_box">
