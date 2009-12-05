@@ -17,6 +17,7 @@ class User extends BaseUser
    *
    * @param Doctrine_Event $event
    */
+  /*
   public function preSave($event)
   {
     if (in_array('password', $this->_modified))
@@ -24,6 +25,17 @@ class User extends BaseUser
        $this->salt = sha1(date('r'));
        $this->password = sha1($this->salt . $this->password);
     }
+  }*/
+  
+  public function setPassword ($password)
+  {
+    if (!$password && 0 == strlen($password))
+    {
+      return;
+    }
+    
+    $this->salt = sha1(date('r'));
+    parent::_set('password', sha1($this->salt . $password));
   }
   
   /**

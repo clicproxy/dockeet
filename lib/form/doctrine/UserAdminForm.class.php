@@ -16,8 +16,8 @@ class UserAdminForm extends BaseUserForm
     $this->widgetSchema['password'] = new sfWidgetFormInputPassword();
     $this->widgetSchema['password_confirm'] = new sfWidgetFormInputPassword();
     
-    $this->validatorSchema['password'] = new sfValidatorString(array('max_length' => 255, 'required' => false));
-    $this->validatorSchema['password_confirm'] = new sfValidatorString(array('max_length' => 255, 'required' => false));
+    $this->validatorSchema['password'] = new sfValidatorString(array('max_length' => 255, 'required' => $this->getObject()->isNew()));
+    $this->validatorSchema['password_confirm'] = new sfValidatorString(array('max_length' => 255, 'required' => $this->getObject()->isNew()));
     $this->validatorSchema['email'] = new sfValidatorEmail();
     
     $this->validatorSchema->setPostValidator(
