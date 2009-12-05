@@ -1,26 +1,56 @@
-# # Populate this file with data to be loaded by your ORM's *:data-load task.
-# # You can create multiple files in this directory (i.e. 010_users.yml,
-# # 020_articles.yml, etc) which will be loaded in alphabetical order.
-# # 
-# # See documentation for your ORM's *:data-load task for more information.
-# 
-# User:
-#   fabien:
-#     username: fabien
-#     password: changeme
-#     name:     Fabien Potencier
-#     email:    fabien.potencier@symfony-project.com
-#   kris:
-#     username: Kris.Wallsmith
-#     password: changeme
-#     name:     Kris Wallsmith
-#     email:    kris.wallsmith@symfony-project.com
+Category:
+  Category_1:
+    title: Green
+    description: 'The green category'
+    slug: first
+    created_at: '2009-12-05 14:27:59'
+    updated_at: '2009-12-05 14:28:26'
+  Category_2:
+    title: Yellow
+    description: 'Yellow category'
+    slug: yellow
+    created_at: '2009-12-05 14:28:14'
+    updated_at: '2009-12-05 14:28:14'
+  Category_3:
+    title: Blue
+    description: 'The blue category'
+    slug: blue
+    created_at: '2009-12-05 14:28:41'
+    updated_at: '2009-12-05 14:28:41'
 User:
   User_1:
     username: david
-    password: pass
+    password: 779215cd27ef3bbf8ce0e16d031d39cdbe2c7227
+    salt: 59f72f1acd4d5924150ac10e1b3a81eabc2db0f0
     email: david@willou.net
     admin: true
     created_at: '2009-11-29 16:31:31'
     updated_at: '2009-11-29 16:31:31'
     slug: david
+  User_2:
+    username: demo
+    password: 19fea0776da590df6cc099132d767e292c558f9b
+    salt: fb3429d47438ec85306a3bd99953c303570e67a3
+    email: demo@demo.com
+    admin: false
+    created_at: '2009-12-05 14:26:23'
+    updated_at: '2009-12-05 14:26:23'
+    slug: demo
+  User_3:
+    username: invite
+    password: 820f5dfb71c778944193af476ff23e7f1abf0047
+    salt: 9987fd0e474c35ec7a3da2e1cc83dfc2e7c22fc7
+    email: invite@invite.com
+    admin: false
+    created_at: '2009-12-05 14:26:47'
+    updated_at: '2009-12-05 14:26:47'
+    slug: invite
+  User_4:
+    username: admin
+    password: 9a64065b089e45dfcf0c4f27e7d8a26041eef9e4
+    salt: 25a39841312dc4b99fcc8205cc16d6e454f45306
+    email: admin@admin.com
+    admin: true
+    created_at: '2009-12-05 14:27:33'
+    updated_at: '2009-12-05 14:27:33'
+    slug: admin
