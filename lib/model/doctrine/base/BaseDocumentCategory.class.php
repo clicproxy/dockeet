@@ -30,14 +30,23 @@ abstract class BaseDocumentCategory extends sfDoctrineRecord
     {
         $this->setTableName('document_category');
         $this->hasColumn('document_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('category_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
 
+
+        $this->index('document_category_unique', array(
+             'fields' => 
+             array(
+              0 => 'document_id',
+              1 => 'category_id',
+             ),
+             'type' => 'unique',
+             ));
         $this->option('type', 'INNODB');
         $this->option('collate', 'utf8_unicode_ci');
         $this->option('charset', 'utf8');
