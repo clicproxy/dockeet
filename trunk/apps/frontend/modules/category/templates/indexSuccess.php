@@ -4,7 +4,11 @@
 <?php if (null !==  $category && $category->getRawValue() instanceof Category): ?>
   <div id="category_control_box">
     <ul>
-      <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+      <?php if ($sf_user->hasSubscribed($category->getRawValue())): ?>
+        <li><a href="<?php echo url_for('category/unsubscribe?slug=' . $category->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
+      <?php else: ?>
+        <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+      <?php endif; ?>
       <?php if($sf_user->hasCredential('admin')): ?>
         <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
       <?php endif; ?>

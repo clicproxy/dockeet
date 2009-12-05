@@ -95,4 +95,36 @@ class categoryActions extends sfActions
     $this->renderPartial('category_users', array('form' => new UserCategoryAddForm($category)));
     return sfView::NONE;
   }
+  
+ /**
+  * Subscribe to a category
+  * @param sfRequest $request A request object
+  */
+  public function executeSubscribe (sfWebRequest $request)
+  {
+    $category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$category instanceof Category)
+    {
+      throw new sfException("Wrong Category slug.");
+    }
+    
+    $category->subscribe($this->getUser()->getUser());
+    $this->redirect('category/index?slug=' . $category->slug);
+  }
+  
+ /**
+  * Subscribe to a category
+  * @param sfRequest $request A request object
+  */
+  public function executeUnsubscribe (sfWebRequest $request)
+  {
+    $category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$category instanceof Category)
+    {
+      throw new sfException("Wrong Category slug.");
+    }
+    
+    $category->unsubscribe($this->getUser()->getUser());
+    $this->redirect('category/index?slug=' . $category->slug);
+  }
 }
