@@ -106,8 +106,25 @@ class Document extends BaseDocument
     $user_document->delete();
   }
   
+  /**
+   * Return the director where thumbnail of this document are saved
+   * @return string
+   */
   public function getThumbnailDirectory ()
   {
     return sfConfig::get('sf_upload_dir') . '/thumbnail/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+  }
+  
+  /**
+   * Return the url of the Thumbnail
+   * @param integer $width
+   * @param integer $height
+   * @return string
+   */
+  public function getThumbnailUrl ($width, $height = null)
+  {
+    $height = (null === $height) ? $width : $height;
+    $thumbnail_web_directory = str_replace(sfConfig::get('sf_web_dir'), '', $this->getThumbnailDirectory());
+    return $thumbnail_web_directory . $width . 'x' . $height . '_' . $this->file;
   }
 }

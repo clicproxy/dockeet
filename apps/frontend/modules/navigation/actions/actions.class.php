@@ -66,4 +66,21 @@ class navigationActions extends sfActions
   public function executeSecure (sfWebRequest $request)
   {
   }
+  
+  /**
+   * Execute Secure Page
+   * @param sfWebRequest $request
+   */
+  public function executeSetDisplay (sfWebRequest $request)
+  {
+    if (!$request->hasParameter('display') && !in_array($request->getParameter('display'), array('thumbnail', 'mixed', 'detail')))
+    {
+      $this->getUser()->setFlash('error', 'An error occured, display change failed');
+    }
+    else
+    {
+      $this->getUser()->setAttribute('display', $request->getParameter('display'), 'frontend');
+    }
+    $this->redirect($request->getReferer());
+  }
 }
