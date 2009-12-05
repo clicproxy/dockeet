@@ -18,6 +18,7 @@ class DocumentFrontendAddForm extends DocumentForm
   	$this->validatorSchema['file'] = new sfValidatorFile();
   	
   	$this->widgetSchema['categories_list'] = new sfWidgetFormDoctrineChoice(array('model' => 'Category'));
+  	$this->validatorSchema['categories_list'] = new sfValidatorDoctrineChoice(array('model' => 'Category', 'required' => true));
   }
 
   /**
