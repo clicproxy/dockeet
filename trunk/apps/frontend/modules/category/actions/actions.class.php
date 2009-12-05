@@ -36,6 +36,7 @@ class categoryActions extends sfActions
   public function executeEdit(sfWebRequest $request)
   {
   	$category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
+  	$this->forward404If($request->hasParameter('slug') && ! $category instanceof Category, "Wrong category slug");
   	
   	$form = new CategoryFrontendForm($category);
   	if ($request->isMethod('post'))

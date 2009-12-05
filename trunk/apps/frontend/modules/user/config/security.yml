@@ -1,8 +1,8 @@
 all:
   is_secure: true 
   
-indexSuccess:
+index:
   credentials: admin
 
-deleteSuccess:
+delete:
   credentials: admin
