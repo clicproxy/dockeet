@@ -15,18 +15,24 @@ abstract class BaseUserDocumentForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'document_id' => new sfWidgetFormInputHidden(),
-      'user_id'     => new sfWidgetFormInputHidden(),
+      'id'          => new sfWidgetFormInputHidden(),
+      'document_id' => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('Document'), 'add_empty' => false)),
+      'user_id'     => new sfWidgetFormDoctrineChoice(array('model' => $this->getRelatedModelName('User'), 'add_empty' => false)),
       'created_at'  => new sfWidgetFormDateTime(),
       'updated_at'  => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
-      'document_id' => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'document_id', 'required' => false)),
-      'user_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'user_id', 'required' => false)),
+      'id'          => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
+      'document_id' => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('Document'))),
+      'user_id'     => new sfValidatorDoctrineChoice(array('model' => $this->getRelatedModelName('User'))),
       'created_at'  => new sfValidatorDateTime(),
       'updated_at'  => new sfValidatorDateTime(),
     ));
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorDoctrineUnique(array('model' => 'UserDocument', 'column' => array('user_id', 'document_id')))
+    );
 
     $this->widgetSchema->setNameFormat('user_document[%s]');
 

@@ -24,14 +24,23 @@ abstract class BaseDocumentTag extends sfDoctrineRecord
     {
         $this->setTableName('document_tag');
         $this->hasColumn('document_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('tag_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
 
+
+        $this->index('document_tag_unique', array(
+             'fields' => 
+             array(
+              0 => 'document_id',
+              1 => 'tag_id',
+             ),
+             'type' => 'unique',
+             ));
         $this->option('type', 'INNODB');
         $this->option('collate', 'utf8_unicode_ci');
         $this->option('charset', 'utf8');

@@ -30,14 +30,23 @@ abstract class BaseUserDocument extends sfDoctrineRecord
     {
         $this->setTableName('user_document');
         $this->hasColumn('document_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('user_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
 
+
+        $this->index('user_document_unique', array(
+             'fields' => 
+             array(
+              0 => 'user_id',
+              1 => 'document_id',
+             ),
+             'type' => 'unique',
+             ));
         $this->option('type', 'INNODB');
         $this->option('collate', 'utf8_unicode_ci');
         $this->option('charset', 'utf8');

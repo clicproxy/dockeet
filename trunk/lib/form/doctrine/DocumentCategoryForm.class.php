@@ -12,13 +12,13 @@ class DocumentCategoryForm extends BaseDocumentCategoryForm
 {
   public function configure()
   {
-    $this->useFields(array('document_id'));
+    $this->useFields(array('category_id'));
     
-    if ($this->getObject()->Document instanceof Document)
+    if ($this->getObject()->Document instanceof Document && !$this->getObject()->Document->isNew())
     {
-      $query = Doctrine::getTable('Category')->createQuery('c')->where('c.id NOT IN (SELECT d.category_id FROM DocumentCategory d WHERE d.document_id = ?)', $this->getObject()->Document->id);
-      $this->widgetSchema['category_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Category', 'query' => $query));
-      $this->validatorSchema['category_id'] = new sfValidatorDoctrineChoice(array('model' => 'Category', 'query' => $query));
+      $this->widgetSchema['category_id']->setOption('query', Doctrine::getTable('Category')->createQuery('c')->where('c.id NOT IN (SELECT d.category_id FROM DocumentCategory d WHERE d.document_id = ?)', $this->getObject()->Document->id));
+      //$query = ;Doctrine::getTable('Category')->createQuery('c')->where('c.id NOT IN (SELECT d.category_id FROM DocumentCategory d WHERE d.document_id = ?)', $this->getObject()->Document->id)
+      //$this->widgetSchema['category_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'Category', 'query' => $query));
     }
   }
 }

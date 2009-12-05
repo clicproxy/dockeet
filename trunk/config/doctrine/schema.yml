@@ -64,12 +64,16 @@ Category:
 UserCategory:
   columns:
     user_id:
+      notnull: true
       type: integer
-      primary: true
     category_id:
+      notnull: true
       type: integer
-      primary: true
     subscribe: boolean
+  indexes:
+    user_category_unique:
+      fields: [user_id, category_id]
+      type: unique
   relations:
     User:
       local: user_id
@@ -146,11 +150,15 @@ DocumentVersion:
 DocumentCategory:
   columns:
     document_id:
+      notnull: true
       type: integer
-      primary: true
     category_id:
+      notnull: true
       type: integer
-      primary: true
+  indexes:
+    document_category_unique:
+      fields: [document_id, category_id]
+      type: unique
   relations:
     Document:
       local: document_id
@@ -184,20 +192,28 @@ Tag:
 DocumentTag:
   columns:
     document_id:
+      notnull: true
       type: integer
-      primary: true
     tag_id:
+      notnull: true
       type: integer
-      primary: true
+  indexes:
+    document_tag_unique:
+      fields: [document_id, tag_id]
+      type: unique
 
 UserDocument:
   columns:
     document_id:
+      notnull: true
       type: integer
-      primary: true
     user_id:
+      notnull: true
       type: integer
-      primary: true
+  indexes:
+    user_document_unique:
+      fields: [user_id, document_id]
+      type: unique
   relations:
     Document:
       local: document_id

@@ -33,17 +33,26 @@ abstract class BaseUserCategory extends sfDoctrineRecord
     {
         $this->setTableName('user_category');
         $this->hasColumn('user_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('category_id', 'integer', null, array(
+             'notnull' => true,
              'type' => 'integer',
-             'primary' => true,
              ));
         $this->hasColumn('subscribe', 'boolean', null, array(
              'type' => 'boolean',
              ));
 
+
+        $this->index('user_category_unique', array(
+             'fields' => 
+             array(
+              0 => 'user_id',
+              1 => 'category_id',
+             ),
+             'type' => 'unique',
+             ));
         $this->option('type', 'INNODB');
         $this->option('collate', 'utf8_unicode_ci');
         $this->option('charset', 'utf8');
