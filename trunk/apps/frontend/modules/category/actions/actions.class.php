@@ -62,9 +62,9 @@ class categoryActions extends sfActions
   public function executeAddUser (sfWebRequest $request)
   {
     $category = Doctrine::getTable('Category')->find($request->getParameter('category[id]', ''));
-    if (!$category instanceof Document)
+    if (!$category instanceof Category)
     {
-      throw new sfException("Bad ID.");
+      throw new sfException("Wrong Category ID.");
     }
     
     $form = new UserCategoryAddForm($category);
@@ -84,12 +84,12 @@ class categoryActions extends sfActions
   public function executeRemoveUser (sfWebRequest $request)
   {
     $category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
-    if (!$category instanceof Document)
+    if (!$category instanceof Category)
     {
-      throw new sfException("Bad slug.");
+      throw new sfException("Wrong Category slug.");
     }
     
-    $category->unlink('Categories', array($request->getParameter('category_id')), true);
+    $category->unlink('Users', array($request->getParameter('user_id')), true);
     $this->getUser()->setFlash('notice', 'User access successfully removed from category');
 
     $this->renderPartial('category_users', array('form' => new UserCategoryAddForm($category)));
