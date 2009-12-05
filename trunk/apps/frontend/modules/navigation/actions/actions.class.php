@@ -50,4 +50,20 @@ class navigationActions extends sfActions
     $this->getUser()->logout();
     $this->redirect('@homepage');
   }
+  
+  /**
+   * Execute Error404 Page
+   * @param sfWebRequest $request
+   */
+  public function executeError404 (sfWebRequest $request)
+  {
+  }
+  
+  /**
+   * Execute Secure Page
+   * @param sfWebRequest $request
+   */
+  public function executeSecure (sfWebRequest $request)
+  {
+  }
 }
