@@ -41,4 +41,12 @@ all:
     # Login
     login_module:        navigation
     login_action:        login
-     
+    
+    # 404
+    error_404_action:    error404
+    error_404_module:    navigation
+    
+    # Secure
+    secure_action:       secure
+    secure_module:       navigation
+    
