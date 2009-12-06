@@ -14,10 +14,17 @@
       </li>
     <?php endforeach; ?>
   </ul>
+<?php else: ?>
+  <p><?php echo __("No category has this document")?></p>
 <?php endif; ?>
 
 <em><?php echo __('Add in another category'); ?></em>
 <form action="<?php echo url_for('document/addCategory'); ?>" method="post" onsubmit="documentCtrl.addCategory(this); return false;">
-  <?php echo $form; ?>
-  <input type="submit" value="<?php echo __('Add'); ?>">
+  <?php echo $form->renderHiddenFields(); ?>
+  <?php echo $form->renderGlobalErrors(); ?>
+  
+  <?php echo $form['document_category']['category_id']->renderError(); ?>
+  <?php echo $form['document_category']['category_id']->renderLabel(); ?>
+  <?php echo $form['document_category']['category_id']; ?>
+  <input class="submit" type="submit" value="<?php echo __('Add'); ?>">
 </form>

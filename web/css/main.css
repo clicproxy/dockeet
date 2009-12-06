@@ -168,6 +168,9 @@ div#top div#admin_box ul li a {
 div#top div#admin_box ul li a:hover {
 	background-position: bottom left;
 }
+div#content div#sf_content li {
+	list-style: none;
+}
 
 div#content div#left {
 	display: inline;
@@ -395,7 +398,6 @@ div#content div#sf_content div#document_box div.document_detail ul {
 }
 
 div#content div#sf_content div#document_box div.document_detail ul li {
-	list-style: none;
 	font-size: 12px;
 }
 
@@ -420,7 +422,7 @@ div#content div#sf_content form textarea {
 }
 
 div#content div#sf_content form input.submit {
-	margin: 3px;
+	margin: 10px 3px;
 	display: block;
 	font-size: 14px;
 }
@@ -428,6 +430,7 @@ div#content div#sf_content form input.submit {
 div#content div#sf_content form label {
 	display: block;
 	font-size: 14px;
+	margin-top: 5px;
 }
 
 div#content div#sf_content div.control_box {
@@ -439,44 +442,46 @@ div#content div#sf_content div.control_box ul {
 
 div#content div#sf_content div.control_box ul li {
 	display: inline;
-	list-style: none;
 	margin: 0 10px;
 }
 
 div#content div#sf_content div.control_box ul li a {
 	display: inline;
-	list-style: none;
 }
 
 div#content div#sf_content div.control_box ul li a:hover {
 	text-decoration: underline;
 }
 
-div#content div#sf_content div#category_users ul {
+div#content div#sf_content div#category_users ul,
+div#content div#sf_content div#document_categories ul {
 	margin: 10px;
 }
 
-div#content div#sf_content div#category_users ul li {
-	list-style: none;
+div#content div#sf_content div#category_users ul li,
+div#content div#sf_content div#document_categories ul li {
 	font-weight: bold;
 }
 
-div#content div#sf_content div#category_users ul li a {
+div#content div#sf_content div#category_users ul li a,
+div#content div#sf_content div#document_categories ul li a {
 	font-weight: normal;
 }
 
+div#top div#notice, div#top div#error {
+	margin: 10px 0 0 270px;
+}
 
-
-div#notice, div#error {
+div#notice, div#error, ul.error_list {
 	font-style: italic;
-	text-align: center;
+	margin: 0 10px;
 }
 
 div#notice {
 	color: #A9C8DD;
 }
 
-div#error {
+div#error, ul.error_list {
 	color: #E76D75;
 }
 
