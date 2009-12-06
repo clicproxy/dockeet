@@ -26,6 +26,8 @@ class navigationActions extends sfActions
    */
   public function executeLogin (sfWebRequest $request)
   {
+    $this->redirectIf($this->getUser()->isAuthenticated(), '@homepage');
+    
     $form = new UserLoginForm();
     if ($request->isMethod('post'))
     {
