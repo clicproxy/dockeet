@@ -1,11 +1,28 @@
-<h2><?php echo ($form->getObject() instanceof Category) ? __('Category') . ' ' . $form->getObject()->title :  __('Add a category'); ?></h2>
+<div id="title_box">
+  <div id="title_left"></div>
+  <div id="title_content">
+    <h2><?php echo ($form->getObject()->isNew()) ? __('New category') . ' ' . $form->getObject()->title :  __('Add a category'); ?></h2>
+  </div>
+  <div id="title_right"></div>
+</div>
 
-<form method="post">
-	<?php echo $form; ?>
-	<input type="submit" value="<?php echo __('Save'); ?>">
+
+<form action="<?php echo url_for('category/edit'); ?>" method="post">
+	<?php echo $form->renderHiddenFields(); ?>
+	<?php echo $form->renderGlobalErrors(); ?>
+  
+	<?php echo $form['title']->renderError(); ?>
+	<?php echo $form['title']->renderLabel(); ?>
+	<?php echo $form['title']; ?>
+  
+	<?php echo $form['description']->renderError(); ?>
+	<?php echo $form['description']->renderLabel(); ?>
+	<?php echo $form['description']; ?>
+  
+	<input class="submit" type="submit" value="<?php echo __('Save'); ?>">
 </form>
 
-<?php if($sf_user->hasCredential('admin')): ?>
+<?php if($sf_user->hasCredential('admin') && !$form->getObject()->isNew()): ?>
   <div id="category_users">
     <?php include_partial('category_users', array('form' => new UserCategoryAddForm($form->getObject()))); ?>
   </div>

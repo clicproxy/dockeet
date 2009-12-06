@@ -79,5 +79,6 @@
       </ul>
     </div>
   <?php endif; ?>
+  
+  <?php include_partial('navigation/notice'); ?>
 </div>
-<?php include_partial('navigation/notice'); ?>
