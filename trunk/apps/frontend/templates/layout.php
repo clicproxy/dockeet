@@ -10,11 +10,14 @@
   </head>
   <body>
     <?php include_partial('navigation/top'); ?>
-    
-    <div id="sf_content">
+      
+    <div id="content" class="column">
       <?php include_partial('navigation/left');?>
-      <?php echo $sf_content ?>
+      <div id="sf_content">
+        <?php echo $sf_content ?>
+      </div>
+      <div class="clear"></div>
     </div>
-    
+    <?php include_partial('navigation/foot'); ?>
   </body>
 </html>
