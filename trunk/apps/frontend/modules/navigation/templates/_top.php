@@ -26,7 +26,10 @@
       <div id="user_tab">
         <div id="user_tab_left"></div>
         <div id="user_tab_content">
-          <strong><?php echo $sf_user->getUser()->username; ?></strong> <?php echo __('is connected'); ?>
+          <a href="<?php echo url_for("user/edit?username=" . $sf_user->getUser()->username); ?>">
+            <strong><?php echo $sf_user->getUser()->username; ?></strong>
+          </a> <?php echo __('is connected'); ?>
+          - <a href="<?php echo url_for('navigation/logout');?>"><?php echo __('Logout'); ?></a>
         </div>
         <div id="user_tab_right"></div>
       </div>
@@ -42,7 +45,7 @@
       <div id="user_tab">
         <div id="user_tab_left"></div>
         <div id="user_tab_content">
-          <a href="#"><?php echo __('login')?></a>
+          <a href="<?php echo url_for('navigation/login'); ?>"><?php echo __('login')?></a>
         </div>
         <div id="user_tab_right"></div>
       </div>

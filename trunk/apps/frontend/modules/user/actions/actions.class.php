@@ -29,7 +29,7 @@ class userActions extends sfActions
    */
   public function executeEdit (sfWebRequest $request)
   {
-    $user = Doctrine::getTable('User')->find($request->getParameter('id'));
+    $user = Doctrine::getTable('User')->findOneBy('username', $request->getParameter('username'));
     
     // Only for admin and the user himself
     $this->redirectUnless($this->getUser()->hasCredential('admin') || $user === $this->getUser()->getUser(), sfConfig::get('sf_secure_module') . '/' . sfConfig::get('sf_secure_action'));
@@ -56,7 +56,7 @@ class userActions extends sfActions
    */
   public function executeDelete (sfWebRequest $request)
   {
-    $user = Doctrine::getTable('User')->find($request->getParameter('id'));
+    $user = Doctrine::getTable('User')->findOneBy('username', $request->getParameter('username'));
     $this->forward404Unless($user instanceof User, 'Incorrect user ID.');
     
     $user->delete();
