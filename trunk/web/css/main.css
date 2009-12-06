@@ -89,6 +89,7 @@ div#top div#search_box input#q {
 	width:130px;
 	margin:4px 0 0 3px;
 	float: left;
+	border: none;
 }
 
 div#top div#search_box a {
@@ -170,6 +171,10 @@ div#top div#admin_box ul li a:hover {
 }
 div#content div#sf_content li {
 	list-style: none;
+}
+
+div#content div#sf_content a:hover {
+  color: #A9C8DD
 }
 
 div#content div#left {
@@ -416,11 +421,6 @@ div#content div#sf_content form {
 	margin: 5px;
 }
 
-div#content div#sf_content form input[type=text],
-div#content div#sf_content form textarea {
-	width: 230px;
-}
-
 div#content div#sf_content form input.submit {
 	margin: 10px 3px;
 	display: block;
@@ -466,6 +466,11 @@ div#content div#sf_content div#document_categories ul li {
 div#content div#sf_content div#category_users ul li a,
 div#content div#sf_content div#document_categories ul li a {
 	font-weight: normal;
+}
+
+div#content div#sf_content table tr th,
+div#content div#sf_content table tr td {
+	padding: 0 10px;
 }
 
 div#top div#notice, div#top div#error {
