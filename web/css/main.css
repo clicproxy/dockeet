@@ -430,6 +430,43 @@ div#content div#sf_content form label {
 	font-size: 14px;
 }
 
+div#content div#sf_content div.control_box {
+}
+
+div#content div#sf_content div.control_box ul {
+	margin: 0 0 5px 5px;
+}
+
+div#content div#sf_content div.control_box ul li {
+	display: inline;
+	list-style: none;
+	margin: 0 10px;
+}
+
+div#content div#sf_content div.control_box ul li a {
+	display: inline;
+	list-style: none;
+}
+
+div#content div#sf_content div.control_box ul li a:hover {
+	text-decoration: underline;
+}
+
+div#content div#sf_content div#category_users ul {
+	margin: 10px;
+}
+
+div#content div#sf_content div#category_users ul li {
+	list-style: none;
+	font-weight: bold;
+}
+
+div#content div#sf_content div#category_users ul li a {
+	font-weight: normal;
+}
+
+
+
 div#notice, div#error {
 	font-style: italic;
 	text-align: center;
