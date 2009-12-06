@@ -125,6 +125,11 @@ class Document extends BaseDocument
   {
     $height = (null === $height) ? $width : $height;
     $thumbnail_web_directory = str_replace(sfConfig::get('sf_web_dir'), '', $this->getThumbnailDirectory());
-    return $thumbnail_web_directory . $width . 'x' . $height . '_' . $this->file;
+    $thumbnail_url = $thumbnail_web_directory . $width . 'x' . $height . '_' . $this->file;
+    if (!file_exists(sfConfig::get('sf_web_dir') . $thumbnail_url) || !is_readable(sfConfig::get('sf_web_dir') . $thumbnail_url))
+    {
+      $thumbnail_url = '/images/content/no_thumbnail.png';
+    }
+    return $thumbnail_url;
   }
 }

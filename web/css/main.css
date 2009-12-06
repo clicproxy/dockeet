@@ -174,7 +174,7 @@ div#content div#left {
 	display: inline;
 	float: left;
 	width: 230px;
-	padding:10px; 
+	padding:0 10px; 
 }
 
 div#content div#left div strong {
@@ -230,11 +230,192 @@ div#content div#left div.left_box_foot {
 }
 
 div#content div#sf_content {
+	position: relative;
 	display: inline;
 	float: right;
-	width: 700px;
+	width: 680px;
+	padding: 0 10px;
 }
 
+div#content div#sf_content div#title_box {
+	height: 43px;
+	margin: 0 auto;
+}
+
+div#content div#sf_content div#title_box div#title_left,
+div#content div#sf_content div#title_box div#title_content,
+div#content div#sf_content div#title_box div#title_right {
+	height: 43px;	
+	display: inline;
+	float: left;
+}
+
+div#content div#sf_content div#title_box div#title_left {
+	background: transparent url("../images/content/title_left.png") no-repeat top right;
+	width: 7px;
+}
+
+div#content div#sf_content div#title_box div#title_right {
+	background: transparent url("../images/content/title_right.png") no-repeat top left;
+	width: 7px;
+}
+
+div#content div#sf_content div#title_box div#title_content {
+  background: transparent url("../images/content/title_repeat.png") repeat-x top;
+	padding: 5px;
+	height: 33px;
+	width: 656px;
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box {
+	display: block;
+	width: 87px;
+	height: 27px;
+	position: absolute;
+	top: 8px;
+	left: 450px;
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li {
+	display: inline;
+	float: left;
+	width: 29px;
+	height: 27px;
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a {
+	display: block;
+	height: 27px;
+	width: 29px;
+	background-position: top center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a.current,
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a:hover {
+	background-position: bottom center;
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a span {
+	display: none;
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a#display_thumbnail {
+	background-image: url("../images/content/option_left.png");
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a#display_mixed {
+	background-image: url("../images/content/option_center.png");
+}
+
+div#content div#sf_content div#title_box div#title_content ul#document_view_box li a#display_detail {
+	background-image: url("../images/content/option_right.png");
+}
+
+div#content div#sf_content div#title_box div#sort_box {
+	height: 25px;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+}
+
+div#content div#sf_content div#document_box {
+	margin: 10px 0;
+}
+
+div#content div#sf_content div#document_box div.document_thumbnail {
+	display: inline;
+	float: left;
+	width: 129px;
+	height: 142px;
+	background-color: transparent;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 3px;
+}
+
+div#content div#sf_content div#document_box div.document_thumbnail a {
+	display: block;
+	width: 129px;
+	height: 142px;
+	background: transparent url("../images/content/img_box.png") no-repeat top left;
+	position: relative;
+}
+
+div#content div#sf_content div#document_box div.document_thumbnail a span.updated_at {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	font-size:12px;
+}
+
+div#content div#sf_content div#document_box div.document_thumbnail a span.title {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	font-size:12px;
+	padding: 5px;
+}
+
+div#content div#sf_content div#document_box div.document_mixed {
+	margin: 10px;
+}
+
+div#content div#sf_content div#document_box div.document_mixed img {
+	float: left;
+	margin: 5px;
+}
+
+div#content div#sf_content div#document_box div.document_mixed a {
+	font-weight: bold;
+}
+
+div#content div#sf_content div#document_box div.document_mixed p.updated_at {
+	font-style: italic;
+	font-size: 12px;
+	margin-bottom: 5px;
+}
+
+div#content div#sf_content div#document_box div.document_detail {
+	margin: 5px;
+}
+
+div#content div#sf_content div#document_box div.document_detail a {
+	font-weight: bold;
+}
+
+div#content div#sf_content div#document_box div.document_detail ul {
+	margin-left: 10px;
+}
+
+div#content div#sf_content div#document_box div.document_detail ul li {
+	list-style: none;
+	font-size: 12px;
+}
+
+
+
+div#content div#sf_content div#document_box span.pager_count {
+	display: block;
+	clear: both; 
+	font-style: italic;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+	
 div#foot {
 	width: 940px;
 	padding: 10px;
