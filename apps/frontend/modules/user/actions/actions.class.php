@@ -29,10 +29,10 @@ class userActions extends sfActions
    */
   public function executeEdit (sfWebRequest $request)
   {
-    $user = Doctrine::getTable('User')->findOneBy('username', $request->getParameter('username'));
+    $user = Doctrine::getTable('User')->findOneBy('username', $request->getParameter('username', ''));
     
     // Only for admin and the user himself
-    $this->redirectUnless($this->getUser()->hasCredential('admin') || $user === $this->getUser()->getUser(), sfConfig::get('sf_secure_module') . '/' . sfConfig::get('sf_secure_action'));
+    $this->redirectUnless($this->getUser()->hasCredential('admin') || ($user instanceof User && $user === $this->getUser()->getUser()), sfConfig::get('sf_secure_module') . '/' . sfConfig::get('sf_secure_action'));
     
     if ($this->getUser()->hasCredential('admin'))
       $form = new UserAdminForm($user);

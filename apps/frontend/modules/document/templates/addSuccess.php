@@ -1,7 +1,7 @@
 <div id="title_box">
   <div id="title_left"></div>
   <div id="title_content">
-    <h2><?php echo __('Add a document'); ?></h2>
+    <h2><?php echo __('New document'); ?></h2>
   </div>
   <div id="title_right"></div>
 </div>
