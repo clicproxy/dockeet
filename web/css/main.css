@@ -1,0 +1,235 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+
+body {
+	background: #F7F7F7 url("../images/tileheader_body.png") repeat-x top;
+	font-family: Arial,Helvetica,sans-serif;
+	color: #6A6A6A;
+	font-size: 16px;
+}
+
+a {
+	color: #6A6A6A;
+	text-decoration: none;
+}
+
+div.clear {
+	clear: both;
+}
+
+div.column {
+	width: 960px;
+	margin: 0 auto;
+	background-color: #FFFFFF;
+	padding-bottom: 10px;
+}
+
+div#top {
+	position: relative;
+	background: #FFFFFF url("../images/tileheader_content.png") repeat-x top;
+}
+
+div#top div#title_box {
+	padding: 15px 0 0 30px;
+}
+
+div#top div#title_box h1 {
+	background: url("../images/logo.png") no-repeat top left;
+	display: block;
+	width: 135px;
+	height: 29px;
+}
+
+div#top div#title_box h1 span {
+	display: none;
+}
+
+div#top div#menu_box {
+	position: absolute;
+	left: 250px;
+	top: 0;
+}
+
+div#top div#menu_box ul li {
+	list-style: none;
+	display: inline;
+	float: left;
+}
+
+div#top div#menu_box ul li a {
+	display: block;
+	width: 148px;
+	height: 50px;
+	padding-top: 17px;
+	text-align: center;
+	
+}
+
+div#top div#menu_box ul li a:hover,
+div#top div#menu_box ul li a.current {
+	background: url("../images/titre_header_hover.png") no-repeat top left;
+}
+
+div#top div#search_box {
+	position: absolute;
+	top: 15px;
+	left: 700px;
+	width: 169px;
+	height: 24px;
+	background: url("../images/input_search.png") no-repeat top left;
+}
+
+div#top div#search_box input#q {
+	background: transparent;
+	height:20px;
+	width:140px;
+	margin:4px 0 0 3px;
+}
+
+div#top div#search_box a {
+	background: transparent url("../images/icon_search.png") no-repeat top left;
+	display: block;
+	width: 20px;
+	height: 20px;
+	float: right;
+	margin: 3px 3px 0 0;
+}
+
+div#top div#search_box a span {
+	display: none;
+}
+
+div#top div#user_box {
+	position: absolute;
+	top: 55px;
+	left: 650px;
+}
+
+div#top div#user_box div#user_panel {
+	display: none;
+}
+
+div#top div#user_box div#user_tab {
+}
+
+div#top div#user_box div#user_tab div#user_tab_left,
+div#top div#user_box div#user_tab div#user_tab_content,
+div#top div#user_box div#user_tab div#user_tab_right {
+	height: 34px;
+	display: inline;
+	float: left;
+}
+
+div#top div#user_box div#user_tab div#user_tab_left {
+	background: transparent url("../images/tab_left.png") no-repeat top right;
+	width: 6px;
+}
+
+div#top div#user_box div#user_tab div#user_tab_right {
+	background: transparent url("../images/tab_right.png") no-repeat top right;
+	width: 6px;
+}
+
+div#top div#user_box div#user_tab div#user_tab_content {
+	height: 27px;
+	background: transparent url("../images/tab_tile.png") repeat-x top;
+	white-space: nowrap;
+	font-size: 14px;
+	padding: 7px 5px 0;
+}
+
+div#top div#admin_box {
+	margin: 50px 0 0 20px;
+	height: 50px;
+}
+
+div#top div#admin_box ul li {
+	display: inline;
+	float: left;
+	height: 50px;
+	margin: 0 5px;
+}
+
+div#top div#admin_box ul li a {
+	display: block;
+	width: 119px;
+	height: 30px;
+	background: transparent url("../images/add_btn.png") no-repeat top left;
+	padding: 10px 5px;
+	text-align: center;
+	line-height: .9em;
+}
+
+div#top div#admin_box ul li a:hover {
+	background-position: bottom left;
+}
+
+div#content div#left {
+	display: inline;
+	float: left;
+	width: 230px;
+	padding:10px; 
+}
+
+div#content div#left div strong {
+	display: block;
+	background: transparent url("../images/leftbar/bgd_titre.png") no-repeat top left;
+	width: 212px;
+	height: 34px;
+	padding: 10px 0 0 10px
+}
+
+div#content div#left div ul {
+	background: transparent url("../images/leftbar/bgd_repeat.png") repeat-y left;
+	width: 222px;
+}
+
+div#content div#left div ul li {
+	list-style: none;
+}
+
+div#content div#left div ul li a {
+	display: block;
+	padding: 2px;
+	width: 200px;
+	margin: 0 auto;
+	border-bottom: 1px solid #B2B2B2;
+	border-top: 1px solid #FFFFFF;
+	height: 20px;
+}
+
+div#content div#left div ul li a.first {
+	border-top: none;
+}
+
+div#content div#left div ul li a.last {
+	border-bottom: none;
+}
+
+div#content div#left div ul li a span {
+	display: block;
+	float: right;
+	width: 36px;
+	height: 19px;
+	background: transparent url("../images/leftbar/bgd_cat_nb.png") no-repeat top left;
+	text-align: center;
+	font-size: 12px;
+	padding-top: 2px;
+}
+
+div#content div#left div.left_box_foot {
+	width: 222px;
+	height: 7px;
+	background: transparent url("../images/leftbar/bgd_bottom.png") no-repeat top left;;
+} 
+
+div#content div#sf_content {
+	display: inline;
+	float: right;
+	width: 700px;
+}
