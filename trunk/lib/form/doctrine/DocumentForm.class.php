@@ -34,7 +34,13 @@ class DocumentForm extends BaseDocumentForm
 
       if ($this->getObject()->isNew() || in_array($this->values['title'], array(null, ''), true))
       {
-        $this->values['title'] = sfInflector::humanize($file->getOriginalName());
+        $title = sfInflector::humanize($file->getOriginalName());
+        $this->values['title'] = $title;
+        $i = 0;
+        while (0 !== Doctrine::getTable('Document')->createQuery('d')->where('d.title = ?', $this->values['title'])->count())
+        {
+          $this->values['title'] = $title . ' (' . ++$i .')';
+        }
       }
       $this->getObject()->mime_type = $file->getType();
       $this->getObject()->size = $file->getSize(); 
@@ -57,7 +63,7 @@ class DocumentForm extends BaseDocumentForm
       
       $file->save($path . '/' . $filename);
       
-      if (in_array($file->getType(), array('image/jpeg', 'image/png', 'image/gif')))
+      if (in_array($file->getType(), array('image/jpeg', 'image/png', 'image/gif', 'application/pdf')))
       {
         if (!is_dir($this->getObject()->getThumbnailDirectory()))
         {
@@ -69,9 +75,16 @@ class DocumentForm extends BaseDocumentForm
           throw new sfException("Write directory access denied");
         }
         
-        $thumbnail = new sfThumbnail(125, 125);
+        $adapterOptions = array();
+        if (in_array($file->getType(), array('application/pdf')))
+        {
+          $adapterOptions['extract'] = 1;
+        }
+        //$maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array()
+        $thumbnail = new sfThumbnail(125, 125, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
+        
         $thumbnail->loadFile($path . '/' . $filename);
-        $thumbnail->save($this->getObject()->getThumbnailDirectory() . '125x125_' . $filename);
+        $thumbnail->save(sfConfig::get('sf_web_dir') . $this->getObject()->getThumbnailUrl(125, 125, true), 'image/png');
       }
     }
   }
