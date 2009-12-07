@@ -121,12 +121,13 @@ class Document extends BaseDocument
    * @param integer $height
    * @return string
    */
-  public function getThumbnailUrl ($width, $height = null)
+  public function getThumbnailUrl ($width, $height = null, $dont_check = false)
   {
     $height = (null === $height) ? $width : $height;
     $thumbnail_web_directory = str_replace(sfConfig::get('sf_web_dir'), '', $this->getThumbnailDirectory());
     $thumbnail_url = $thumbnail_web_directory . $width . 'x' . $height . '_' . $this->file;
-    if (!file_exists(sfConfig::get('sf_web_dir') . $thumbnail_url) || !is_readable(sfConfig::get('sf_web_dir') . $thumbnail_url))
+    $thumbnail_url = substr($thumbnail_url, 0, strrpos($thumbnail_url, '.')) . '.png';
+    if (!$dont_check && (!file_exists(sfConfig::get('sf_web_dir') . $thumbnail_url) || !is_readable(sfConfig::get('sf_web_dir') . $thumbnail_url)))
     {
       $thumbnail_url = '/images/content/no_thumbnail.png';
     }
