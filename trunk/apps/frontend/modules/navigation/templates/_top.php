@@ -2,12 +2,19 @@
   <div id="title_box">
     <h1><span><?php echo __('Ressources management'); ?></span></h1>
   </div>
-  
   <div id="menu_box">
     <ul>
-      <li><a href="<?php echo url_for('@homepage'); ?>"><?php echo __('Documents'); ?></a></li>
+      <li>
+        <a href="<?php echo url_for('@homepage'); ?>" <?php if(in_array($sf_request->getParameter('module'), array('document', 'category'))): ?>class="current"<?php endif;?>>
+          <?php echo __('Documents'); ?>
+        </a>
+      </li>
       <?php if($sf_user->hasCredential('admin')): ?>
-        <li><a href="<?php echo url_for('user/index'); ?>"><?php echo __('Users'); ?></a></li>
+        <li>
+          <a href="<?php echo url_for('user/index'); ?>" <?php if(in_array($sf_request->getParameter('module'), array('user'))): ?>class="current"<?php endif;?>>
+            <?php echo __('Users'); ?>
+          </a>
+        </li>
       <?php endif; ?>
     </ul>
   </div>
