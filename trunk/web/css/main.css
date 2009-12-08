@@ -526,7 +526,9 @@ div#content div#sf_content div#document_info ul li label {
 	text-align: left;
 }
 
-
+ul.pager li {
+	display: inline;
+}
 
 
 	
