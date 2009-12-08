@@ -14,6 +14,7 @@
  * @property Doctrine_Collection $Documents
  * @property Doctrine_Collection $UserCategory
  * @property Doctrine_Collection $UserDocument
+ * @property Doctrine_Collection $ApiAccess
  * 
  * @method string              getUsername()     Returns the current record's "username" value
  * @method string              getPassword()     Returns the current record's "password" value
@@ -24,6 +25,7 @@
  * @method Doctrine_Collection getDocuments()    Returns the current record's "Documents" collection
  * @method Doctrine_Collection getUserCategory() Returns the current record's "UserCategory" collection
  * @method Doctrine_Collection getUserDocument() Returns the current record's "UserDocument" collection
+ * @method Doctrine_Collection getApiAccess()    Returns the current record's "ApiAccess" collection
  * @method User                setUsername()     Sets the current record's "username" value
  * @method User                setPassword()     Sets the current record's "password" value
  * @method User                setSalt()         Sets the current record's "salt" value
@@ -33,6 +35,7 @@
  * @method User                setDocuments()    Sets the current record's "Documents" collection
  * @method User                setUserCategory() Sets the current record's "UserCategory" collection
  * @method User                setUserDocument() Sets the current record's "UserDocument" collection
+ * @method User                setApiAccess()    Sets the current record's "ApiAccess" collection
  * 
  * @package    dockeet
  * @subpackage model
@@ -92,6 +95,10 @@ abstract class BaseUser extends sfDoctrineRecord
              'foreign' => 'user_id'));
 
         $this->hasMany('UserDocument', array(
+             'local' => 'id',
+             'foreign' => 'user_id'));
+
+        $this->hasMany('ApiAccess', array(
              'local' => 'id',
              'foreign' => 'user_id'));
 

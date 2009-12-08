@@ -228,3 +228,23 @@ UserDocument:
       foreign: id
       onDelete: cascade
       onUpdate: cascade
+
+ApiAccess:
+  columns:
+    api_key:
+      notnull: true
+      type: string(255)
+    api_secret:
+      notnull: true
+      type: string(255)
+    user_id: integer
+  indexes:
+    api_key_unique:
+      fields: [api_key]
+      type: unique
+  relations:
+    User:
+      local: user_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
