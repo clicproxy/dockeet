@@ -108,6 +108,8 @@ abstract class BaseUser extends sfDoctrineRecord
              array(
               0 => 'username',
              ),
+             'unique' => true,
+             'canUpdate' => true,
              ));
         $this->actAs($timestampable0);
         $this->actAs($sluggable0);

@@ -122,6 +122,8 @@ abstract class BaseDocument extends sfDoctrineRecord
              array(
               0 => 'title',
              ),
+             'unique' => true,
+             'canUpdate' => true,
              ));
         $searchable0 = new Doctrine_Template_Searchable(array(
              'fields' => 
