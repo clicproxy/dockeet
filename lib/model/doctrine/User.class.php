@@ -46,4 +46,27 @@ class User extends BaseUser
   {
     return (sha1($this->salt . $password) === $this->password);
   }
+  
+  /**
+   * 
+   * @param Category $category
+   */
+  public function getDocumentsUpdatesQuery (Category $category = null)
+  {
+    $document_query = Doctrine::getTable('Document')->createQuery('d');
+    
+    if (null !== $category)
+    {
+      $document_query->leftJoin('d.Categories c')->where('c.id = ?', $category->id);
+      $document_query->leftJoin('c.UserCategory u ON u.category_id = c.id')->andWhere('u.subscribe = 1')->andWhere('u.user_id = ?', $this->id);
+    }
+    else
+    {
+      $document_query->leftJoin('d.Users u')->where('u.username = ?', $this->username);
+    }
+    $document_query->orderBy('d.title');
+    $document_query->andWhere('TO_DAYS(NOW()) - TO_DAYS(d.updated_at) <= 1');
+    
+    return $document_query;
+  }
 }

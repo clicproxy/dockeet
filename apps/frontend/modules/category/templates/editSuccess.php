@@ -7,7 +7,7 @@
 </div>
 
 
-<form action="<?php echo url_for('category/edit'); ?>" method="post">
+<form action="<?php echo url_for('category/edit' . ($form->getObject()->isNew() ? '' : '?slug=' . $form->getObject()->slug)); ?>" method="post">
 	<?php echo $form->renderHiddenFields(); ?>
 	<?php echo $form->renderGlobalErrors(); ?>
   

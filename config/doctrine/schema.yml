@@ -10,6 +10,8 @@ User:
     Timestampable:
     Sluggable:
       fields: [username]
+      unique: true
+      canUpdate: true
   columns:
     username:
       notnull: true
@@ -42,6 +44,8 @@ Category:
   actAs:
     Sluggable:
       fields: [title]
+      unique: true
+      canUpdate: true
     Timestampable:
   columns:
     title:
@@ -91,6 +95,8 @@ Document:
     Timestampable:
     Sluggable:
       fields: [title]
+      unique: true
+      canUpdate: true
     Searchable:
       fields: [title, description, file]
   columns:
@@ -180,6 +186,8 @@ Tag:
     Timestampable:
     Sluggable:
       fields: [title]
+      unique: true
+      canUpdate: true
   columns:
     title:
       notnull: true

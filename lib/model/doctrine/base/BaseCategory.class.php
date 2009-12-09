@@ -76,6 +76,8 @@ abstract class BaseCategory extends sfDoctrineRecord
              array(
               0 => 'title',
              ),
+             'unique' => true,
+             'canUpdate' => true,
              ));
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($sluggable0);

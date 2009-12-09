@@ -49,6 +49,8 @@ abstract class BaseTag extends sfDoctrineRecord
              array(
               0 => 'title',
              ),
+             'unique' => true,
+             'canUpdate' => true,
              ));
         $this->actAs($timestampable0);
         $this->actAs($sluggable0);
