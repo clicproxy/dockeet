@@ -26,6 +26,10 @@
   <?php echo $form['email']->renderLabel(); ?>
   <?php echo $form['email']; ?>
   
+  <?php echo $form['culture']->renderError(); ?>
+  <?php echo $form['culture']->renderLabel(); ?>
+  <?php echo $form['culture']; ?>
+  
   <?php echo $form['admin']->renderError(); ?>
   <?php echo $form['admin']->renderLabel(); ?>
   <?php echo $form['admin']; ?>
