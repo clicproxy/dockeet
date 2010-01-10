@@ -10,6 +10,7 @@
  * @property string $salt
  * @property string $email
  * @property boolean $admin
+ * @property string $culture
  * @property Doctrine_Collection $Categories
  * @property Doctrine_Collection $Documents
  * @property Doctrine_Collection $UserCategory
@@ -21,6 +22,7 @@
  * @method string              getSalt()         Returns the current record's "salt" value
  * @method string              getEmail()        Returns the current record's "email" value
  * @method boolean             getAdmin()        Returns the current record's "admin" value
+ * @method string              getCulture()      Returns the current record's "culture" value
  * @method Doctrine_Collection getCategories()   Returns the current record's "Categories" collection
  * @method Doctrine_Collection getDocuments()    Returns the current record's "Documents" collection
  * @method Doctrine_Collection getUserCategory() Returns the current record's "UserCategory" collection
@@ -31,6 +33,7 @@
  * @method User                setSalt()         Sets the current record's "salt" value
  * @method User                setEmail()        Sets the current record's "email" value
  * @method User                setAdmin()        Sets the current record's "admin" value
+ * @method User                setCulture()      Sets the current record's "culture" value
  * @method User                setCategories()   Sets the current record's "Categories" collection
  * @method User                setDocuments()    Sets the current record's "Documents" collection
  * @method User                setUserCategory() Sets the current record's "UserCategory" collection
@@ -69,7 +72,13 @@ abstract class BaseUser extends sfDoctrineRecord
              'length' => '255',
              ));
         $this->hasColumn('admin', 'boolean', null, array(
+             'notnull' => true,
              'type' => 'boolean',
+             'default' => false,
+             ));
+        $this->hasColumn('culture', 'string', 5, array(
+             'type' => 'string',
+             'length' => '5',
              ));
 
         $this->option('type', 'INNODB');

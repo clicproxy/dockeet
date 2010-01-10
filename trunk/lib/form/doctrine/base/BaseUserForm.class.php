@@ -8,7 +8,7 @@
  * @package    dockeet
  * @subpackage form
  * @author     Your name here
- * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24051 2009-11-16 21:08:08Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
  */
 abstract class BaseUserForm extends BaseFormDoctrine
 {
@@ -21,6 +21,7 @@ abstract class BaseUserForm extends BaseFormDoctrine
       'salt'            => new sfWidgetFormInputText(),
       'email'           => new sfWidgetFormInputText(),
       'admin'           => new sfWidgetFormInputCheckbox(),
+      'culture'         => new sfWidgetFormInputText(),
       'created_at'      => new sfWidgetFormDateTime(),
       'updated_at'      => new sfWidgetFormDateTime(),
       'slug'            => new sfWidgetFormInputText(),
@@ -35,6 +36,7 @@ abstract class BaseUserForm extends BaseFormDoctrine
       'salt'            => new sfValidatorString(array('max_length' => 255)),
       'email'           => new sfValidatorString(array('max_length' => 255)),
       'admin'           => new sfValidatorBoolean(array('required' => false)),
+      'culture'         => new sfValidatorString(array('max_length' => 5, 'required' => false)),
       'created_at'      => new sfValidatorDateTime(),
       'updated_at'      => new sfValidatorDateTime(),
       'slug'            => new sfValidatorString(array('max_length' => 255, 'required' => false)),

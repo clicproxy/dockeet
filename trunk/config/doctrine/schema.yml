@@ -27,7 +27,10 @@ User:
       notnull: true
       type: string(255)
     admin:
+      notnull: true
       type: boolean
+      default: false
+    culture: string(5)
   relations:
     Categories:
       class: Category
