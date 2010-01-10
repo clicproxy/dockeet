@@ -133,4 +133,17 @@ class Document extends BaseDocument
     }
     return $thumbnail_url;
   }
+  
+  /**
+   * Return the name of the file downloaded
+   * @param Version $version
+   * @return string
+   */
+  public function getDownloadFilename (Version $version = null)
+  {
+    $filename = Doctrine_Inflector::urlize($this->title);
+    $file = $version instanceof Version ? $version->file : $this->file;
+    $filename .= substr($file, strrpos($file, '.'));
+    return $filename;
+  }
 }
