@@ -214,6 +214,8 @@ class documentActions extends sfActions
     }
     
     $document->subscribe($this->getUser()->getUser());
+    $this->getUser()->setFlash('notice', 'Document subscription successfully saved');
+    
     $this->redirect('document/index?slug=' . $document->slug);
   }
   
@@ -230,6 +232,8 @@ class documentActions extends sfActions
     }
     
     $document->unsubscribe($this->getUser()->getUser());
+    $this->getUser()->setFlash('notice', 'Document unsubscription successfully saved');
+    
     $this->redirect('document/index?slug=' . $document->slug);
   }
 }
