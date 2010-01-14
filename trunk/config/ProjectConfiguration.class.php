@@ -9,6 +9,5 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     $this->enablePlugins('sfDoctrinePlugin');
     $this->enablePlugins('sfThumbnailPlugin');
-    $this->enablePlugins('sfWidgetFormInputSWFUploadPlugin');
   }
 }
