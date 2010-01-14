@@ -31,6 +31,7 @@ class documentActions extends sfActions
   */
   public function executeAdd(sfWebRequest $request)
   {
+    $this->logMessage('########### ' . var_export($request->getParameterHolder()->getAll(), true));
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slud', ''));
     
   	$form = new DocumentFrontendAddForm($document);
