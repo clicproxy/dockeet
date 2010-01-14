@@ -22,6 +22,7 @@
     </ul>
     
     <div id="sort_box">
+      <?php echo __('Sort by'); ?>
       <form action="<?php echo url_for('navigation/setOrder'); ?>" method="get">
         <select onchange="jQuery(jQuery(this).parent()).submit(); return false;" name="order_by">
           <option value="updated_at" <?php echo 0 === strpos($sf_user->getAttribute('order_by', 'updated_at DESC', 'frontend'), 'updated_at') ? 'selected="selected"' : ''; ?>>
