@@ -7,11 +7,14 @@
  * 
  * @property string $title
  * @property Doctrine_Collection $Documents
+ * @property Doctrine_Collection $DocumentTag
  * 
- * @method string              getTitle()     Returns the current record's "title" value
- * @method Doctrine_Collection getDocuments() Returns the current record's "Documents" collection
- * @method Tag                 setTitle()     Sets the current record's "title" value
- * @method Tag                 setDocuments() Sets the current record's "Documents" collection
+ * @method string              getTitle()       Returns the current record's "title" value
+ * @method Doctrine_Collection getDocuments()   Returns the current record's "Documents" collection
+ * @method Doctrine_Collection getDocumentTag() Returns the current record's "DocumentTag" collection
+ * @method Tag                 setTitle()       Sets the current record's "title" value
+ * @method Tag                 setDocuments()   Sets the current record's "Documents" collection
+ * @method Tag                 setDocumentTag() Sets the current record's "DocumentTag" collection
  * 
  * @package    dockeet
  * @subpackage model
@@ -42,6 +45,10 @@ abstract class BaseTag extends sfDoctrineRecord
              'refClass' => 'DocumentTag',
              'local' => 'tag_id',
              'foreign' => 'document_id'));
+
+        $this->hasMany('DocumentTag', array(
+             'local' => 'id',
+             'foreign' => 'tag_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $sluggable0 = new Doctrine_Template_Sluggable(array(

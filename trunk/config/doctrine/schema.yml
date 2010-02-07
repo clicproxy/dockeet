@@ -215,6 +215,17 @@ DocumentTag:
     document_tag_unique:
       fields: [document_id, tag_id]
       type: unique
+  relations:
+    Document:
+      local: document_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
+    Tag:
+      local: tag_id
+      foreign: id
+      onDelete: cascade
+      onUpdate: cascade
 
 UserDocument:
   columns:

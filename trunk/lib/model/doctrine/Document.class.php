@@ -146,4 +146,14 @@ class Document extends BaseDocument
     $filename .= substr($file, strrpos($file, '.'));
     return $filename;
   }
+  
+  /**
+   * Retourne les tags non associé à ce document
+   * return Doctrine_Collection
+   */
+  public function getOtherTags ()
+  {
+    return Doctrine::getTable('Tag')->createQuery('t')->whereNotIn('id', $this->Tags->getPrimaryKeys())->execute();
+    
+  }
 }

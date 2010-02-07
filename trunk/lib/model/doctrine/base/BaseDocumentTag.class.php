@@ -7,11 +7,17 @@
  * 
  * @property integer $document_id
  * @property integer $tag_id
+ * @property Document $Document
+ * @property Tag $Tag
  * 
  * @method integer     getDocumentId()  Returns the current record's "document_id" value
  * @method integer     getTagId()       Returns the current record's "tag_id" value
+ * @method Document    getDocument()    Returns the current record's "Document" value
+ * @method Tag         getTag()         Returns the current record's "Tag" value
  * @method DocumentTag setDocumentId()  Sets the current record's "document_id" value
  * @method DocumentTag setTagId()       Sets the current record's "tag_id" value
+ * @method DocumentTag setDocument()    Sets the current record's "Document" value
+ * @method DocumentTag setTag()         Sets the current record's "Tag" value
  * 
  * @package    dockeet
  * @subpackage model
@@ -49,6 +55,18 @@ abstract class BaseDocumentTag extends sfDoctrineRecord
     public function setUp()
     {
         parent::setUp();
+        $this->hasOne('Document', array(
+             'local' => 'document_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
+        $this->hasOne('Tag', array(
+             'local' => 'tag_id',
+             'foreign' => 'id',
+             'onDelete' => 'cascade',
+             'onUpdate' => 'cascade'));
+
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);
     }
