@@ -161,10 +161,11 @@ class documentActions extends sfActions
    */
   public function executeAddCategory (sfWebRequest $request)
   {
-    $document = Doctrine::getTable('Document')->find($request->getParameter('document[id]', ''));
+    $request_document = $request->getParameter('document');
+    $document = Doctrine::getTable('Document')->find($request_document['id']);
     if (!$document instanceof Document)
     {
-      throw new sfException("Bad slug.");
+      throw new sfException("Document ID unknown.");
     }
     
     $form = new DocumentCategoryAddForm($document);
