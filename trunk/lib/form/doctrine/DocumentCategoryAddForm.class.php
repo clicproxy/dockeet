@@ -3,7 +3,7 @@ class DocumentCategoryAddForm extends DocumentForm
 {
   public function configure()
   {
-    $this->useFields(array('id'));
+    $this->useFields();
     
     $this->embedForm('document_category', $this->getDocumentCategoryForm());
   }
