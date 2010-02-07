@@ -85,18 +85,6 @@
         <li><a href="<?php echo url_for('user/edit');?>"><span><?php echo __('Add an user')?></span></a></li>
       </ul>
     </div>
-    <?php 
-    FlashUploader::IAF_display_js();
-    $uploader = new FlashUploader('uploader', '/images/uploader', url_for('document/add'));
-    $uploader->set('valid_extensions', '*.*');
-    $uploader->set('max_files', 1);
-    $uploader->set('callback', '');
-    $uploader->pass_var(VARNAME, VALUE);
-    //CUSTOMIZATION CODE GOES HERE!
-    $uploader->display();
-    ?>
-    
-    
   <?php endif; ?>
   
   <?php include_partial('navigation/notice'); ?>
