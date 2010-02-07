@@ -19,6 +19,16 @@ DocumentCtrl = function ()
   {
     jQuery.get(jQuery(link).attr('href'), {}, function(data) { jQuery('div#document_categories').html(data) });
   };
+  
+  this.addTag = function (link)
+  {
+    jQuery.get(jQuery(link).attr('href'), {}, function(data) { jQuery('div#document_tags').html(data) });
+  };
+  
+  this.removeTag = function (link)
+  {
+    // TODO
+  };
 };
 
 var documentCtrl = new DocumentCtrl();

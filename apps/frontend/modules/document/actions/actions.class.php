@@ -237,4 +237,39 @@ class documentActions extends sfActions
     
     $this->redirect('document/index?slug=' . $document->slug);
   }
+  
+ /**
+  * Add a Tag from a document
+  * @param sfRequest $request A request object
+  */
+  public function executeAddTag(sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Wrong Document slug.");
+    }
+    
+    $tag = Doctrine::getTable('Tags')->find($request->getParameter('tag_id'));
+    if (!$tag instanceof Tag)
+    {
+      throw new sfException("Wrong Tag Id.");
+    }
+    
+    $document->Tags[] = $tag;
+    $document->save();
+    
+    return $this->getPartial('document/document_tags', array('document' => $document));
+  }
+  
+ /**
+  * Remove a Tag from a document
+  * @param sfRequest $request A request object
+  */
+  public function executeRemoveTag(sfWebRequest $request)
+  {
+    // TODO
+  }
+  
+  
 }

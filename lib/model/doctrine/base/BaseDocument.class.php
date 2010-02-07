@@ -16,6 +16,7 @@
  * @property Doctrine_Collection $Users
  * @property Doctrine_Collection $Versions
  * @property Doctrine_Collection $DocumentCategory
+ * @property Doctrine_Collection $DocumentTag
  * @property Doctrine_Collection $UserDocument
  * 
  * @method string              getTitle()            Returns the current record's "title" value
@@ -29,6 +30,7 @@
  * @method Doctrine_Collection getUsers()            Returns the current record's "Users" collection
  * @method Doctrine_Collection getVersions()         Returns the current record's "Versions" collection
  * @method Doctrine_Collection getDocumentCategory() Returns the current record's "DocumentCategory" collection
+ * @method Doctrine_Collection getDocumentTag()      Returns the current record's "DocumentTag" collection
  * @method Doctrine_Collection getUserDocument()     Returns the current record's "UserDocument" collection
  * @method Document            setTitle()            Sets the current record's "title" value
  * @method Document            setDescription()      Sets the current record's "description" value
@@ -41,6 +43,7 @@
  * @method Document            setUsers()            Sets the current record's "Users" collection
  * @method Document            setVersions()         Sets the current record's "Versions" collection
  * @method Document            setDocumentCategory() Sets the current record's "DocumentCategory" collection
+ * @method Document            setDocumentTag()      Sets the current record's "DocumentTag" collection
  * @method Document            setUserDocument()     Sets the current record's "UserDocument" collection
  * 
  * @package    dockeet
@@ -109,6 +112,10 @@ abstract class BaseDocument extends sfDoctrineRecord
              'foreign' => 'document_id'));
 
         $this->hasMany('DocumentCategory', array(
+             'local' => 'id',
+             'foreign' => 'document_id'));
+
+        $this->hasMany('DocumentTag', array(
              'local' => 'id',
              'foreign' => 'document_id'));
 
