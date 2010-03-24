@@ -18,33 +18,33 @@ class apiActions extends sfActions
   public function preExecute()
   {
     $api_access = Doctrine::getTable('ApiAccess')->findOneBy('api_key', $this->getRequest()->getParameter('api_key', ''));
-    
+
     if (!$api_access instanceof ApiAccess)
     {
       throw new sfException("Wrong API Key");
     }
-    
+
     $parameters = $this->getRequest()->getParameterHolder()->getAll();
     ksort($parameters);
-    
+
     $plain_sig = $api_access->api_secret;
     foreach ($parameters as $key => $value)
     {
       if (in_array($key, array('api_sig', 'module', 'action'))) continue;
       $plain_sig .= $key . $value;
     }
-    
+
     if ($this->getRequest()->getParameter('api_sig') !== md5($plain_sig))
     {
       throw new sfException("Wrong API signature");
     }
-    
+
     if (!$api_access->User->isNew())
     {
       $this->getUser()->login($api_access->User);
     }
   }
-  
+
  /**
   * Executes index action
   *
@@ -55,7 +55,7 @@ class apiActions extends sfActions
     $category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
     $document_query = $this->getUser()->getDocumentsQuery($category);
     $document_query->limit($request->getParameter('limit', 10));
-    
+
     $document_yaml = array();
     foreach ($document_query->execute() as $document)
     {
@@ -66,12 +66,12 @@ class apiActions extends sfActions
         'description' => $document->description
       );
     }
-    
+
     $this->document_yaml = $document_yaml;
   }
-  
+
   /**
-   * 
+   *
    * @param sfWebRequest $request
    */
   public function executeDownload (sfWebRequest $request)
@@ -81,19 +81,19 @@ class apiActions extends sfActions
     {
       throw new sfException("Bad slug.");
     }
-    
+
     $version = ($request->hasParameter('version')) ? Doctrine::getTable('DocumentVersion')->find($request->getParameter('version')) : null;
-  
+
     $this->setLayout(false);
     sfConfig::set('sf_web_debug', false);
-    
+
     $file_path = ($version instanceof DocumentVersion) ? $document->getFilePath($version->id) : $document->getFilePath();
     if (! file_exists($file_path) || ! is_readable($file_path))
     {
       throw new sfException(sprintf("File %s doesn't exist or read access denied.", $file_path));
     }
-    
-    
+
+
     // Adding the file to the Response object
     $this->getResponse()->clearHttpHeaders();
     $this->getResponse()->setHttpHeader('Pragma: public', true);
@@ -101,9 +101,9 @@ class apiActions extends sfActions
     $this->getResponse()->setContentType(($version instanceof DocumentVersion) ? $version->mime_type : $document->mime_type);
     $this->getResponse()->sendHttpHeaders();
     $this->getResponse()->setContent(readfile($file_path));
-  
+
     return sfView::NONE;
-    
+
   }
-  
+
 }
