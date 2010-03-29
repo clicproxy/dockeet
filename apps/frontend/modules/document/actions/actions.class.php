@@ -18,12 +18,12 @@ class documentActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
   	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
-  	
+
   	$this->forward404Unless($document instanceof Document, "Unknown document.");
-  	
+
   	$this->document = $document;
   }
-  
+
  /**
   * Executes add action
   *
@@ -31,13 +31,35 @@ class documentActions extends sfActions
   */
   public function executeAdd(sfWebRequest $request)
   {
-    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slud', ''));
-    
+    $document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories')->where('slug = ?', $request->getParameter('slug', ''))->fetchOne();
+
+    if (!$document instanceof Document && $request->isMethod('post'))
+    {
+      $file = $request->getFiles('file');
+      $document = array_key_exists('name', $file) ? Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories')->where('title = ?', substr($file['name'], 0, strrpos($file['name'], '.')))->fetchOne() : null;
+    }
+
+    if (!$document instanceof Document)
+    {
+      $document = new Document();
+    }
+
+    if ($request->hasParameter('category_slug'))
+    {
+      $category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('category_slug'));
+      if ($category instanceof Category
+        && ($document->isNew()
+          || 0 == Doctrine::getTable('document_category')->createQuery('d')->where('document_id = ? AND category_id = ?', array($document->id, $category->id))->count()))
+      {
+        $document->Categories[] = $category;
+      }
+    }
+
   	$form = new DocumentFrontendAddForm($document);
-  	
+
   	if ($request->isMethod('post'))
   	{
-  	  if ($form->bindAndSave($request->getParameter($form->getName()), $request->getFiles($form->getName())))
+  	  if ($form->bindAndSave($request->getPostParameters(), $request->getFiles()))
   	  {
   	    $this->getUser()->setFlash('notice', 'File successfully uploaded');
   	    $this->redirect('document/edit?id=' . $form->getObject()->id);
@@ -47,7 +69,7 @@ class documentActions extends sfActions
   	}
   	$this->form = $form;
   }
-  
+
  /**
   * Executes edit action
   *
@@ -60,7 +82,7 @@ class documentActions extends sfActions
     {
     	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
     }
-    
+
     $form = new DocumentFrontendForm($document);
     if ($request->isMethod('post'))
     {
@@ -69,10 +91,10 @@ class documentActions extends sfActions
       else
         $this->getUser()->setFlash('error', 'An error occurred during the saving of the document');
     }
-    
+
     $this->form = $form;
   }
-  
+
  /**
   * Executes delete action
   *
@@ -81,13 +103,13 @@ class documentActions extends sfActions
   public function executeDelete(sfWebRequest $request)
   {
     $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
-    
+
     $document->delete();
-    
+
     $this->getUser()->setFlash('notice', 'Document successfully deleted');
     $this->redirect('@homepage');
   }
-  
+
  /**
   * Executes download action
   *
@@ -100,19 +122,19 @@ class documentActions extends sfActions
     {
       throw new sfException("Bad slug.");
     }
-    
+
     $version = ($request->hasParameter('version')) ? Doctrine::getTable('DocumentVersion')->find($request->getParameter('version')) : null;
-  
+
     $this->setLayout(false);
 	  sfConfig::set('sf_web_debug', false);
-	  
+
 	  $file_path = ($version instanceof DocumentVersion) ? $document->getFilePath($version->id) : $document->getFilePath();
 	  if (! file_exists($file_path) || ! is_readable($file_path))
 	  {
 	  	throw new sfException(sprintf("File %s doesn't exist or read access denied.", $file_path));
 	  }
-	  
-	  
+
+
 	  // Adding the file to the Response object
 	  $this->getResponse()->clearHttpHeaders();
 	  $this->getResponse()->setHttpHeader('Pragma: public', true);
@@ -120,10 +142,10 @@ class documentActions extends sfActions
 	  $this->getResponse()->setContentType(($version instanceof DocumentVersion) ? $version->mime_type : $document->mime_type);
 	  $this->getResponse()->sendHttpHeaders();
 	  $this->getResponse()->setContent(readfile($file_path));
-	
+
 	  return sfView::NONE;
   }
-  
+
   /*
   * Executes search action
   *
@@ -132,10 +154,10 @@ class documentActions extends sfActions
   public function executeSearch (sfWebRequest $request)
   {
     $form = new DocumentSearchForm();
-    
+
     $form->bind(array('q' => $request->getParameter('q')));
     $this->getUser()->setFlash('q', $request->getParameter('q'));
-    
+
     if ($form->isValid())
     {
       $documents_query = $this->getUser()->getDocumentsQuery();
@@ -150,13 +172,13 @@ class documentActions extends sfActions
     {
       $pager = null;
     }
-    
+
     $this->pager = $pager;
     $this->form = $form;
   }
-  
+
   /**
-   * 
+   *
    * @param sfWebRequest $request
    */
   public function executeAddCategory (sfWebRequest $request)
@@ -167,19 +189,19 @@ class documentActions extends sfActions
     {
       throw new sfException("Document ID unknown.");
     }
-    
+
     $form = new DocumentCategoryAddForm($document);
     if ($form->bindAndSave($request->getParameter($form->getName())))
       $this->getUser()->setFlash('notice', 'Document successfully added in category');
     else
       $this->getUser()->setFlash('error', 'An error occurred during the saving of the document');
-    
+
     $this->renderPartial('document_categories', array('form' => $form));
     return sfView::NONE;
   }
-  
+
   /**
-   * 
+   *
    * @param sfWebRequest $request
    */
   public function executeRemoveCategory (sfWebRequest $request)
@@ -189,7 +211,7 @@ class documentActions extends sfActions
     {
       throw new sfException("Bad slug.");
     }
-    
+
     if (1 < count($document->Categories))
     {
       $document->unlink('Categories', array($request->getParameter('category_id')), true);
@@ -201,7 +223,7 @@ class documentActions extends sfActions
     $this->renderPartial('document_categories', array('form' => new DocumentCategoryAddForm($document)));
     return sfView::NONE;
   }
-  
+
  /**
   * Subscribe to a document
   * @param sfRequest $request A request object
@@ -213,13 +235,13 @@ class documentActions extends sfActions
     {
       throw new sfException("Wrong Document slug.");
     }
-    
+
     $document->subscribe($this->getUser()->getUser());
     $this->getUser()->setFlash('notice', 'Document subscription successfully saved');
-    
+
     $this->redirect('document/index?slug=' . $document->slug);
   }
-  
+
  /**
   * Subscribe to a document
   * @param sfRequest $request A request object
@@ -231,13 +253,13 @@ class documentActions extends sfActions
     {
       throw new sfException("Wrong Document slug.");
     }
-    
+
     $document->unsubscribe($this->getUser()->getUser());
     $this->getUser()->setFlash('notice', 'Document unsubscription successfully saved');
-    
+
     $this->redirect('document/index?slug=' . $document->slug);
   }
-  
+
  /**
   * Add a Tag from a document
   * @param sfRequest $request A request object
@@ -249,19 +271,19 @@ class documentActions extends sfActions
     {
       throw new sfException("Wrong Document slug.");
     }
-    
+
     $tag = Doctrine::getTable('Tags')->find($request->getParameter('tag_id'));
     if (!$tag instanceof Tag)
     {
       throw new sfException("Wrong Tag Id.");
     }
-    
+
     $document->Tags[] = $tag;
     $document->save();
-    
+
     return $this->getPartial('document/document_tags', array('document' => $document));
   }
-  
+
  /**
   * Remove a Tag from a document
   * @param sfRequest $request A request object
@@ -270,6 +292,6 @@ class documentActions extends sfActions
   {
     // TODO
   }
-  
-  
+
+
 }
