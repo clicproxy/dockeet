@@ -77,15 +77,5 @@
     <?php endif;?>
   </div>
   
-  <?php if($sf_user->hasCredential('admin')): ?>
-    <div id="admin_box">
-      <ul>
-        <li><a href="<?php echo url_for('category/edit');?>"><span><?php echo __('Add a category')?></span></a></li>
-        <li><a href="<?php echo url_for('document/add');?>"><span><?php echo __('Add a document')?></span></a></li>
-        <li><a href="<?php echo url_for('user/edit');?>"><span><?php echo __('Add an user')?></span></a></li>
-      </ul>
-    </div>
-  <?php endif; ?>
-  
   <?php include_partial('navigation/notice'); ?>
 </div>

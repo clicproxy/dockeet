@@ -6,30 +6,12 @@
   <div id="title_right"></div>
 </div>
 
-
-
-<form method="post" enctype="multipart/form-data" action="<?php echo url_for('document/add'); ?>">
-  <?php echo $form->renderHiddenFields(); ?>
-  <?php echo $form->renderGlobalErrors(); ?>
-
-  <?php echo $form['file']->renderError(); ?>
-  <?php echo $form['file']->renderLabel(); ?>
-  <?php echo $form['file']; ?>
-  <?php echo $form['document_category']['category_id']->renderError(); ?>
-  <?php echo $form['document_category']['category_id']->renderLabel(); ?>
-  <?php echo $form['document_category']['category_id']; ?>
-  <input class="submit" type="submit" value="<?php echo __('Save'); ?>" />
-
-
   <div>
     <div id="filelist">No runtime found.</div>
     <br />
     <a id="pickfiles" href="#"><?php echo __('Select files'); ?></a>
     <a id="uploadfiles" href="#"><?php echo __('Upload files'); ?></a>
   </div>
-
-</form>
-
 
 <script>
 $(document).ready( function ()
@@ -38,13 +20,12 @@ $(document).ready( function ()
     runtimes : 'gears,html5,flash,silverlight,browserplus',
     browse_button : 'pickfiles',
     max_file_size : '10mb',
-    url : '<?php echo url_for("document/add"); ?>',
+    url : '<?php echo url_for("document/add?category_slug=" . $category->slug); ?>',
     unique_names : true,
     flash_swf_url : 'js/plupload.flash.swf',
     silverlight_xap_url : 'js/plupload.silverlight.xap',
     multipart: true,
-    multipart_params: { 'document_category[category_id]': jQuery('select#document_category_category_id').val(),
-    '_csrf_token': jQuery('input#csrf_token').val() }
+    multipart_params: { '_csrf_token': '<?php echo $form->getCSRFToken(); ?>' }
   });
 
   uploader.bind('Init', function(up, params) {
@@ -62,8 +43,7 @@ $(document).ready( function ()
 
   uploader.bind('FileUploaded', function (up, file, r)
   {
-    jQuery('body').append('<div>' + r.response + '</div>');
-    //console.log(r.response);
+	  $('#' + file.id + " b").after(r.response);
   });
 
   uploader.bind('UploadProgress', function(up, file) {
