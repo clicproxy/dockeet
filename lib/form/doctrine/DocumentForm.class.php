@@ -46,6 +46,7 @@ class DocumentForm extends BaseDocumentForm
       $this->getObject()->size = $file->getSize();
 
     }
+    
     parent::doSave($con);
 
     if (null !== $file)
