@@ -27,13 +27,16 @@ class DocumentFrontendAddForm extends DocumentForm
    */
   protected function getDocumentCategoryForm ()
   {
-    if ($this->getObject()->isNew())
+  	$document_category = null;
+    if (1 == Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ?', $this->getObject()->id)->count())
+    {
+      $document_category = Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ?', $this->getObject()->id)->fetchOne();
+    }
+      
+    if (!$document_category instanceof DocumentCategory)
     {
       $document_category = new DocumentCategory();
       $document_category->Document = $this->getObject();
-    }
-    else
-    {
     }
     return new DocumentCategoryForm($document_category);
   }

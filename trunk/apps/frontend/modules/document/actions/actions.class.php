@@ -61,8 +61,7 @@ class documentActions extends sfActions
   	{
   	  if ($form->bindAndSave($request->getPostParameters(), $request->getFiles()))
   	  {
-  	    $this->getUser()->setFlash('notice', 'File successfully uploaded');
-  	    $this->redirect('document/edit?id=' . $form->getObject()->id);
+  	  	return $this->renderPartial('document/document_edit_url', array('document' => $form->getObject()));
   	  }
   	  else
   	   $this->getUser()->setFlash('error', 'An error occurred during the uploading of the file');
