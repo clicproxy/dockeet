@@ -31,7 +31,15 @@ class documentActions extends sfActions
   */
   public function executeAdd(sfWebRequest $request)
   {
-    $document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories')->where('slug = ?', $request->getParameter('slug', ''))->fetchOne();
+  	$category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('category_slug'));
+
+  	if (!$category instanceof Category)
+  	{
+  		throw new sfException(sprintf("Category slug '%s' unknown", $request->getParameter('category_slug')));
+  	}
+
+
+    $document = Doctrine::getTable('Document')->createQuery('d')->where('slug = ?', $request->getParameter('slug', ''))->fetchOne();
 
     if (!$document instanceof Document && $request->isMethod('post'))
     {
@@ -44,28 +52,27 @@ class documentActions extends sfActions
       $document = new Document();
     }
 
-    if ($request->hasParameter('category_slug'))
-    {
-      $category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('category_slug'));
-      if ($category instanceof Category
-        && ($document->isNew()
-          || 0 == Doctrine::getTable('document_category')->createQuery('d')->where('document_id = ? AND category_id = ?', array($document->id, $category->id))->count()))
-      {
-        $document->Categories[] = $category;
-      }
-    }
-
   	$form = new DocumentFrontendAddForm($document);
 
   	if ($request->isMethod('post'))
   	{
   	  if ($form->bindAndSave($request->getPostParameters(), $request->getFiles()))
   	  {
+  	  	if (0 == Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ? AND category_id = ?', array($form->getObject()->id, $category->id))->count())
+  	  	{
+  	  		$document_category = new DocumentCategory();
+  	  		$document_category->Document = $form->getObject();
+  	  		$document_category->Category = $category;
+  	  		$document_category->save();
+  	  	}
   	  	return $this->renderPartial('document/document_edit_url', array('document' => $form->getObject()));
   	  }
   	  else
-  	   $this->getUser()->setFlash('error', 'An error occurred during the uploading of the file');
+  	  {
+  	  	return $this->renderPartial('document/document_upload_fail', array('form' => $form));
+  	  }
   	}
+  	$this->category = $category;
   	$this->form = $form;
   }
 

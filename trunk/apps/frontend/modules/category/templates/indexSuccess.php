@@ -2,7 +2,7 @@
   <div id="title_left"></div>
   <div id="title_content">
     <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->title : __('Homepage'); ?></h2>
-    
+
     <ul id="document_view_box">
       <li>
         <a id="display_thumbnail" href="<?php echo url_for('navigation/setDisplay?display=thumbnail'); ?>" <?php if ('thumbnail' === $sf_user->getAttribute('display', 'thumbnail', 'frontend')): ?>class="current"<?php endif;?>>
@@ -20,7 +20,7 @@
         </a>
       </li>
     </ul>
-    
+
     <div id="sort_box">
       <?php echo __('Sort by'); ?>
       <form action="<?php echo url_for('navigation/setOrder'); ?>" method="get">
@@ -51,6 +51,7 @@
       <?php endif; ?>
       <?php if($sf_user->hasCredential('admin')): ?>
         <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
+        <li><a href="<?php echo url_for('document/add?category_slug=' . $category->slug); ?>"><?php echo __('Upload'); ?></a></li>
       <?php endif; ?>
     </ul>
   </div>
