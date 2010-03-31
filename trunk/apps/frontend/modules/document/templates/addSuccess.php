@@ -29,7 +29,10 @@ $(document).ready( function ()
   });
 
   uploader.bind('Init', function(up, params) {
-    $('#filelist').html("<div>Current runtime: " + params.runtime + "</div>");
+    if (0 != params.runtime.length)
+    {
+  	  $('#filelist').html("");
+    }
   });
 
   uploader.bind('FilesAdded', function(up, files) {
