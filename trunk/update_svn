@@ -22,3 +22,5 @@ svn export --username $1 --password $PASSWD https://dockeet.googlecode.com/svn/t
 svn export --username $1 --password $PASSWD https://dockeet.googlecode.com/svn/trunk/lib ./lib --force
 svn export --username $1 --password $PASSWD https://dockeet.googlecode.com/svn/trunk/plugins ./plugins --force
 svn export --username $1 --password $PASSWD https://dockeet.googlecode.com/svn/trunk/config/doctrine ./config/doctrine --force
+
+./symfony cc
