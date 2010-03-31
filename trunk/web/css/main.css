@@ -539,8 +539,6 @@ ul.pager li {
 	display: inline;
 }
 
-
-	
 div#foot {
 	width: 940px;
 	padding: 10px;
@@ -562,3 +560,82 @@ div#foot ul li a:hover {
 	text-decoration: underline;
 }
 
+input#category_title {
+  width: 300px;
+}
+
+div#content div#left div#category_box ul li.root {
+  position: relative;
+}
+
+div#content div#left div#category_box ul li.root ul {
+  background: none;
+  position: absolute;
+  top: 10px;
+  left: 100px;
+  width: 511px;
+}
+
+div#content div#left div#category_box ul li.root ul li.title {
+  background: url("../images/cat_top_popup.png") no-repeat top left;
+  display: block;
+  width: 491px;
+  height: 29px;
+  padding: 15px 0 0 20px;
+}
+
+div#content div#left div#category_box ul li.root ul li.title a {
+  border: none;
+  padding: 0;
+  display: inline;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  text-decoration: none;
+}
+
+div#content div#left div#category_box ul li.root ul li.title a:hover {
+  text-decoration: underline;
+}
+
+div#content div#left div#category_box ul li.root ul li.sub_category {
+  background: url("../images/cat_repeat_popup.png") repeat-y left;
+  text-align: left;
+  padding: 5px 0 2px 20px;
+  font-size: 12px;
+}
+
+div#content div#left div#category_box ul li.root ul li.subcat_level_1 {
+  font-size: 13px;
+  font-weight: bold; 
+}
+
+div#content div#left div#category_box ul li.root ul li.subcat_level_2 {
+  padding-left: 30px;
+}
+
+div#content div#left div#category_box ul li.root ul li.subcat_level_3 {
+  padding-left: 40px;
+}
+
+div#content div#left div#category_box ul li.root ul li.subcat_level_4 {
+  padding-left: 50px;
+}
+
+div#content div#left div#category_box ul li.root ul li.foot_sub_category {
+  display: block;
+  height: 17px;
+  width: 511px;
+  background: url("../images/cat_bottom_popup.png") no-repeat top left;
+}
+
+div#content div#left div#category_box ul li.root ul li.sub_category a {
+  display: inline;
+  border: none;
+  text-decoration: none;
+}
+
+div#content div#left div#category_box ul li.root ul li.sub_category a:hover {
+  text-decoration: underline;
+}

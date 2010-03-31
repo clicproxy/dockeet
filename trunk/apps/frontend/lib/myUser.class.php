@@ -16,7 +16,7 @@ class myUser extends sfBasicSecurityUser
     $this->setAuthenticated(true);
     return true;
   }
-  
+
   /**
    * Logout
    */
@@ -27,7 +27,7 @@ class myUser extends sfBasicSecurityUser
     $this->setAuthenticated(false);
     return true;
   }
-  
+
   /**
    * Get the User Object
    * @return User
@@ -36,7 +36,7 @@ class myUser extends sfBasicSecurityUser
   {
     return $this->isAuthenticated() ? Doctrine::getTable('User')->findOneBy('username', $this->getAttribute('username', '', 'frontend')) : null;
   }
-  
+
   /**
    * Return viewable document of the user
    * @param $category
@@ -47,14 +47,14 @@ class myUser extends sfBasicSecurityUser
     $user = $this->getUser();
     $documents_query = Doctrine::getTable('Document')->createQuery('d');
     $documents_query->addOrderBy($this->getAttribute('order_by', 'updated_at DESC', 'frontend'));
-    
+
     if ($category instanceof Category)
     {
       $documents_query->innerJoin('d.Categories c WITH c.id = ?', $category->id);
     }
-    
+
     if (! $user instanceof User || !$user->admin) $documents_query->where('d.public = ?', 1);
-    
+
     if ($user instanceof User && !$user->admin)
     {
       if ($category instanceof Category)
@@ -68,24 +68,24 @@ class myUser extends sfBasicSecurityUser
         $documents_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
       }
     }
-    
+
     return $documents_query;
   }
-  
-  public function getCategories ()
+
+  public function getCategories ($root_only = false)
   {
     $user = $this->getUser();
-    $categories_query = Doctrine::getTable('Category')->createQuery('c');
-    $categories_query->leftJoin('c.Documents d');
-    $categories_query->select('c.slug, count(d.id) AS count_documents');
-    $categories_query->addGroupBy('c.id');
-    
+    $categories_query = Doctrine::getTable('Category')->createQuery('c')
+      ->leftJoin('c.Documents d')
+      ->select('c.slug, count(d.id) AS count_documents')
+      ->addGroupBy('c.id');
     if (! $user instanceof User || !$user->admin) $categories_query->where('d.public = ?', 1);
     if ($user instanceof User && !$user->admin) $categories_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
-    
+    if ($root_only) $categories_query->addWhere("title NOT LIKE ?", '%|%');
+
     return $categories_query->execute();
   }
-  
+
   /**
    * Test if the User logged has suscribed to the category
    * @param Category $category
@@ -97,18 +97,18 @@ class myUser extends sfBasicSecurityUser
     {
       $object = $object->getRawValue();
     }
-    
+
     $has_subscribed = false;
     if (!$object instanceof Document && !$object instanceof Category)
     {
       throw new sfException("Wrong parameter, Category or Document object expected, " . get_class($object) . " given");
     }
-    
+
     if ($this->getUser() instanceof User)
     {
       $has_subscribed = $object->hasSubscribed($this->getUser());
     }
-    
+
     sfConfig::set('sf_web_debug', false);
     return $has_subscribed;
   }

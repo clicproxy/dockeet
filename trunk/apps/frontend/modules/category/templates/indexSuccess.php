@@ -1,7 +1,7 @@
 <div id="title_box">
   <div id="title_left"></div>
   <div id="title_content">
-    <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->title : __('Homepage'); ?></h2>
+    <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->getPublicTitle() : __('Homepage'); ?></h2>
 
     <ul id="document_view_box">
       <li>
@@ -52,6 +52,7 @@
       <?php if($sf_user->hasCredential('admin')): ?>
         <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
         <li><a href="<?php echo url_for('document/add?category_slug=' . $category->slug); ?>"><?php echo __('Upload'); ?></a></li>
+        <li><a href="<?php echo url_for('category/edit?parent_slug=' . $category->slug); ?>"><?php echo __('Add child category'); ?></a></li>
       <?php endif; ?>
     </ul>
   </div>
