@@ -19,10 +19,10 @@ class userActions extends sfActions
     $pager = new sfDoctrinePager('User', 10);
     $pager->setPage($request->getParameter('page', 1));
     $pager->init();
-    
+
     $this->pager = $pager;
   }
-  
+
   /**
    * Edit a user profile
    * @param sfWebRequest $request
@@ -30,13 +30,16 @@ class userActions extends sfActions
   public function executeEdit (sfWebRequest $request)
   {
     if ($request->isMethod('post'))
-      $user = Doctrine::getTable('User')->find($request->getParameter('user[id]', ''));
+    {
+    	$post_user =  $request->getParameter('user', array('id' => null));
+      $user = Doctrine::getTable('User')->find($post_user['id']);
+    }
     else
       $user = Doctrine::getTable('User')->findOneBy('username', $request->getParameter('username', ''));
-    
+
     // Only for admin and the user himself
     $this->redirectUnless($this->getUser()->hasCredential('admin') || ($user instanceof User && $user === $this->getUser()->getUser()), sfConfig::get('sf_secure_module') . '/' . sfConfig::get('sf_secure_action'));
-    
+
     if ($this->getUser()->hasCredential('admin'))
       $form = new UserAdminForm($user);
     else
@@ -48,11 +51,11 @@ class userActions extends sfActions
       else
         $this->getUser()->setFlash('error', 'An error occurred during the saving of the user profile');
     }
-    
+
     $this->user = $user;
     $this->form = $form;
   }
-  
+
   /**
    * Delete a user
    * @param sfWebRequest $request
@@ -61,10 +64,10 @@ class userActions extends sfActions
   {
     $user = Doctrine::getTable('User')->findOneBy('username', $request->getParameter('username'));
     $this->forward404Unless($user instanceof User, 'Incorrect user ID.');
-    
+
     $user->delete();
     $this->getUser()->setFlash('notice', 'User successfully deleted');
-    
+
     $this->redirect('user/index');
   }
 }
