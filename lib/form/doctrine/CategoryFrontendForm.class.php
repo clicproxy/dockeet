@@ -12,8 +12,6 @@ class CategoryFrontendForm extends CategoryForm
 {
   public function configure()
   {
-    unset($this->widgetSchema['slug'], $this->validatorSchema['slug']);
-    unset($this->widgetSchema['users_list'], $this->validatorSchema['users_list']);
-    unset($this->widgetSchema['documents_list'], $this->validatorSchema['documents_list']);
+  	$this->useFields(array('title', 'description'));
   }
 }
