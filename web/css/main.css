@@ -176,11 +176,13 @@ div#content div#left {
 	padding: 0 10px;
 }
 div#content div#left div strong {
-	display: block;
-	background: transparent url("../images/leftbar/bgd_titre.png") no-repeat top left;
-	width: 212px;
-	height: 34px;
-	padding: 10px 0 0 10px
+	background:url("../images/leftbar/bgd_titre.png") no-repeat scroll left top transparent;
+	display:block;
+	height:30px;
+	padding:14px 0 0 10px;
+	text-shadow:0 1px 1px white;
+	text-transform:uppercase;
+	width:212px;
 }
 div#content div#left div ul {
 	background: transparent url("../images/leftbar/bgd_repeat.png") repeat-y left;
@@ -223,9 +225,7 @@ div#content div#left div.left_box_foot {
 div#content div#sf_content li {
 	list-style: none;
 }
-div#content div#sf_content a:hover {
-	color: #A9C8DD
-}
+
 /* @end */
 div#content div#sf_content {
 	position: relative;
@@ -235,39 +235,36 @@ div#content div#sf_content {
 	padding: 0 10px;
 }
 div#content div#sf_content div#title_box {
-	height: 43px;
 	margin: 0 auto;
 }
-div#content div#sf_content div#title_box div#title_left,
-div#content div#sf_content div#title_box div#title_content,
-div#content div#sf_content div#title_box div#title_right {
-	height: 43px;
-	display: inline;
-	float: left;
+div#content div#sf_content div#title_box div#title_top {
+	background: transparent url("../images/content/title_top.png") no-repeat top right;
+	width: 680px;
+	height: 7px;
 }
-div#content div#sf_content div#title_box div#title_left {
-	background: transparent url("../images/content/title_left.png") no-repeat top right;
-	width: 7px;
-}
-div#content div#sf_content div#title_box div#title_right {
-	background: transparent url("../images/content/title_right.png") no-repeat top left;
-	width: 7px;
+div#content div#sf_content div#title_box div#title_bottom {
+	background: transparent url("../images/content/title_bottom.png") no-repeat top left;
+	width: 680px;
+	height: 7px;
 }
 div#content div#sf_content div#title_box div#title_content {
-	background: transparent url("../images/content/title_repeat.png") repeat-x top;
-	padding: 5px;
-	height: 33px;
-	width: 656px;
+	background: transparent url("../images/content/title_content.png") repeat-y left;
+	padding:5px 5px 0;
+	width:680px;
 }
 div#content div#sf_content div#title_box div#title_content h2 {
 	width:410px;
+	padding-left:10px;
+	font-size: 1.3em;
+	text-transform: uppercase;
+	text-shadow: white 0 1px 1px;
 }
 div#content div#sf_content div#title_box div#title_content ul#document_view_box {
 	display: block;
 	width: 87px;
 	height: 27px;
 	position: absolute;
-	top: 8px;
+	top:10px;
 	left: 440px;
 }
 div#content div#sf_content div#title_box div#title_content ul#document_view_box li {
@@ -333,24 +330,38 @@ div#content div#sf_content div#document_box div.document_thumbnail {
 div#content div#sf_content div#document_box div.document_thumbnail a {
 	display: block;
 	width: 129px;
-	height: 142px;
+	height: 143px;
 	background: transparent url("../images/content/img_box.png") no-repeat top left;
 	position: relative;
 }
+div#content div#sf_content div#document_box div.document_thumbnail a:hover {
+	background-position: left bottom;
+}
 div#content div#sf_content div#document_box div.document_thumbnail a span.updated_at {
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	font-size: 12px;
+	font-size:12px;
+	left:6px;
+	position:absolute;
+	top:7px;
 }
 div#content div#sf_content div#document_box div.document_thumbnail a span.title {
-	background: transparent url("../images/content/img_box_repeat.png") repeat-y center;
-	bottom: 0;
-	font-size: 12px;
-	left: 0;
-	margin-bottom: 7px;
-	padding: 3px 5px 0;
-	position: absolute;
+	background:url("../images/content/pixel_transparent.png") repeat scroll center center transparent;
+	bottom:0;
+	font-size:12px;
+	left:0;
+	margin-bottom:2px;
+	margin-left:2px;
+	padding:3px 5px;
+	width:115px;
+	position:absolute;
+	-moz-border-radius: 0 0 5px 5px; /* FF1+ */
+  	-webkit-border-radius: 0 0 5px 5px; /* Saf3+, Chrome */
+    border-radius: 0 0 5px 5px;
+	display: block;
+	border-top:1px solid #D8EEFA;
+}
+div#content div#sf_content div#document_box div.document_thumbnail a:hover span.title {
+	background:url("../images/content/pixel_transparent_hover.png") repeat scroll center center transparent;
+	border-top:1px solid #D8EEFA;	
 }
 div#content div#sf_content div#document_box div.document_mixed {
 	margin: 10px;
@@ -380,9 +391,16 @@ div#content div#sf_content div#document_box div.document_detail ul li {
 	font-size: 12px;
 }
 div#content div#sf_content div#document_box span.pager_count {
-	display: block;
-	clear: both;
 	font-style: italic;
+	-moz-border-radius: 5px; /* FF1+ */
+  	-webkit-border-radius: 5px; /* Saf3+, Chrome */
+    border-radius: 5px;
+	border: 1px solid #d8eefa; 
+	padding: 5px;
+	margin-top: 5px;
+	margin-bottom: 10px;  
+	display: inline-block;
+	font-size: 0.9em;
 }
 div#content div#sf_content h3 {
 	border-bottom: 1px solid #6A6A6A;
@@ -439,6 +457,45 @@ div#content div#sf_content table tr th,
 div#content div#sf_content table tr td {
 	padding: 0 10px;
 }
+
+/* @group loginstart */
+div#loginstart {
+	margin-top: 20px;
+	margin-top:20px;
+	padding-left:10px;
+}
+div#loginstart label {
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+div#loginstart input {
+	background:url("../images/loginputtxt.png") no-repeat scroll left top transparent;
+	border:medium none;
+	font-size:0.8em;
+	height:20px;
+	margin-bottom:5px;
+	margin-top:5px;
+	padding:4px 5px 5px;
+	width:199px;
+	color: silver;
+}
+div#loginstart input.submit {
+	background: url(../images/logbt.png) no-repeat left top;
+	width: 127px;
+	height: 49px;
+	cursor: pointer;
+	color: #5F6060;
+	text-shadow: #d8eefa 0 1px 0;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+div#loginstart input.submit:hover {
+	background-position: left bottom;
+}
+/* @end */
+
 /* @group Notice Error */
 div#top div#notice, div#top div#error {
 	margin: 10px 0 0 270px;

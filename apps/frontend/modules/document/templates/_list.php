@@ -1,9 +1,9 @@
 <div id="document_box">
+	<span class="pager_count"><?php echo $pager->count() . ' ' . ((1 < $pager->count()) ? __('documents') : __('document')) . '.'; ?></span>
+	<div class="clear"></div>
   <?php foreach ($pager->getResults() as $document): ?>
     <?php include_partial('document/view_' . $sf_user->getAttribute('display', 'thumbnail', 'frontend'), array('document' => $document)); ?>
   <?php endforeach; ?>
-  
-  <span class="pager_count"><?php echo $pager->count() . ' ' . ((1 < $pager->count()) ? __('documents') : __('document')) . '.'; ?></span>
   
   <?php if ($pager->haveToPaginate()): ?>
     <ul class="pager">
