@@ -108,6 +108,63 @@ class apiActions extends sfActions
     return sfView::NONE;
   }
 
+  /**
+   * Subscribe via a remote web site.
+   * @param sfWebRequest $request
+   */
+  public function executeSubscribe (sfWebRequest $request)
+  {
+  	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Bad document slug.");
+    }
+
+  	$user = Doctrine::getTable('User')->findOneBy('email', $request->getParameter('email'));
+    if (!$user instanceof User)
+    {
+      throw new sfException("Unknown user email.");
+    }
+
+    if (0 == Doctrine::getTable('UserDocument')->createQuery('u')->where('user_id = ? AND document_id = ?', array($user->id, $document->id))->count())
+    {
+    	$user_document = new UserDocument();
+    	$user_document->User = $user;
+    	$user_document->Document = $document;
+    	$user_document->save();
+    }
+
+    sfConfig::set('sf_web_debug', false);
+    return $this->renderText('ok');
+  }
+
+  /**
+   * Unsubscribe via a remote web site.
+   * @param sfWebRequest $request
+   */
+  public function executeUnsubscribe (sfWebRequest $request)
+  {
+  	$document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Bad document slug.");
+    }
+
+  	$user = Doctrine::getTable('User')->findOneBy('email', $request->getParameter('email'));
+    if (!$user instanceof User)
+    {
+      throw new sfException("Unknown user email.");
+    }
+
+    if (0 < Doctrine::getTable('UserDocument')->createQuery('u')->where('user_id = ? AND document_id = ?', array($user->id, $document->id))->count())
+    {
+    	Doctrine::getTable('UserDocument')->createQuery('u')->where('user_id = ? AND document_id = ?', array($user->id, $document->id))->delete();
+    }
+
+    sfConfig::set('sf_web_debug', false);
+    return $this->renderText('ok');
+  }
+
 
 
 }
