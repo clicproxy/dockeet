@@ -152,6 +152,39 @@ class documentActions extends sfActions
 	  return sfView::NONE;
   }
 
+ /**
+  * Executes thumbnail action
+  *
+  * @param sfRequest $request A request object
+  */
+  public function executeThumbnail(sfWebRequest $request)
+  {
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Bad slug.");
+    }
+
+    $this->setLayout(false);
+	  sfConfig::set('sf_web_debug', false);
+
+	  $file_path = $document->genThumbnail($request->getParameter('width', 150));
+	  if (! file_exists($file_path) || ! is_readable($file_path))
+	  {
+	  	throw new sfException(sprintf("File %s doesn't exist or read access denied.", $file_path));
+	  }
+
+	  // Adding the file to the Response object
+	  $this->getResponse()->clearHttpHeaders();
+	  $this->getResponse()->setHttpHeader('Pragma: public', true);
+	  $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=' . basename($file_path));
+	  $this->getResponse()->setContentType('image/png');
+	  $this->getResponse()->sendHttpHeaders();
+	  $this->getResponse()->setContent(readfile($file_path));
+
+	  return sfView::NONE;
+  }
+
   /*
   * Executes search action
   *

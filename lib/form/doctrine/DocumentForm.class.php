@@ -46,7 +46,7 @@ class DocumentForm extends BaseDocumentForm
       $this->getObject()->size = $file->getSize();
 
     }
-    
+
     parent::doSave($con);
 
     if (null !== $file)
@@ -83,7 +83,6 @@ class DocumentForm extends BaseDocumentForm
         }
         //$maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array()
         $thumbnail = new sfThumbnail(125, 125, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
-
         $thumbnail->loadFile($path . '/' . $filename);
         $thumbnail->save(sfConfig::get('sf_web_dir') . $this->getObject()->getThumbnailUrl(125, 125, true), 'image/png');
       }

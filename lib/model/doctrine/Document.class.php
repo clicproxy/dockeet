@@ -31,7 +31,7 @@ class Document extends BaseDocument
 	  }
     return $file_path;
 	}
-	
+
 	/**
 	 * Delete document and files
 	 * @param unknown_type $event
@@ -43,7 +43,7 @@ class Document extends BaseDocument
       unlink($this->getFilePath());
     }
   }
-  
+
   /**
    * Save old file
    * @param unknown_type $event
@@ -56,11 +56,11 @@ class Document extends BaseDocument
       $document_version->document_id = $this->id;
       $document_version->file = $this->file;
       $document_version->mime_type = $this->mime_type;
-      
-      $this->Versions[] = $document_version;  
+
+      $this->Versions[] = $document_version;
     }
   }
-  
+
   /**
    * Test if the user has subscribed to this document update
    * @param User $user
@@ -71,7 +71,7 @@ class Document extends BaseDocument
     $query_has_subscribed  = Doctrine::getTable('UserDocument')->createQuery('u')->where('u.user_id = ? AND u.document_id = ?');
     return 1 === $query_has_subscribed->count(array($user->id, $this->id));
   }
-  
+
   /**
    * User subscription
    * @param User $user
@@ -79,17 +79,17 @@ class Document extends BaseDocument
   public function subscribe (User $user)
   {
     $user_document = Doctrine::getTable('UserDocument')->createQuery('u')->where('document_id = ? AND user_id = ?', array($this->id, $user->id))->fetchOne();
-    
+
     if (!$user_document instanceof UserDocument)
     {
       $user_document = new UserDocument();
       $user_document->Document= $this;
       $user_document->User = $user;
     }
-    
+
     $user_document->save();
   }
-  
+
   /**
    * User unsubscription
    * @param User $user
@@ -97,15 +97,15 @@ class Document extends BaseDocument
   public function unsubscribe (User $user)
   {
     $user_document = Doctrine::getTable('UserDocument')->createQuery('u')->where('document_id = ? AND user_id = ?', array($this->id, $user->id))->fetchOne();
-    
+
     if (!$user_document instanceof UserDocument)
     {
       throw new sfException('No relation between Document ' . $this->title . ' and user ' . $user->username);
     }
-    
+
     $user_document->delete();
   }
-  
+
   /**
    * Return the director where thumbnail of this document are saved
    * @return string
@@ -114,7 +114,7 @@ class Document extends BaseDocument
   {
     return sfConfig::get('sf_upload_dir') . '/thumbnail/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
   }
-  
+
   /**
    * Return the url of the Thumbnail
    * @param integer $width
@@ -133,7 +133,7 @@ class Document extends BaseDocument
     }
     return $thumbnail_url;
   }
-  
+
   /**
    * Return the name of the file downloaded
    * @param Version $version
@@ -146,7 +146,7 @@ class Document extends BaseDocument
     $filename .= substr($file, strrpos($file, '.'));
     return $filename;
   }
-  
+
   /**
    * Retourne les tags non associé à ce document
    * return Doctrine_Collection
@@ -154,6 +154,42 @@ class Document extends BaseDocument
   public function getOtherTags ()
   {
     return Doctrine::getTable('Tag')->createQuery('t')->whereNotIn('id', $this->Tags->getPrimaryKeys())->execute();
-    
+  }
+
+  /**
+   *
+   * @param integer $width
+   * @param integer $height
+   * @param integer $version_id
+   * @return mixed
+   */
+  public function genThumbnail ($width, $height = null, $version_id = null)
+  {
+  	$thumb_filename = sfConfig::get('sf_web_dir') . $this->getThumbnailUrl($width, $height, true);
+  	if (! file_exists($thumb_filename))
+  	{
+	    $height = (null === $height) ? $width : $height;
+
+	  	if (class_exists('finfo_open'))
+	  	{
+	  		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+	  		$mime_type = finfo_file($finfo, $this->getFilePath($version_id));
+	  	}
+	  	else
+	  	{
+	  		$mime_type = mime_content_type($this->getFilePath($version_id));
+	  	}
+
+			$adapterOptions = array();
+			if (in_array($mime_type, array('application/pdf')))
+			{
+			  $adapterOptions['extract'] = 1;
+			}
+
+			$thumbnail = new sfThumbnail($width, $height, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
+			$thumbnail->loadFile($this->getFilePath($version_id));
+			$thumbnail->save($thumb_filename, 'image/png');
+  	}
+		return $thumb_filename;
   }
 }

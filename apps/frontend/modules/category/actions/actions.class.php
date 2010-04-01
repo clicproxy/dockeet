@@ -69,7 +69,8 @@ class categoryActions extends sfActions
    */
   public function executeAddUser (sfWebRequest $request)
   {
-    $category = Doctrine::getTable('Category')->find($request->getParameter('category[id]', ''));
+  	$category_params = $request->getParameter('category', array('id' => null));
+    $category = Doctrine::getTable('Category')->find($category_params['id']);
     if (!$category instanceof Category)
     {
       throw new sfException("Wrong Category ID.");
