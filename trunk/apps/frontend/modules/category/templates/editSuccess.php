@@ -1,9 +1,9 @@
 <div id="title_box">
-  <div id="title_left"></div>
+  <div id="title_top"></div>
   <div id="title_content">
     <h2><?php echo ($form->getObject()->isNew()) ? __('New category') :  __('Edit category')  . ' ' . $form->getObject()->title; ?></h2>
   </div>
-  <div id="title_right"></div>
+  <div id="title_bottom"></div>
 </div>
 
 

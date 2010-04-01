@@ -1,5 +1,5 @@
 <div id="title_box">
-  <div id="title_left"></div>
+  <div id="title_top"></div>
   <div id="title_content">
     <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->getPublicTitle() : __('Homepage'); ?></h2>
 
@@ -38,7 +38,7 @@
       </form>
     </div>
   </div>
-  <div id="title_right"></div>
+  <div id="title_bottom"></div>
 </div>
 
 <?php if ($sf_user->isAuthenticated() && null !==  $category && $category->getRawValue() instanceof Category): ?>
