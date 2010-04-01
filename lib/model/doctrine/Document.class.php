@@ -165,8 +165,8 @@ class Document extends BaseDocument
    */
   public function genThumbnail ($width, $height = null, $version_id = null)
   {
-  	$thumb_filename = sfConfig::get('sf_web_dir') . $this->getThumbnailUrl($width, $height, true);
-  	if (! file_exists($thumb_filename))
+  	$thumb_filename = $this->getThumbnailUrl($width, $height, true);
+  	if (! file_exists(sfConfig::get('sf_web_dir') . $thumb_filename))
   	{
 	    $height = (null === $height) ? $width : $height;
 
@@ -188,7 +188,7 @@ class Document extends BaseDocument
 
 			$thumbnail = new sfThumbnail($width, $height, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
 			$thumbnail->loadFile($this->getFilePath($version_id));
-			$thumbnail->save($thumb_filename, 'image/png');
+			$thumbnail->save(sfConfig::get('sf_web_dir') . $thumb_filename, 'image/png');
   	}
 		return $thumb_filename;
   }

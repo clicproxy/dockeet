@@ -43,6 +43,7 @@ class apiActions extends sfActions
     {
       $this->getUser()->login($api_access->User);
     }
+    $this->api_access = $api_access;
   }
 
  /**
@@ -63,11 +64,14 @@ class apiActions extends sfActions
         'title' => $document->title,
         'updated_at' => $document->updated_at,
         'size' => $document->size,
-        'description' => $document->description
+        'description' => $document->description,
+        'thumbnail' => $document->genThumbnail($request->getParameter('width', 125)),
+        'download' => '/api/download?slug=' . $document->slug . '&api_key=' . $this->api_access->api_key . '&api_sig=' . md5($this->api_access->api_secret . 'api_key' . $this->api_access->api_key . 'slug' . $document->slug)
       );
     }
 
-    $this->document_yaml = $document_yaml;
+    sfConfig::set('sf_web_debug', false);
+    return $this->renderText(sfYaml::dump($document_yaml));
   }
 
   /**
