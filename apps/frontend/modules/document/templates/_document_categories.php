@@ -8,7 +8,7 @@
     <?php foreach($form->getObject()->Categories as $category):?>
       <li id="category_<?php echo $category->id; ?>">
         <?php echo $category->title; ?>
-        <a href="<?php echo url_for('document/removeCategory?slug=' . $form->getObject()->slug . '&category_id=' . $category->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeCategory(this); return false;">
+        <a class="border_stylehover" href="<?php echo url_for('document/removeCategory?slug=' . $form->getObject()->slug . '&category_id=' . $category->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeCategory(this); return false;">
           <?php echo __('remove'); ?>
         </a>
       </li>
@@ -17,8 +17,8 @@
 <?php else: ?>
   <p><?php echo __("No category has this document")?></p>
 <?php endif; ?>
-
-<em><?php echo __('Add in another category'); ?></em>
+<div class="clear"></div>
+<em><?php echo __('Add in another category:'); ?></em>
 <form action="<?php echo url_for('document/addCategory'); ?>" method="post" onsubmit="documentCtrl.addCategory(this); return false;">
   <?php echo $form->renderHiddenFields(); ?>
   <?php echo $form->renderGlobalErrors(); ?>

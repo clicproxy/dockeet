@@ -6,10 +6,9 @@
   <div id="title_bottom"></div>
 </div>
 
-
-<a href="<?php echo url_for('document/index?slug=' . $form->getObject()->slug); ?>">&larr; <?php echo __('Back to the document'); ?></a>
-
 <div id="doc_edit">
+<a class="border_stylehover" href="<?php echo url_for('document/index?slug=' . $form->getObject()->slug); ?>">&laquo; <?php echo __('Back to the document'); ?></a>
+
 	<form method="post" enctype="multipart/form-data">
 	  <?php echo $form->renderHiddenFields(); ?>
 	  <?php echo $form->renderGlobalErrors(); ?>
@@ -22,13 +21,21 @@
 	  <?php echo $form['description']->renderLabel(); ?>
 	  <?php echo $form['description']; ?>
 	  
+	  <div class="clear"></div>
+	  
+	  <div class="checkbox_public">
 	  <?php echo $form['public']->renderError(); ?>
 	  <?php echo $form['public']->renderLabel(); ?>
 	  <?php echo $form['public']; ?>
+	  </div>
 	  
+	  <div class="filechange_public">
 	  <?php echo $form['file']->renderError(); ?>
 	  <?php echo $form['file']->renderLabel(); ?>
 	  <?php echo $form['file']; ?>
+	  </div>
+	  
+	  <div class="clear"></div>
 	  
 	  <input class="submit" type="submit" value="<?php echo __('Save'); ?>" />
 	</form>

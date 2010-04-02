@@ -1,4 +1,3 @@
-<?php include_partial('category/breadcrumb', array('category' => $form->getObject())); ?>
 <div id="title_box">
   <div id="title_top"></div>
   <div id="title_content">
@@ -6,6 +5,9 @@
   </div>
   <div id="title_bottom"></div>
 </div>
+
+<?php include_partial('category/breadcrumb', array('category' => $form->getObject())); ?>
+<div class="clear"></div>
 
 <div id="cat_edit">
 	<form action="<?php echo url_for('category/edit' . ($form->getObject()->isNew() ? '' : '?slug=' . $form->getObject()->slug)); ?>" method="post">
