@@ -29,8 +29,8 @@
     <em class="border_stylehover"><?php echo $document->mime_type; ?> | <strong><?php echo number_format($document->size / 1024, 2) . ' ' . __('Ko'); ?></strong></em>
   </p>
   <ul>
-    <li><label><?php echo __("Last update"); ?></label><?php echo date('d/m/Y', strtotime($document->updated_at)); ?></li>
-    <li><label><?php echo __("First upload"); ?></label><?php echo date('d/m/Y', strtotime($document->created_at)); ?></li>
+    <li><label><?php echo __("Last update"); ?></label><strong><?php echo date('d/m/Y', strtotime($document->updated_at)); ?></strong></li>
+    <li><label><?php echo __("First upload"); ?></label><strong><?php echo date('d/m/Y', strtotime($document->created_at)); ?></strong></li>
   </ul>
   <h3><?php echo __('Description'); ?></h3>
   <p id="document_description"><?php echo $document->description; ?></p>

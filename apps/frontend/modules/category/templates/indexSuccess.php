@@ -1,4 +1,3 @@
-<?php include_partial('category/breadcrumb', array('category' => $category)); ?>
 <div id="title_box">
   <div id="title_top"></div>
   <div id="title_content">
@@ -41,6 +40,9 @@
   </div>
   <div id="title_bottom"></div>
 </div>
+
+<?php include_partial('category/breadcrumb', array('category' => $category)); ?>
+<div class="clear"></div>
 
 <?php if ($sf_user->isAuthenticated() && null !==  $category && $category->getRawValue() instanceof Category): ?>
   <div id="category_control_box" class="control_box">
