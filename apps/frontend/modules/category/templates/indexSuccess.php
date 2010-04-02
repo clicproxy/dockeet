@@ -44,7 +44,7 @@
 
 <?php if ($sf_user->isAuthenticated() && null !==  $category && $category->getRawValue() instanceof Category): ?>
   <div id="category_control_box" class="control_box">
-    <ul>
+    <ul class="listdoc">
       <?php if ($sf_user->hasSubscribed($category->getRawValue())): ?>
         <li><a href="<?php echo url_for('category/unsubscribe?slug=' . $category->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
       <?php else: ?>
