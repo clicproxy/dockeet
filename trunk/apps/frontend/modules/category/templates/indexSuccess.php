@@ -61,4 +61,4 @@
   </div>
 <?php endif; ?>
 
-<?php include_partial('document/list', array('pager' => $pager)); ?>
+<?php include_partial('document/list', array('pager' => $pager, 'category' => $category)); ?>
