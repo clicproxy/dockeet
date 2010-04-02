@@ -440,6 +440,7 @@ div#content div#sf_content div#document_box div.document_thumbnail a:hover span.
 
 div#content div#sf_content div#document_box div.document_mixed {
 	margin: 10px;
+	position:relative;
 }
 div#content div#sf_content div#document_box div.document_mixed img {
 	float: left;
@@ -447,13 +448,31 @@ div#content div#sf_content div#document_box div.document_mixed img {
 	min-width:100px;
 	max-width: 100px;
 }
-div#content div#sf_content div#document_box div.document_mixed a {
-	font-weight: bold;
+div#content div#sf_content div#document_box div.document_mixed a strong.mixed_title {
+	display:block;
+	font-weight:bold;
+	padding:5px;
+	margin:0 0 0 110px;
 }
-div#content div#sf_content div#document_box div.document_mixed p.updated_at {
+div#content div#sf_content div#document_box div.document_mixed a strong.border_stylemixed {	
+    width:450px;  
+}
+div#content div#sf_content div#document_box div.document_mixed span {
+	font-size:0.8em;
+	padding:0 10px 10px;
+	display: block;
+	margin-left:106px;
+	padding-top: 5px;
+}
+div#content div#sf_content div#document_box div.document_mixed span.updated_at {
 	font-style: italic;
 	font-size: 12px;
-	margin-bottom: 5px;
+	display: block;
+	position: absolute;
+	right:10px;
+	top:9px;
+	border-top: none;
+	padding: 0 0 4px;
 }
 
 /* @end */
@@ -493,7 +512,7 @@ div#content div#sf_content h3 {
 	font-size: 0.9em;
 	}
 div#content div#sf_content form {
-	margin: 5px;
+	margin: 0 5px 5px;
 }
 div#content div#sf_content form input.submit,
 #doc_edit input.submit {
@@ -503,8 +522,9 @@ div#content div#sf_content form input.submit,
 }
 div#content div#sf_content form label {
 	display: block;
-	font-size: 14px;
-	margin-top: 5px;
+	font-size:0.9em;
+	font-weight: bold;
+	margin-top:10px;
 }
 div#content div#sf_content div.control_box {
 	border-bottom:1px solid #D8EEFA;
@@ -534,11 +554,28 @@ div#content div#sf_content div.control_box ul li a:hover {
 }
 div#content div#sf_content div#category_users ul,
 div#content div#sf_content div#document_categories ul {
-	margin: 10px;
+	margin: 0 10px 10px 0;
 }
 div#content div#sf_content div#category_users ul li,
 div#content div#sf_content div#document_categories ul li {
 	font-weight: bold;
+}
+div#content div#sf_content div#document_categories ul li {
+	font-size:0.8em;
+	font-weight:bold;
+	margin-right:20px;	
+}
+div#content div#sf_content div#document_categories em {
+	float:left;
+	font-size: 0.8em;
+	width:191px;
+	text-transform: uppercase;
+	font-style: normal;
+	margin-top:2px;
+}
+div#content div#sf_content div#document_categories form label,
+div#content div#sf_content div#document_categories form select#document_document_category_category_id {
+	margin-left:195px;
 }
 div#content div#sf_content div#category_users ul li a,
 div#content div#sf_content div#document_categories ul li a {
@@ -698,20 +735,59 @@ div#content div#sf_content div#document_info p#document_description {
 }
 /* @end */
 
-/* @group Document edit */
-#doc_edit label {
+/* @group edit */
+#doc_edit label,
+#cat_edit label,
+#doc_cat label {
 	font-size:0.6em;
 	text-transform:uppercase;	
 }
 #doc_edit input,
+#cat_edit input.submit,
+#cat_edit input,
 #doc_cat input.submit,
 #document_categories input.submit {
 	border: none;
 }
-#doc_edit input#document_title {
-	background: url(../images/loginputtxt.png) no-repeat left top;
-	width: 199px;
-	height: 26px;
+#doc_edit input#document_title,
+#cat_edit input#category_title {
+	background:url("../images/loginputtxt.png") no-repeat scroll left top transparent;
+	height:26px;
+	padding-left:5px;
+	padding-right:5px;
+	width:189px;
+}
+textarea {
+	-moz-border-radius: 5px; /* FF1+ */
+  	-webkit-border-radius: 5px; /* Saf3+, Chrome */
+    border-radius: 5px;	
+    border: 1px solid #d8eefa;  
+    padding:5px;
+    color: #5F6060;
+    font-weight: normal;
+}
+div#content div#sf_content #category_users form {
+	margin-top: 0;
+}
+#doc_edit a.border_stylehover,
+#document_categories a.border_stylehover {
+	display:inline-block;
+	margin-top:10px;
+	padding:1px 10px;
+}
+div#content div#sf_content form .checkbox_public {
+	width: 110px;
+	float: left;
+}
+div#content div#sf_content form .checkbox_public label,
+div#content div#sf_content form .filechange_public label {
+	float: left;
+	display: inline;
+}
+div#content div#sf_content form .checkbox_public input#document_public,
+div#content div#sf_content form .filechange_public input#document_file {
+	margin-top:11px;
+	margin-left:10px;
 }
 /* @end */
 
