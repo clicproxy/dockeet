@@ -1,7 +1,7 @@
 <div id="title_box">
   <div id="title_top"></div>
   <div id="title_content">
-    <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? __('Category') . ' ' . $category->getPublicTitle() : __('Homepage'); ?></h2>
+    <h2><?php echo (!is_null($category) && $category->getRawValue() instanceof Category) ? $category->getPublicTitle() : __('Homepage'); ?></h2>
 
     <ul id="document_view_box">
       <li>
