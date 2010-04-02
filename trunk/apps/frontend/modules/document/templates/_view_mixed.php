@@ -1,4 +1,4 @@
-<div class="document_mixed">
+<div class="document_mixed border_style">
   <a href="<?php echo url_for('document/index?slug=' . $document->slug); ?>">
     <img src="<?php echo $document->getThumbnailUrl(125); ?>" alt="<?php echo $document->title; ?>" />
   </a>
