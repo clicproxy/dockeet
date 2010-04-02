@@ -1,1 +1,1 @@
-<a href="<?php echo url_for('document/edit?id=' . $document->id); ?>"><?php echo __('Edit'); ?></a>
+<?php echo __("Upload complete")?>, <a href="<?php echo url_for('document/edit?id=' . $document->id); ?>"><?php echo __('edit now'); ?>.</a>
