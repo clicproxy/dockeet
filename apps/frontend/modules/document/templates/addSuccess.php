@@ -9,8 +9,14 @@
   <div>
     <div id="filelist">No runtime found.</div>
     <br />
-    <a id="pickfiles" href="#"><?php echo __('Select files'); ?></a>
-    <a id="uploadfiles" href="#"><?php echo __('Upload files'); ?></a>
+    <div class="bt_expand_global">
+    	<span class="bt_expand_left"></span>
+    	<a id="pickfiles" class="bt_expand" href="#"><?php echo __('Select files'); ?></a>
+    </div>
+    <div class="bt_expand_global">
+    	<span class="bt_expand_left"></span>
+    	<a id="uploadfiles" class="bt_expand" href="#"><?php echo __('Upload files'); ?></a>
+    </div>
   </div>
 
 <script>
@@ -38,19 +44,19 @@ $(document).ready( function ()
   uploader.bind('FilesAdded', function(up, files) {
     $.each(files, function(i, file) {
       $('#filelist').append(
-        '<div id="' + file.id + '">' +
-        file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+        '<div class="border_style" id="' + file.id + '">' +
+        file.name + ' <span>(' + plupload.formatSize(file.size) + ')</span> <strong></strong>' +
       '</div>');
     });
   });
 
   uploader.bind('FileUploaded', function (up, file, r)
   {
-	  $('#' + file.id + " b").after(r.response);
+	  $('#' + file.id + " strong").after(r.response);
   });
 
   uploader.bind('UploadProgress', function(up, file) {
-    $('#' + file.id + " b").html(file.percent + "%");
+    $('#' + file.id + " strong").html(file.percent + "%");
   });
 
   $('#uploadfiles').click(function(e) {
