@@ -1,3 +1,4 @@
+<?php include_partial('category/breadcrumb', array('category' => $category)); ?>
 <div id="title_box">
   <div id="title_top"></div>
   <div id="title_content">

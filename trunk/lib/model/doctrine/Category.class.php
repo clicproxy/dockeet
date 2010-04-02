@@ -67,4 +67,26 @@ class Category extends BaseCategory
   {
   	return false != strpos($this->title, '|') ? substr($this->title, strrpos($this->title, '|')+1) : $this->title;
   }
+
+  /**
+   * Return the breadcrumb
+   * @return array
+   */
+  public function getBreadcrumb ()
+  {
+  	$breadcrumb = array();
+  	$current_title = '';
+  	foreach (explode('|', $this->title) as $title)
+  	{
+  		$current_title .= (0 == strlen($current_title) ? '' : '|') . $title;
+  		if ($current_title === $this->title) continue;
+  		$current_category = Doctrine::getTable('Category')->findOneBy('title', $current_title);
+  		if (!$current_category instanceof Category)
+  		{
+  			 continue;
+  		}
+  		$breadcrumb[$current_category->slug] = $current_category->getPublicTitle();
+  	}
+  	return $breadcrumb;
+  }
 }
