@@ -665,6 +665,9 @@ ul.pager li.pager_next {
 input#category_title {
 	width: 300px;
 }
+
+/* @group uploader */
+
 #filelist div {
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -677,14 +680,22 @@ input#category_title {
 	font-size: 0.8em;
 	float: right;
 	font-style: italic;
+	font-weight: bold;
 }
 #filelist div strong {
 	position: absolute;
 	font-size: 0.9em;
-	right: 20px;
-	color: #d8eefa;
+	right: 25px;
 	top: 25px;	
 }
+#filelist div strong.border_stylehover {
+	background-color: #d8eefa;
+	-moz-border-radius: 5px; /* FF1+ */
+  	-webkit-border-radius: 5px; /* Saf3+, Chrome */
+    border-radius: 5px;
+	padding: 0 5px;
+}
+/* @end */
 /* @group side left category */
 
 div#content div#left div#category_box ul li.root {

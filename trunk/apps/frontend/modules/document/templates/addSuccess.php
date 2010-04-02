@@ -45,7 +45,7 @@ $(document).ready( function ()
     $.each(files, function(i, file) {
       $('#filelist').append(
         '<div class="border_style" id="' + file.id + '">' +
-        file.name + ' <span>(' + plupload.formatSize(file.size) + ')</span> <strong></strong>' +
+        file.name + ' <span>(' + plupload.formatSize(file.size) + ')</span> <strong class="border_stylehover"></strong>' +
       '</div>');
     });
   });
