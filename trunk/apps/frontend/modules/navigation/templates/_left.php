@@ -8,16 +8,19 @@
   	    <li class="root">
   	      <a href="<?php echo url_for('category/index?slug=' . $category->slug); ?>" <?php if (0 === $i): ?>class="first"<?php endif;?><?php if ($max_i === $i): ?>class="last"<?php endif;?>>
     	      <?php echo $category->getPublicTitle(); ?>
+            <span><?php echo $category->countDocument(true); ?></span>
           </a>
           <?php if (0 < Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->count()): ?>
             <ul>
               <li class="title">
                 <a href="<?php echo url_for("category/index?slug=" . $category->slug); ?>"><?php echo $category->getPublicTitle(); ?></a>
+                <span><?php echo $category->countDocument(); ?></span>
               </li>
 
 		          <?php foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->execute() as $sub_category): ?>
                 <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
                   <a href="<?php echo url_for("category/index?slug=" . $sub_category->slug); ?>"><?php echo $sub_category->getPublicTitle(); ?></a>
+                  <span><?php echo $sub_category->countDocument(true); ?></span>
                 </li>
 		          <?php endforeach;?>
               <li class="foot_sub_category"></li>
