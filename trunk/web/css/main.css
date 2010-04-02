@@ -420,7 +420,7 @@ div#content div#sf_content form label {
 	margin-top: 5px;
 }
 div#content div#sf_content div.control_box {
-	
+	padding-left: 10px;	
 }
 div#content div#sf_content div.control_box ul {
 	margin: 0 0 5px 5px;
@@ -430,8 +430,7 @@ div#content div#sf_content div.control_box ul li {
 }
 div#content div#sf_content div.control_box ul li a {
 	display: inline;
-	background-color: #d8eefa;
-	border: none;
+	border: 1px solid #d8eefa;   
 	font-size: 0.8em;
 	-moz-border-radius: 0 0 5px 5px; /* FF1+ */
   	-webkit-border-radius: 0 0 5px 5px; /* Saf3+, Chrome */
@@ -439,7 +438,8 @@ div#content div#sf_content div.control_box ul li a {
     padding:3px 6px;
 }
 div#content div#sf_content div.control_box ul li a:hover {
-	text-decoration: underline;
+	text-decoration: none;
+	background-color: #d8eefa;
 }
 div#content div#sf_content div#category_users ul,
 div#content div#sf_content div#document_categories ul {
