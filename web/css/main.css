@@ -877,6 +877,15 @@ input#category_title {
     border-radius: 5px;
 	padding: 0 5px;
 }
+#filelist span.upload_response {
+	display:block;
+	margin-right:70px;
+	color: red;
+}
+#filelist a.editnow {
+	padding: 2px 5px;
+	display: inline-block;
+}
 /* @end */
 /* @group side left category */
 
