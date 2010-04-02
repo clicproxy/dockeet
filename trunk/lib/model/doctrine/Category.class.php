@@ -100,7 +100,7 @@ class Category extends BaseCategory
   	$count_document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->count();
   	if ($deep)
   	{
-  		foreach (Doctrine::getTable('Category')->createQuery('c')->where('title LIKE ?', $this->title . '%')->execute() as $category_child)
+  		foreach (Doctrine::getTable('Category')->createQuery('c')->where('title LIKE ?', $this->title . '|%')->execute() as $category_child)
   		{
   		  $count_document += Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $category_child->id)->count();
   		}
