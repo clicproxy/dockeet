@@ -25,8 +25,13 @@
 ?>
 <pre><?php echo $server_output; ?></pre>
 <ul>
-  <?php foreach (sfYaml::load($server_output) as $document_info): ?>
-    <li><a href="<?php echo $hostname . $document_info['download']; ?>"><img src="<?php echo $hostname . $document_info['thumbnail']; ?>"><?php echo $document_info['title']; ?></a></li>
+  <?php foreach (sfYaml::load($server_output) as $slug => $document_info): ?>
+    <li>
+      <a href="<?php echo $hostname . $document_info['download']; ?>"><img src="<?php echo $hostname . $document_info['thumbnail']; ?>"><?php echo $document_info['title']; ?></a>
+      <?php $api_sig = md5($api_secret . 'api_key' . $api_key . 'emaildavid@willou.net' . 'slug' . $slug); ?>
+      <a href="<?php echo $hostname . 'api/subscribe?api_key=' . $api_key . '&email=david@willou.net' . '&slug=' . $slug . '&api_sig=' . $api_sig ?>">Subscribe</a>
+      <a href="<?php echo $hostname . 'api/unsubscribe?api_key=' . $api_key . '&email=david@willou.net' . '&slug=' . $slug . '&api_sig=' . $api_sig ?>">Unsubscribe</a>
+    </li>
   <?php endforeach; ?>
 </ul>
 <?php
