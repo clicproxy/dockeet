@@ -6,7 +6,7 @@
   <div id="title_bottom"></div>
 </div>
 
-<div id="document_control_box" class="control_box">
+<div id="document_control_box" class="control_box_doc">
   <ul>
     <?php if($sf_user->hasCredential('admin')): ?>
       <li><a href="<?php echo url_for('document/edit?slug=' . $document->slug); ?>"><?php echo __('Edit'); ?></a></li>
@@ -24,9 +24,9 @@
 </div>
 
 <div id="document_info">
-  <p id="document_thumbnail">
+  <p id="document_thumbnail" class="border_style">
     <img src="<?php echo $document->getThumbnailUrl(125); ?>" alt="<?php echo $document->title; ?>" />
-    <em><?php echo $document->mime_type; ?> / <?php echo number_format($document->size / 1024, 2) . ' ' . __('Ko'); ?></em>
+    <em class="border_stylehover"><?php echo $document->mime_type; ?> | <strong><?php echo number_format($document->size / 1024, 2) . ' ' . __('Ko'); ?></strong></em>
   </p>
   <ul>
     <li><label><?php echo __("Last update"); ?></label><?php echo date('d/m/Y', strtotime($document->updated_at)); ?></li>
