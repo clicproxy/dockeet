@@ -358,6 +358,7 @@ div#content div#sf_content div#document_box div.document_thumbnail a span.title 
     border-radius: 0 0 5px 5px;
 	display: block;
 	border-top:1px solid #D8EEFA;
+	overflow:hidden;
 }
 div#content div#sf_content div#document_box div.document_thumbnail a:hover span.title {
 	background:url("../images/content/pixel_transparent_hover.png") repeat scroll center center transparent;
@@ -538,9 +539,57 @@ div#content div#sf_content div#document_info ul li label {
 	float: left;
 	text-align: left;
 }
+
+/* @group pager documents */
+
+ul.pager {
+	margin-left:5px;
+	margin-right:10px;
+	margin-top:15px;
+	text-align:center;
+	border-top: 1px solid #d8eefa;
+	padding-top: 5px;
+}
 ul.pager li {
 	display: inline;
+	-moz-border-radius: 5px; /* FF1+ */
+  	-webkit-border-radius: 5px; /* Saf3+, Chrome */
+    border-radius: 5px;
+	border: 1px solid #d8eefa;
+	padding: 1px 5px;
+	font-size:0.8em;
+	margin-right: 2px;
+	margin-left: 2px;
+	font-weight:bold;
 }
+ul.pager li:hover {
+	background-color: #d8eefa;
+	border: none;
+	-moz-border-radius: 5px; /* FF1+ */
+  	-webkit-border-radius: 5px; /* Saf3+, Chrome */
+    border-radius: 5px;
+    padding: 2px 6px;
+}
+ul.pager li.pager_first {
+	float: left;
+}
+ul.pager li.pager_last {
+	float: right;
+}
+ul.pager li.pager_previous {
+	margin-right:18px;
+}
+ul.pager li.pager_next {
+	margin-left: 20px;	
+}
+ul.pager li.pager_first,
+ul.pager li.pager_last,
+ul.pager li.pager_previous,
+ul.pager li.pager_next {
+	font-weight: normal;
+}
+
+/* @end */
 input#category_title {
 	width: 300px;
 }
