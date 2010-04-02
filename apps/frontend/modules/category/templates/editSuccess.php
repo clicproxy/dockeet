@@ -7,21 +7,22 @@
   <div id="title_bottom"></div>
 </div>
 
-
-<form action="<?php echo url_for('category/edit' . ($form->getObject()->isNew() ? '' : '?slug=' . $form->getObject()->slug)); ?>" method="post">
-	<?php echo $form->renderHiddenFields(); ?>
-	<?php echo $form->renderGlobalErrors(); ?>
-
-	<?php echo $form['title']->renderError(); ?>
-	<?php echo $form['title']->renderLabel(); ?>
-	<?php echo $form['title']; ?>
-
-	<?php echo $form['description']->renderError(); ?>
-	<?php echo $form['description']->renderLabel(); ?>
-	<?php echo $form['description']; ?>
-
-	<input class="submit" type="submit" value="<?php echo __('Save'); ?>">
-</form>
+<div id="cat_edit">
+	<form action="<?php echo url_for('category/edit' . ($form->getObject()->isNew() ? '' : '?slug=' . $form->getObject()->slug)); ?>" method="post">
+		<?php echo $form->renderHiddenFields(); ?>
+		<?php echo $form->renderGlobalErrors(); ?>
+	
+		<?php echo $form['title']->renderError(); ?>
+		<?php echo $form['title']->renderLabel(); ?>
+		<?php echo $form['title']; ?>
+	
+		<?php echo $form['description']->renderError(); ?>
+		<?php echo $form['description']->renderLabel(); ?>
+		<?php echo $form['description']; ?>
+	
+		<input class="submit" type="submit" value="<?php echo __('Save'); ?>">
+	</form>
+</div>
 
 <?php if($sf_user->hasCredential('admin') && !$form->getObject()->isNew()): ?>
   <div id="category_users">

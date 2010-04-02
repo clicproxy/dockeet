@@ -495,7 +495,8 @@ div#content div#sf_content h3 {
 div#content div#sf_content form {
 	margin: 5px;
 }
-div#content div#sf_content form input.submit {
+div#content div#sf_content form input.submit,
+#doc_edit input.submit {
 	margin: 10px 3px;
 	display: block;
 	font-size: 14px;
@@ -587,7 +588,10 @@ div#loginstart input {
 	width:199px;
 	color: silver;
 }
-div#loginstart input.submit {
+div#loginstart input.submit,
+#doc_edit input.submit,
+#cat_edit input.submit,
+#document_categories input.submit {
 	background: url(../images/logbt.png) no-repeat left top;
 	width: 127px;
 	height: 49px;
@@ -598,7 +602,10 @@ div#loginstart input.submit {
 	font-weight: bold;
 	font-size: 0.8em;
 }
-div#loginstart input.submit:hover {
+div#loginstart input.submit:hover,
+#doc_edit input.submit:hover,
+#cat_edit input.submit:hover,
+#document_categories input.submit:hover {
 	background-position: left bottom;
 }
 /* @end */
@@ -688,6 +695,23 @@ div#content div#sf_content div#document_info ul li strong {
 div#content div#sf_content div#document_info p#document_description {
 	font-size:0.8em;
 	padding:10px 10px 0;
+}
+/* @end */
+
+/* @group Document edit */
+#doc_edit label {
+	font-size:0.6em;
+	text-transform:uppercase;	
+}
+#doc_edit input,
+#doc_cat input.submit,
+#document_categories input.submit {
+	border: none;
+}
+#doc_edit input#document_title {
+	background: url(../images/loginputtxt.png) no-repeat left top;
+	width: 199px;
+	height: 26px;
 }
 /* @end */
 
