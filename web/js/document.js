@@ -5,10 +5,10 @@ DocumentCtrl = function ()
    * @param form
    * @return
    */
-  this.addCategory = function(form)
+  this.addCategory = function(category_id)
   {
-	  // TODO : Rajouter la récupération de l'identifiant de catégorie.
-    jQuery.post(jQuery(form).attr('action'), jQuery(form).serialize(), function(data) { jQuery('div#document_categories').html(data) });
+	jQuery('input#document_document_category_category_id').val(category_id);
+    jQuery.post(jQuery('form#form_add_category').attr('action'), jQuery('form#form_add_category').serialize(), function(data) { jQuery('div#document_categories').html(data) });
   };
   
   /**
