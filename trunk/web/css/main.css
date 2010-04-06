@@ -802,6 +802,8 @@ textarea {
     color: #5F6060;
     font-weight: normal;
     width:340px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 0.7em;
 }
 div#content div#sf_content #category_users form {
 	margin-top: 0;
@@ -833,7 +835,8 @@ div#content div#sf_content form .filechange_public input#document_file {
 #user_edit {
 	margin-top: 10px;
 }
-#user_edit a {
+#user_edit a,
+#document_categories a.addcat {
 	display:block;
 	padding:1px 10px;
 }
@@ -848,7 +851,33 @@ div#content div#sf_content form .filechange_public input#document_file {
 #user_unique_edit input {
 	border: none;	
 }
-
+#user_edit a.newuser,
+#document_categories a.addcat {
+	background:url("../images/logbt.png") no-repeat scroll left top transparent;
+	color:#5F6060;
+	cursor:pointer;
+	display:block;
+	font-size:0.8em;
+	font-weight:bold;
+	height:47px;
+	margin-top:20px;
+	text-shadow:0 1px 0 #D8EEFA;
+	text-transform:uppercase;
+	width:108px;
+}
+#user_edit a.newuser span,
+#document_categories a.addcat span {
+	display:block;
+	padding-top:17px;
+	text-align:center;
+}
+#document_categories a.addcat span {
+	padding-top:8px;	
+}
+#user_edit a.newuser:hover,
+#document_categories a.addcat:hover {
+	background-position: left bottom;
+}
 /* @end */
 
 /* @group pager documents */

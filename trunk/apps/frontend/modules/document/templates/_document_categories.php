@@ -25,7 +25,7 @@
   <?php echo $form['document_category']['category_id']->renderError(); ?>
   <?php echo $form['document_category']['category_id']; ?>
 
-  <a onclick="jQuery('ul#add_category').toggle(); return false;" href="#"><span><?php echo __("Add a category") ?></span></a>
+  <a class="addcat" onclick="jQuery('ul#add_category').toggle(); return false;" href="#"><span><?php echo __("Add a category") ?></span></a>
 
     <ul id="add_category" style="display: none;">
       <?php $max_i = count($sf_user->getCategories(true)) -1; ?>
