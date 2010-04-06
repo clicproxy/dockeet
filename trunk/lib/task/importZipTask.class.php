@@ -46,6 +46,7 @@ EOF;
 		foreach ($directory_iterator as $filename => $spl_file_info)
 		{
 			$relative_path = str_replace($extract_path, '', $filename);
+
 			if (is_dir($filename))
 			{
 				$category_path = str_replace('/', '|', $relative_path);
@@ -58,16 +59,19 @@ EOF;
 					$category->save();
 				}
 			}
+			else
+			{
+        $category_path = str_replace('/', '|', dirname($relative_path));
+        $category = Doctrine::getTable('Category')->findOneby('title', $category_path);
+        if (!$category instanceof Category)  throw new sfException(sprintf("Category %s unknown.", $category->title));
+			}
 
 			if (is_file($filename))
 			{
 				$title = substr(basename($filename), 0, strrpos(basename($filename), '.'));
 				$document_file = sha1(date('U') . $filename) . substr($filename, strrpos($filename, '.'));
 
-				if (0 < Doctrine::getTable('Document')->createQuery('d')->where('title = ?', $title)->count())
-				{
-					$document = Doctrine::getTable('Document')->findOneBy('title', $title);
-				}
+				$document = Doctrine::getTable('Document')->findOneBy('title', $title);
 
 				if (!$document instanceof Document)
 				{
