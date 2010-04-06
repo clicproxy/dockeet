@@ -6,7 +6,7 @@
   <div id="title_bottom"></div>
 </div>
 
-<div id="">
+<div id="user_edit">
 	<table>
 	  <thead>
 	    <tr>
@@ -17,9 +17,9 @@
 	  <tbody>
 	    <?php foreach($pager->getResults() as $user): ?>
 	      <tr>
-	        <th><a href="<?php echo url_for('user/edit?username=' . $user->username); ?>"><?php echo $user->username; ?></a></th>
+	        <th><a class="border_stylehover" href="<?php echo url_for('user/edit?username=' . $user->username); ?>"><?php echo $user->username; ?></a></th>
 	        <td><?php echo $user->email; ?></td>
-	        <td><a href="<?php echo url_for('user/delete?username=' . $user->username);?>" onclick="return confirm('<?php echo __('Are you sure ?'); ?>');"><?php echo __('delete'); ?></a></td>
+	        <td><a class="border_stylehover" href="<?php echo url_for('user/delete?username=' . $user->username);?>" onclick="return confirm('<?php echo __('Are you sure ?'); ?>');"><?php echo __('delete'); ?></a></td>
 	      </tr>
 	    <?php endforeach; ?>
 	  </tbody>

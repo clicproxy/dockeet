@@ -516,14 +516,16 @@ div#content div#sf_content form {
 }
 div#content div#sf_content form input.submit,
 #doc_edit input.submit,
-#category_users input.submit {
+#category_users input.submit ,
+#user_unique_edit input.submit{
 	margin: 10px 3px;
 	display: block;
 	font-size: 14px;
 }
-div#content div#sf_content form label {
+div#content div#sf_content form label,
+#user_unique_edit form label {
 	display: block;
-	font-size:0.9em;
+	font-size:0.8em;
 	font-weight: bold;
 	margin-top:10px;
 }
@@ -618,7 +620,8 @@ div#loginstart {
 	margin-top:20px;
 	padding-left:10px;
 }
-div#loginstart label {
+div#loginstart label,
+#user_unique_edit form label {
 	text-transform: uppercase;
 	font-weight: bold;
 	font-size: 0.8em;
@@ -638,7 +641,8 @@ div#loginstart input.submit,
 #doc_edit input.submit,
 #cat_edit input.submit,
 #document_categories input.submit,
-#category_users input.submit {
+#category_users input.submit,
+#user_unique_edit input.submit {
 	background: url(../images/logbt.png) no-repeat left top;
 	width: 127px;
 	height: 49px;
@@ -653,7 +657,8 @@ div#loginstart input.submit:hover,
 #doc_edit input.submit:hover,
 #cat_edit input.submit:hover,
 #document_categories input.submit:hover,
-#category_users:hover input.submit {
+#category_users:hover input.submit,
+#user_unique_edit:hover input.submit {
 	background-position: left bottom;
 }
 /* @end */
@@ -762,7 +767,11 @@ div#content div#sf_content div#document_info p#document_description {
 	border: none;
 }
 #doc_edit input#document_title,
-#cat_edit input#category_title {
+#cat_edit input#category_title,
+#user_unique_edit input#user_username,
+#user_unique_edit input#user_password,
+#user_unique_edit input#user_password_confirm,
+#user_unique_edit input#user_email {
 	background:url("../images/loginputtxt_large.png") no-repeat scroll left top transparent;
 	height:26px;
 	padding-left:5px;
@@ -803,6 +812,25 @@ div#content div#sf_content form .filechange_public input#document_file {
 	margin-top:11px;
 	margin-left:10px;
 }
+#user_edit {
+	margin-top: 10px;
+}
+#user_edit a {
+	display:block;
+	padding:1px 10px;
+}
+#user_edit thead {
+	font-size:0.9em;
+	text-transform:uppercase;	
+	height: 30px;
+}
+#user_edit tbody {
+	font-size:0.9em;	
+}
+#user_unique_edit input {
+	border: none;	
+}
+
 /* @end */
 
 /* @group pager documents */
