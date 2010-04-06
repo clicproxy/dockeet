@@ -24,10 +24,10 @@
 </div>
 
 <div id="document_info">
-  <p id="document_thumbnail" class="border_style">
+  <a id="document_thumbnail" class="border_style" href="<?php echo url_for('document/edit?slug=' . $document->slug); ?>">
     <img src="<?php echo $document->getThumbnailUrl(125); ?>" alt="<?php echo $document->title; ?>" />
     <em class="border_stylehover"><?php echo $document->mime_type; ?> | <strong><?php echo number_format($document->size / 1024, 2) . ' ' . __('Ko'); ?></strong></em>
-  </p>
+  </a>
   <ul>
     <li><label><?php echo __("Last update"); ?></label><strong><?php echo date('d/m/Y', strtotime($document->updated_at)); ?></strong></li>
     <li><label><?php echo __("First upload"); ?></label><strong><?php echo date('d/m/Y', strtotime($document->created_at)); ?></strong></li>
