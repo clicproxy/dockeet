@@ -16,7 +16,7 @@ abstract class BaseCategoryForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'             => new sfWidgetFormInputHidden(),
-      'title'          => new sfWidgetFormInputText(),
+      'title'          => new sfWidgetFormTextarea(),
       'description'    => new sfWidgetFormTextarea(),
       'slug'           => new sfWidgetFormInputText(),
       'created_at'     => new sfWidgetFormDateTime(),
@@ -27,7 +27,7 @@ abstract class BaseCategoryForm extends BaseFormDoctrine
 
     $this->setValidators(array(
       'id'             => new sfValidatorDoctrineChoice(array('model' => $this->getModelName(), 'column' => 'id', 'required' => false)),
-      'title'          => new sfValidatorString(array('max_length' => 255)),
+      'title'          => new sfValidatorString(),
       'description'    => new sfValidatorString(array('required' => false)),
       'slug'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'created_at'     => new sfValidatorDateTime(),
@@ -37,10 +37,7 @@ abstract class BaseCategoryForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorAnd(array(
-        new sfValidatorDoctrineUnique(array('model' => 'Category', 'column' => array('title'))),
-        new sfValidatorDoctrineUnique(array('model' => 'Category', 'column' => array('slug'))),
-      ))
+      new sfValidatorDoctrineUnique(array('model' => 'Category', 'column' => array('slug')))
     );
 
     $this->widgetSchema->setNameFormat('category[%s]');

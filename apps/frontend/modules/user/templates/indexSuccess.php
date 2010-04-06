@@ -24,4 +24,5 @@
 	    <?php endforeach; ?>
 	  </tbody>
 	</table>
+  <a href="<?php echo url_for('user/edit'); ?>">New</a>
 </div>
