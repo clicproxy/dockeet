@@ -14,13 +14,12 @@
             <ul>
               <li class="title">
                 <a href="<?php echo url_for("category/index?slug=" . $category->slug); ?>"><?php echo $category->getPublicTitle(); ?></a>
-                <span><?php echo $category->countDocument(); ?></span>
+                <span class="cat_count"><?php echo $category->countDocument(); ?></span>
               </li>
 
 		          <?php foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->execute() as $sub_category): ?>
                 <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
-                  <a href="<?php echo url_for("category/index?slug=" . $sub_category->slug); ?>"><?php echo $sub_category->getPublicTitle(); ?></a>
-                  <span><?php echo $sub_category->countDocument(true); ?></span>
+                  <a class="border_stylehover" href="<?php echo url_for("category/index?slug=" . $sub_category->slug); ?>">&raquo; <?php echo $sub_category->getPublicTitle(); ?> <span><?php echo $sub_category->countDocument(true); ?></span></a>
                 </li>
 		          <?php endforeach;?>
               <li class="foot_sub_category"></li>
