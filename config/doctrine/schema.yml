@@ -53,8 +53,7 @@ Category:
   columns:
     title:
       notnull: true
-      type: string(255)
-      unique: true
+      type: clob
     description: clob
   relations:
     Users:
