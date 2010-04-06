@@ -480,18 +480,28 @@ div#content div#sf_content div#document_box div.document_mixed span.updated_at {
 /* @group view detail */
 
 div#content div#sf_content div#document_box div.document_detail {
-	margin: 5px;
+	margin: 10px;
+	position:relative;
+	padding:5px;
 }
 div#content div#sf_content div#document_box div.document_detail a {
 	font-weight: bold;
 }
 div#content div#sf_content div#document_box div.document_detail ul {
-	margin-left: 10px;
+	margin-top:10px;
 }
 div#content div#sf_content div#document_box div.document_detail ul li {
 	font-size: 12px;
 }
-
+div#content div#sf_content div#document_box div.document_detail ul li.updated {
+	font-style: italic;
+	font-size: 12px;
+	display: inline;
+	border-top: none;
+	padding: 0 0 4px;
+	font-weight: normal;
+	margin-right:70px;
+}
 /* @end */
 div#content div#sf_content div#document_box span.pager_count {
 	font-style: italic;
@@ -557,11 +567,12 @@ div#content div#sf_content div.control_box ul li a:hover {
 }
 div#content div#sf_content div#category_users ul,
 div#content div#sf_content div#document_categories ul {
-	margin: 0 10px 10px 0;
+	margin:0 10px 20px 0;
 }
 div#content div#sf_content div#category_users ul li,
 div#content div#sf_content div#document_categories ul li {
 	font-weight: bold;
+	height: 22px;
 }
 div#content div#sf_content div#category_users ul li,
 div#content div#sf_content div#document_categories ul li {
@@ -665,17 +676,21 @@ div#loginstart input.submit:hover,
 
 /* @group Notice Error */
 div#top div#notice, div#top div#error {
-	margin: 10px 0 0 270px;
+	margin:10px 18px 0 270px;
 }
 div#notice, div#error, ul.error_list {
 	font-style: italic;
 	margin: 0 10px;
 }
 div#notice {
-	color: #A9C8DD;
+	color:#A9C8DD;
+	float:right;
+	font-size:0.9em;
 }
 div#error, ul.error_list {
 	color: #E76D75;
+	float:right;
+	font-size:0.9em;
 }
 /* @end */
 
@@ -797,6 +812,9 @@ div#content div#sf_content #category_users form {
 	display:inline-block;
 	margin-top:10px;
 	padding:1px 10px;
+}
+#doc_edit .backdoc {
+	font-size: 0.9em;
 }
 div#content div#sf_content form .checkbox_public {
 	width: 110px;

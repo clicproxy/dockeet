@@ -7,7 +7,7 @@
 </div>
 
 <div id="doc_edit">
-<a class="border_stylehover" href="<?php echo url_for('document/index?slug=' . $form->getObject()->slug); ?>">&laquo; <?php echo __('Back to the document'); ?></a>
+<a class="border_stylehover backdoc" href="<?php echo url_for('document/index?slug=' . $form->getObject()->slug); ?>">&laquo; <?php echo __('Back to the document'); ?></a>
 
 	<form method="post" enctype="multipart/form-data">
 	  <?php echo $form->renderHiddenFields(); ?>
