@@ -8,7 +8,7 @@
     <?php foreach($form->getObject()->Users as $user):?>
       <li id="category_<?php echo $user->id; ?>">
         <?php echo $user->username; ?>
-        <a href="<?php echo url_for('category/removeUser?slug=' . $form->getObject()->slug . '&user_id=' . $user->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) categoryCtrl.removeUser(this); return false;">
+        <a class="border_stylehover" href="<?php echo url_for('category/removeUser?slug=' . $form->getObject()->slug . '&user_id=' . $user->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) categoryCtrl.removeUser(this); return false;">
           <?php echo __('remove'); ?>
         </a>
       </li>
@@ -17,8 +17,8 @@
 <?php else: ?>
   <p><?php echo __("No user has access to this category")?></p>
 <?php endif; ?>
-<br/>
-<em><?php echo __('Add another user'); ?></em>
+<div class="clear"></div>
+<em><?php echo __('Add another user:'); ?></em>
 <form action="<?php echo url_for('category/addUser'); ?>" method="post" onsubmit="categoryCtrl.addUser(this); return false;">
   <?php echo $form->renderHiddenFields(); ?>
   <?php echo $form->renderGlobalErrors(); ?>
