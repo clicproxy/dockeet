@@ -12,5 +12,6 @@ class CategoryForm extends BaseCategoryForm
 {
   public function configure()
   {
+  	$this->setWidget('title', new sfWidgetFormInput());
   }
 }

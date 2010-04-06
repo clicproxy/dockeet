@@ -15,6 +15,7 @@ class CategoryFrontendForm extends CategoryForm
 	 */
   public function configure()
   {
+  	parent::configure();
   	$this->useFields(array('title', 'description'));
   	$this->setWidget('path', new sfWidgetFormInputHidden());
   	$this->setValidator('path', new sfValidatorString(array('required' => false)));
@@ -29,7 +30,7 @@ class CategoryFrontendForm extends CategoryForm
     if (array() !== $defaults && !isset($defaults['path']))
     {
       $defaults['path'] = substr($defaults['title'], 0, strrpos($defaults['title'], '|')+1);
-      $defaults['title'] = substr($defaults['title'], strrpos($defaults['title'], '|')+1);
+      $defaults['title'] = substr($defaults['title'], strrpos($defaults['title'], '|'));
       sfContext::getInstance()->getLogger()->info(var_export($defaults, true));
     }
 
