@@ -1,6 +1,6 @@
 <div class="document_detail border_style">
   <a href="<?php echo url_for('document/index?slug=' . $document->slug); ?>">
-    <?php echo $document->title; ?>
+    <strong class="title_detail"><?php echo $document->title; ?></strong>
 	  <ul>
 	    <li class="updated"><?php echo __("Last update"). ' : '; ?> <strong><?php echo date('d/m/Y', strtotime($document->updated_at)); ?></strong></li>
 	    <li class="updated"><?php echo __("First upload"). ' : '; ?> <strong><?php echo date('d/m/Y', strtotime($document->created_at)); ?></strong></li>
