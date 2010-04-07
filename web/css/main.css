@@ -240,6 +240,7 @@ div#content div#left {
 	float: left;
 	width: 230px;
 	padding: 0 10px;
+	position: relative;
 }
 div#content div#left div strong {
 	background:url("../images/leftbar/bgd_titre.png") no-repeat scroll left top transparent;
@@ -654,7 +655,7 @@ div#loginstart input {
 	margin-top:5px;
 	padding:4px 5px 5px;
 	width:199px;
-	color: silver;
+	color: gray;
 }
 div#loginstart input.submit,
 #doc_edit input.submit,
