@@ -95,12 +95,17 @@ class Category extends BaseCategory
    * @param boolean $deep
    * @return integer
    */
-  public function countDocument($deep = false)
+  public function countDocument($deep = false, User $user = null)
   {
   	$count_document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->count();
   	if ($deep)
   	{
-  		foreach (Doctrine::getTable('Category')->createQuery('c')->where('title LIKE ?', $this->title . '|%')->execute() as $category_child)
+  		$count_document_query = Doctrine::getTable('Category')->createQuery('c')->where('title LIKE ?', $this->title . '|%');
+  		if (null !== $user)
+  		{
+  		  $count_document_query->leftJoin('c.Users u')->andWhere('u.id = ?', $user->id);
+  		}
+  		foreach ($count_document_query->execute() as $category_child)
   		{
   		  $count_document += Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $category_child->id)->count();
   		}
