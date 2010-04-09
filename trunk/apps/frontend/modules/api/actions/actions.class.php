@@ -46,6 +46,19 @@ class apiActions extends sfActions
     $this->api_access = $api_access;
   }
 
+  public function executeCategories (sfWebRequest $request)
+  {
+    $tree = array();
+    foreach($this->getUser()->getCategories(true) as $category)
+    {
+      $tree[$category->slug] = array(
+        'title'     => $category->title,
+        'children'  => $category->getDescendantsForAPI()
+      );
+    }
+    return $this->renderText(sfYaml::dump($tree, 999));
+  }
+
  /**
   * Executes index action
   *
