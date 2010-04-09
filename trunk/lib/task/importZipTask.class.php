@@ -45,6 +45,9 @@ EOF;
     $category = null;
 		foreach ($directory_iterator as $filename => $spl_file_info)
 		{
+			if (false !== strpos($filename, '__MACOSX')) continue;
+			if (false !== strpos($filename, 'DS_Store')) continue;
+
 			$relative_path = str_replace($extract_path, '', $filename);
 
 			if (is_dir($filename))
