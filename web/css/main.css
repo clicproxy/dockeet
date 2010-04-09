@@ -986,8 +986,10 @@ input#category_title {
 	display: inline-block;
 }
 /* @end */
-/* @group side left category */
-
+/* @group category POPUP */
+div#popupaddcat {
+	margin-top: 10px;
+}
 div#content div#left div#category_box ul li.root {
 	position: relative;
 }
@@ -998,14 +1000,23 @@ div#content div#left div#category_box ul li.root ul {
 	left:60px;
 	width: 511px;
 }
-div#content div#left div#category_box ul li.root ul li.title {
+div#content div#sf_content div#popupaddcat ul li.root ul {
+	background: none;
+	position: absolute;
+	top: 350px;
+	left:60px;
+	width: 511px;	
+}
+div#content div#left div#category_box ul li.root ul li.title,
+div#content div#sf_content div#popupaddcat ul li.root ul li.title{
 	background: url("../images/cat_top_popup.png") no-repeat top left;
 	display: block;
 	width: 491px;
 	height: 33px;
 	padding: 10px 0 0 20px;
 }
-div#content div#left div#category_box ul li.root ul li.title a {
+div#content div#left div#category_box ul li.root ul li.title a,
+div#content div#sf_content div#popupaddcat ul li.root ul li.title a{
 	border: none;
 	padding: 0;
 	display: inline;
@@ -1014,76 +1025,97 @@ div#content div#left div#category_box ul li.root ul li.title a {
 	padding: 0;
 	width: auto;
 	text-decoration: none;
-	font-size: 1em;
+	font-size: 16px;
 	font-weight: bold;
 }
-div#content div#left div#category_box ul li.root ul li.title span.cat_count {
+div#content div#left div#category_box ul li.root ul li.title span.cat_count,
+div#content div#sf_content div#popupaddcat ul li.root ul li.title span.cat_count {
 	background:url("../images/leftbar/bgd_cat_nb.png") no-repeat scroll left top transparent;
 	display:block;
 	float:right;
-	font-size: 0.8em;
+	font-size: 12px;
 	height:19px;
-	padding-top: 2px;
+	padding-top: 3px;
 	text-align: center;
 	width: 36px;
 	margin-right: 15px;
 }
-div#content div#left div#category_box ul li.root ul li.title a:hover {
+div#content div#left div#category_box ul li.root ul li.title a:hover,
+div#content div#sf_content div#popupaddcat ul li.root ul li.title a:hover {
 	color: #fff;
 }
-div#content div#left div#category_box ul li.root ul li.sub_category {
+div#content div#left div#category_box ul li.root ul li.sub_category,
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category {
 	background: url("../images/cat_repeat_popup.png") repeat-y left;
 	text-align: left;
 	padding: 5px 0 2px 10px;
 	font-size: 0.8em;
+	margin-right: 0;
 }
-div#content div#left div#category_box ul li.root ul li.subcat_level_2 {
+div#content div#left div#category_box ul li.root ul li.subcat_level_2,
+div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_2 {
 	padding-left: 30px;
 }
-div#content div#left div#category_box ul li.root ul li.subcat_level_3 {
+div#content div#left div#category_box ul li.root ul li.subcat_level_3,
+div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_3 {
 	padding-left: 50px;
 }
-div#content div#left div#category_box ul li.root ul li.subcat_level_4 {
+div#content div#left div#category_box ul li.root ul li.subcat_level_4,
+div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_4 {
 	padding-left: 70px;
 }
-div#content div#left div#category_box ul li.root ul li.subcat_level_5 {
+div#content div#left div#category_box ul li.root ul li.subcat_level_5,
+div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_5 {
 	padding-left: 90px;
 }
-div#content div#left div#category_box ul li.root ul li.subcat_level_6 {
+div#content div#left div#category_box ul li.root ul li.subcat_level_6,
+div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_6 {
 	padding-left: 110px;
 }
-div#content div#left div#category_box ul li.root ul li.foot_sub_category {
+div#content div#left div#category_box ul li.root ul li.foot_sub_category,
+div#content div#sf_content div#popupaddcat ul li.root ul li.foot_sub_category {
 	display: block;
 	height: 18px;
 	width: 511px;
 	padding-top: 10px;
 	background: url("../images/cat_bottom_popup.png") no-repeat top left;
 }
-div#content div#left div#category_box ul li.root ul li.sub_category a {
+div#content div#left div#category_box ul li.root ul li.sub_category a,
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category a {
 	display: inline;
 	text-decoration: none;
 	padding: 2px 2px 2px 10px;
 	border: 1px solid #d8eefa;
 }
-div#content div#left div#category_box ul li.root ul li.sub_category a span {
+div#content div#left div#category_box ul li.root ul li.sub_category a span,
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category a span {
 	display: inline-block;
 	width: 24px;
-	height: 12px;
 	-moz-border-radius: 5px; /* FF1+ */
   	-webkit-border-radius: 5px; /* Saf3+, Chrome */
     border-radius: 5px;
     background-image: none;
     background-color: #fff;
     float: none;
-    font-size: 0.8em;
     margin-left: 10px;
     font-weight: bold;
+    text-align:center;
 }
-div#content div#left div#category_box ul li.root ul li.sub_category a:hover {
+div#content div#left div#category_box ul li.root ul li.sub_category a span {
+	font-size: 0.8em;
+	height: 12px;
+}
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category a span {
+	font-size: 1em;
+	height: 13px;
+}
+div#content div#left div#category_box ul li.root ul li.sub_category a:hover,
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category a:hover {
     border: 1px solid #d8eefa;
     background-color: #fff;
 }
-div#content div#left div#category_box ul li.root ul li.sub_category a:hover span {
+div#content div#left div#category_box ul li.root ul li.sub_category a:hover span,
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category a:hover span {
    background-color: #d8eefa;	
 }
 /* @end */
