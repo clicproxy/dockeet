@@ -45,84 +45,92 @@ EOF;
     $category = null;
 		foreach ($directory_iterator as $filename => $spl_file_info)
 		{
-			if (false !== strpos($filename, '__MACOSX')) continue;
-			if (false !== strpos($filename, 'DS_Store')) continue;
-
-			$relative_path = str_replace($extract_path, '', $filename);
-
-			if (is_dir($filename))
+			try
 			{
-				$category_path = str_replace('/', '|', $relative_path);
-				$category = Doctrine::getTable('Category')->findOneby('title', $category_path);
+				if (false !== strpos($filename, '__MACOSX')) continue;
+				if (false !== strpos($filename, 'DS_Store')) continue;
 
-				if (!$category instanceof Category)
+				$relative_path = str_replace($extract_path, '', $filename);
+
+				if (is_dir($filename))
 				{
-					$category = new Category();
-					$category->title = $category_path;
-					$category->save();
+					$category_path = str_replace('/', '|', $relative_path);
+					$category = Doctrine::getTable('Category')->findOneby('title', $category_path);
+
+					if (!$category instanceof Category)
+					{
+						$category = new Category();
+						$category->title = $category_path;
+						$category->save();
+					}
 				}
-			}
-			else
-			{
-        $category_path = str_replace('/', '|', dirname($relative_path));
-        $category = Doctrine::getTable('Category')->findOneby('title', $category_path);
-        if (!$category instanceof Category)  throw new sfException(sprintf("Category %s unknown.", $category->title));
-			}
-
-			if (is_file($filename))
-			{
-				$title = substr(basename($filename), 0, strrpos(basename($filename), '.'));
-				$document_file = sha1(date('U') . $filename) . substr($filename, strrpos($filename, '.'));
-
-				$document = Doctrine::getTable('Document')->findOneBy('title', $title);
-
-				if (!$document instanceof Document)
+				else
 				{
-					$document = new Document();
-					$document->title = $title;
-
+	        $category_path = str_replace('/', '|', dirname($relative_path));
+	        $category = Doctrine::getTable('Category')->findOneby('title', $category_path);
+	        if (!$category instanceof Category)  throw new sfException(sprintf("Category %s unknown.", $category->title));
 				}
 
-				$document->file = $document_file;
-				$document->save();
+				if (is_file($filename))
+				{
+					$title = substr(basename($filename), 0, strrpos(basename($filename), '.'));
+					$document_file = sha1(date('U') . $filename) . substr($filename, strrpos($filename, '.'));
 
-        $path = dirname($document->getFilePath());
-        if (! is_dir($path)) mkdir($path, 0777, true);
-        if (! is_writable($path)) throw new sfException("Write directory access denied");
+					$document = Doctrine::getTable('Document')->findOneBy('title', $title);
 
-        sfFileSystem::copy($filename, $path . '/' . $document_file);
+					if (!$document instanceof Document)
+					{
+						$document = new Document();
+						$document->title = $title;
 
-	      if (class_exists('finfo_open'))
-	      {
-	        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-	        $mime_type = finfo_file($finfo, $document->getFilePath());
-	      }
-	      else
-	      {
-	        $mime_type = mime_content_type($document->getFilePath());
-	      }
-	      $document->mime_type = $mime_type;
-	      $document->size = $spl_file_info->getSize();
-	      if (0 === Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ? and category_id = ?', array($document->id, $category->id))->count()) $document->Categories[] = $category;
+					}
 
+					$document->file = $document_file;
+					$document->save();
 
-	      if (in_array($mime_type, array('image/jpeg', 'image/png', 'image/gif', 'application/pdf')))
-	      {
-	        if (!is_dir($document->getThumbnailDirectory())) mkdir($document->getThumbnailDirectory(), 0777, true);
+	        $path = dirname($document->getFilePath());
+	        if (! is_dir($path)) mkdir($path, 0777, true);
 	        if (! is_writable($path)) throw new sfException("Write directory access denied");
 
-	        $adapterOptions = array();
-	        if (in_array($mime_type, array('application/pdf')))
-	        {
-	          $adapterOptions['extract'] = 1;
-	        }
-	        //$maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array()
-	        $thumbnail = new sfThumbnail(125, 125, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
-	        $thumbnail->loadFile($path . '/' . $document_file);
-	        $thumbnail->save(sfConfig::get('sf_web_dir') . $document->getThumbnailUrl(125, 125, true), 'image/png');
-	      }
-	      $document->save();
+	        sfFileSystem::copy($filename, $path . '/' . $document_file);
+
+		      if (class_exists('finfo_open'))
+		      {
+		        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+		        $mime_type = finfo_file($finfo, $document->getFilePath());
+		      }
+		      else
+		      {
+		        $mime_type = mime_content_type($document->getFilePath());
+		      }
+		      $document->mime_type = $mime_type;
+		      $document->size = $spl_file_info->getSize();
+		      if (0 === Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ? and category_id = ?', array($document->id, $category->id))->count()) $document->Categories[] = $category;
+
+
+		      if (in_array($mime_type, array('image/jpeg', 'image/png', 'image/gif', 'application/pdf')))
+		      {
+		        if (!is_dir($document->getThumbnailDirectory())) mkdir($document->getThumbnailDirectory(), 0777, true);
+		        if (! is_writable($path)) throw new sfException("Write directory access denied");
+
+		        $adapterOptions = array();
+		        if (in_array($mime_type, array('application/pdf')))
+		        {
+		          $adapterOptions['extract'] = 1;
+		        }
+		        //$maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array()
+		        $thumbnail = new sfThumbnail(125, 125, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
+		        $thumbnail->loadFile($path . '/' . $document_file);
+		        $thumbnail->save(sfConfig::get('sf_web_dir') . $document->getThumbnailUrl(125, 125, true), 'image/png');
+		      }
+		      $document->save();
+				}
 			}
-    }
+			catch (Exception $e)
+			{
+				echo sprintf("Erreur '%s' dans le fichier %s à la ligne %s\n", $e->getMessage(), $e->getFile(), $e->getLine());
+				continue;
+	    }
+		}
   }
 }
