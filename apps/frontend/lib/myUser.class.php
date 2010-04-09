@@ -77,7 +77,7 @@ class myUser extends sfBasicSecurityUser
     $user = $this->getUser();
     $categories_query = Doctrine::getTable('Category')->createQuery('c')
       ->leftJoin('c.Documents d')
-      ->select('c.slug, count(d.id) AS count_documents')
+      ->select('c.*, count(d.id) AS count_documents')
       ->addGroupBy('c.id');
     if (! $user instanceof User || !$user->admin) $categories_query->where('d.public = ?', 1);
     if ($user instanceof User && !$user->admin) $categories_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());

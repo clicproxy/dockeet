@@ -112,4 +112,25 @@ class Category extends BaseCategory
   	}
   	return $count_document;
   }
+
+  public function getChildren()
+  {
+    return Doctrine::getTable('Category')
+      ->createQuery()
+      ->where('title REGEXP ?', '^'.str_replace('|', '\\|', $this->title).'\\|[^|]+$')
+      ->execute();
+  }
+
+  public function getDescendantsForAPI()
+  {
+    $descendants = array();
+    foreach($this->getChildren() as $category)
+    {
+      $descendants[$category->slug] = array(
+        'title'     => $category->getPublicTitle(),
+        'children'  => $category->getDescendantsForAPI()
+      );
+    }
+    return $descendants;
+  }
 }
