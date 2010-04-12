@@ -48,17 +48,29 @@
   <div id="category_control_box" class="control_box">
     <ul class="listdoc">
       <?php if ($sf_user->hasSubscribed($category->getRawValue())): ?>
-        <li><a href="<?php echo url_for('category/unsubscribe?slug=' . $category->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
+        <li class="unsubscribe"><a href="<?php echo url_for('category/unsubscribe?slug=' . $category->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
       <?php else: ?>
-        <li><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+        <li class="unsubscribe"><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
       <?php endif; ?>
       <?php if($sf_user->hasCredential('admin')): ?>
-        <li><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
-        <li><a href="<?php echo url_for('document/add?category_slug=' . $category->slug); ?>"><?php echo __('Upload'); ?></a></li>
-        <li><a href="<?php echo url_for('category/edit?parent_slug=' . $category->slug); ?>"><?php echo __('Add child category'); ?></a></li>
+        <li class="edit"><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
+        <li class="upload"><a href="<?php echo url_for('document/add?category_slug=' . $category->slug); ?>"><?php echo __('Upload'); ?></a></li>
+        <li class="plus"><a href="<?php echo url_for('category/edit?parent_slug=' . $category->slug); ?>"><?php echo __('Add child category'); ?></a></li>
       <?php endif; ?>
     </ul>
   </div>
 <?php endif; ?>
+
+<div id="list_category">
+	<ul>
+		<?php foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->execute() as $sub_category): ?>
+		  <?php if (0 === $sub_category->countDocument(true, $sf_user->getUser()->getRawValue()) && !$sf_user->hasCredential('admin')) continue;?>
+		  <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
+		    <a class="border_stylehover" href="<?php echo url_for("category/index?slug=" . $sub_category->slug); ?>">&raquo; <?php echo $sub_category->getPublicTitle(); ?> <span><?php echo $sub_category->countDocument(); ?></span></a>
+		  </li>
+		<?php endforeach;?>
+	</ul>
+</div>
+<div class="clear"></div>
 
 <?php include_partial('document/list', array('pager' => $pager, 'category' => $category)); ?>
