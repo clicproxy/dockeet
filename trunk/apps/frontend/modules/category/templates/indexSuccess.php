@@ -50,7 +50,7 @@
       <?php if ($sf_user->hasSubscribed($category->getRawValue())): ?>
         <li class="unsubscribe"><a href="<?php echo url_for('category/unsubscribe?slug=' . $category->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
       <?php else: ?>
-        <li class="unsubscribe"><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+        <li class="subscribe"><a href="<?php echo url_for('category/subscribe?slug=' . $category->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
       <?php endif; ?>
       <?php if($sf_user->hasCredential('admin')): ?>
         <li class="edit"><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>

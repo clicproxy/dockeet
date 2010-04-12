@@ -15,7 +15,7 @@
       <?php if ($sf_user->hasSubscribed($document)): ?>
         <li class="unsubscribe"><a href="<?php echo url_for('document/unsubscribe?slug=' . $document->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
       <?php else: ?>
-        <li class="unsubscribe"><a href="<?php echo url_for('document/subscribe?slug=' . $document->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+        <li class="subscribe"><a href="<?php echo url_for('document/subscribe?slug=' . $document->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
       <?php endif; ?>
     <?php endif; ?>
     <li class="download"><a href="<?php echo url_for('document/download?slug=' . $document->slug); ?>"><?php echo __('Download'); ?></a></li>
