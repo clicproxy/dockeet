@@ -768,6 +768,10 @@ div#content div#sf_content div.control_box ul li.delete a{
 }
 div#content div#sf_content div.control_box_doc ul li.unsubscribe a,
 div#content div#sf_content div.control_box ul li.unsubscribe a{
+	background:url("../images/icons/subscribe.png") no-repeat scroll 85px 4px transparent;
+}
+div#content div#sf_content div.control_box_doc ul li.subscribe a,
+div#content div#sf_content div.control_box ul li.subscribe a{
 	background:url("../images/icons/subscribe.png") no-repeat scroll 71px 4px transparent;
 }
 div#content div#sf_content div.control_box_doc ul li.download a,
@@ -794,6 +798,11 @@ div#content div#sf_content div.control_box ul li.delete a:hover {
 }
 div#content div#sf_content div.control_box_doc ul li.unsubscribe a:hover,
 div#content div#sf_content div.control_box ul li.unsubscribe a:hover {
+	background:url("../images/icons/subscribe_hover.png") no-repeat scroll 85px 4px transparent;
+	background-color: #d8eefa;	
+}
+div#content div#sf_content div.control_box_doc ul li.subscribe a:hover,
+div#content div#sf_content div.control_box ul li.subscribe a:hover {
 	background:url("../images/icons/subscribe_hover.png") no-repeat scroll 71px 4px transparent;
 	background-color: #d8eefa;	
 }
