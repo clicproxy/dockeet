@@ -282,6 +282,7 @@ div#content div#left div ul li a.first {
 }
 div#content div#left div ul li a.last {
 	border-bottom: none;
+	position: relative;
 }
 div#content div#left div ul li a span {
 	display: block;
@@ -313,6 +314,7 @@ div#content div#sf_content {
 }
 div#content div#sf_content div#title_box {
 	margin: 0 auto;
+	position: relative;
 }
 div#content div#sf_content div#title_box div#title_top {
 	background: transparent url("../images/content/title_top.png") no-repeat top right;
@@ -328,6 +330,7 @@ div#content div#sf_content div#title_box div#title_content {
 	background: transparent url("../images/content/title_content.png") repeat-y left;
 	padding: 5px 5px 0;
 	width: 680px;
+	position: relative;
 }
 div#content div#sf_content div#title_box div#title_content h2 {
 	width: 410px;
@@ -341,8 +344,8 @@ div#content div#sf_content div#title_box div#title_content ul#document_view_box 
 	width: 87px;
 	height: 27px;
 	position: absolute;
-	top: 10px;
-	left: 440px;
+	top:3px;
+	left:430px;
 }
 div#content div#sf_content div#title_box div#title_content ul#document_view_box li {
 	display: inline;
@@ -380,7 +383,7 @@ div#content div#sf_content div#title_box div#sort_box {
 	height: 25px;
 	position: absolute;
 	right: 20px;
-	top: 10px;
+	top:7px;
 }
 div#content div#sf_content div#title_box div#sort_box form {
 	margin: 0;
