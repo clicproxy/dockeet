@@ -264,7 +264,7 @@ div#content div#left div ul li a {
 	display:block;
 	font-size:0.8em;
 	margin:0 auto;
-	padding:2px 2px 5px;
+	padding:2px 2px 10px;
 	width:200px;
 }
 div#content div#left div ul li a.first {
@@ -1051,6 +1051,9 @@ div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category {
 	padding: 5px 0 2px 10px;
 	font-size: 0.8em;
 	margin-right: 0;
+}
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category {
+	height: 16px;
 }
 div#content div#left div#category_box ul li.root ul li.subcat_level_2,
 div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_2 {
