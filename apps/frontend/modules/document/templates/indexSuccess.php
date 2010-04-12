@@ -5,26 +5,25 @@
   </div>
   <div id="title_bottom"></div>
 </div>
-
 <div id="document_control_box" class="control_box_doc">
   <ul>
     <?php if($sf_user->hasCredential('admin')): ?>
-      <li><a href="<?php echo url_for('document/edit?slug=' . $document->slug); ?>"><?php echo __('Edit'); ?></a></li>
-      <li><a href="<?php echo url_for('document/delete?slug=' . $document->slug); ?>" onclick="return confirm('<?php echo __('Are you sure ?'); ?>')"><?php echo __('Delete'); ?></a></li>
+      <li class="edit"><a href="<?php echo url_for('document/edit?slug=' . $document->slug); ?>"><?php echo __('Edit'); ?></a></li>
+      <li class="delete"><a href="<?php echo url_for('document/delete?slug=' . $document->slug); ?>" onclick="return confirm('<?php echo __('Are you sure ?'); ?>')"><?php echo __('Delete'); ?></a></li>
     <?php endif; ?>
     <?php if ($sf_user->isAuthenticated()): ?>
       <?php if ($sf_user->hasSubscribed($document)): ?>
-        <li><a href="<?php echo url_for('document/unsubscribe?slug=' . $document->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
+        <li class="unsubscribe"><a href="<?php echo url_for('document/unsubscribe?slug=' . $document->slug); ?>"><?php echo __('Unsubscribe'); ?></a></li>
       <?php else: ?>
-        <li><a href="<?php echo url_for('document/subscribe?slug=' . $document->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
+        <li class="unsubscribe"><a href="<?php echo url_for('document/subscribe?slug=' . $document->slug); ?>"><?php echo __('Subscribe'); ?></a></li>
       <?php endif; ?>
     <?php endif; ?>
-    <li><a href="<?php echo url_for('document/download?slug=' . $document->slug); ?>"><?php echo __('Download'); ?></a></li>
+    <li class="download"><a href="<?php echo url_for('document/download?slug=' . $document->slug); ?>"><?php echo __('Download'); ?></a></li>
   </ul>
 </div>
 
 <div id="document_info">
-  <a id="document_thumbnail" class="border_style" href="<?php echo url_for('document/edit?slug=' . $document->slug); ?>">
+  <a id="document_thumbnail" class="border_style" href="<?php echo url_for('document/download?slug=' . $document->slug); ?>"><?php echo __('Download'); ?>
     <img src="<?php echo $document->getThumbnailUrl(125); ?>" alt="<?php echo $document->title; ?>" />
     <em class="border_stylehover"><?php echo $document->mime_type; ?> | <strong><?php echo number_format($document->size / 1024, 2) . ' ' . __('Ko'); ?></strong></em>
   </a>
