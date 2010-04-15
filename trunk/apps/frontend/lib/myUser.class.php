@@ -39,25 +39,41 @@ class myUser extends sfBasicSecurityUser
 
   /**
    * Return viewable document of the user
-   * @param $category
+   * @param $query
    * @return Doctrine_Query
    */
-  public function getDocumentsQuery (Category $category = null)
+  public function getDocumentsQuery ($query = array())
   {
+    
+// NOTE DE THOMAS ... c'est pas à mettre en grande partie dans le modèle ???
+    
     $user = $this->getUser();
     $documents_query = Doctrine::getTable('Document')->createQuery('d');
-    $documents_query->addOrderBy($this->getAttribute('order_by', 'updated_at DESC', 'frontend'));
-
-    if ($category instanceof Category)
+    
+    if (isset($query['order_by']))
     {
-      $documents_query->innerJoin('d.Categories c WITH c.id = ?', $category->id);
+      $documents_query->addOrderBy($query['order_by']);  
+    }
+    else
+    {
+      $documents_query->addOrderBy($this->getAttribute('order_by', 'updated_at DESC', 'frontend'));
+    }    
+    
+    if (isset($query['public']) && $query['public'])
+    {
+      $documents_query->andWhere('d.public = 1');
+    }
+
+    if ($query['category'] instanceof Category)
+    {
+      $documents_query->innerJoin('d.Categories c WITH c.id = ?', $query['category']->id);
     }
 
     if (! $user instanceof User || !$user->admin) $documents_query->where('d.public = ?', 1);
 
     if ($user instanceof User && !$user->admin)
     {
-      if ($category instanceof Category)
+      if ($query['category'] instanceof Category)
       {
         $documents_query->leftJoin('c.Users u');
         $documents_query->orWhere('u.id = ?', $user->id);
@@ -67,6 +83,11 @@ class myUser extends sfBasicSecurityUser
         $documents_query->leftJoin('d.Categories c');
         $documents_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
       }
+    }
+
+    if (isset($query['mime_types']) && !empty($query['mime_types']))
+    {
+      $documents_query->andWhereIn('d.mime_type', $query['mime_types']);
     }
 
     return $documents_query;

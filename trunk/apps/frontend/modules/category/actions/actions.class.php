@@ -19,7 +19,7 @@ class categoryActions extends sfActions
     $category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
 
     $pager = new sfDoctrinePager('Document');
-    $pager->setQuery($this->getUser()->getDocumentsQuery($category));
+    $pager->setQuery($this->getUser()->getDocumentsQuery(array('category'=>$category)));
     $pager->setPage($request->getParameter('page', 1));
     $pager->init();
 
