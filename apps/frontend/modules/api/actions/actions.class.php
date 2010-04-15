@@ -66,8 +66,19 @@ class apiActions extends sfActions
   */
   public function executeList (sfWebRequest $request)
   {
-    $category = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
-    $document_query = $this->getUser()->getDocumentsQuery($category);
+    
+    $documentsQuery = array();    
+    $documentsQuery['category'] = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
+    $documentsQuery['mime_types'] = $request->hasParameter('type') ? MimeMap::getMimeTypesForType($request->getParameter('type')) : array();
+    $documentsQuery['public'] = $request->getParameter('public', false);
+
+    // order_by
+    if ($request->hasParameter('order_by'))
+    {
+      $documentsQuery['order_by'] = 'd.'.$request->getParameter('order_by');
+    } 
+    
+    $document_query = $this->getUser()->getDocumentsQuery($documentsQuery);
     $document_query->limit($request->getParameter('limit', 10));
 
     $document_yaml = array();
@@ -79,6 +90,7 @@ class apiActions extends sfActions
         'size' => $document->size,
         'description' => $document->description,
         'thumbnail' => $document->genThumbnail($request->getParameter('width', 125)),
+        'mime_type' => $document->mime_type,
         'download' => '/api/download?slug=' . $document->slug . '&api_key=' . $this->api_access->api_key . '&api_sig=' . md5($this->api_access->api_secret . 'api_key' . $this->api_access->api_key . 'slug' . $document->slug)
       );
     }
