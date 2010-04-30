@@ -427,19 +427,15 @@ div#content div#sf_content div#document_box div.document_thumbnail a span.update
 div#content div#sf_content div#document_box div.document_thumbnail a span.title {
 	background: url("../images/content/pixel_transparent.png") repeat scroll center center transparent;
 	bottom: 0;
-	font-size: 12px;
+	font-size:11px;
 	left: 0;
 	margin-bottom: 2px;
 	margin-left: 2px;
 	padding: 3px 5px;
 	width: 115px;
 	position: absolute;
-	-moz-border-radius: 0 0 
-5px 5px;
-	/* FF1+ */
-  	-webkit-border-radius: 0 0
-5px 5px;
-	/* Saf3+, Chrome */
+	-moz-border-radius: 0 0 5px 5px; /* FF1+ */
+  	-webkit-border-radius: 0 0 5px 5px; /* Saf3+, Chrome */
     border-radius: 0 0 5px 5px;
 	display: block;
 	border-top: 1px solid #D8EEFA;
