@@ -136,4 +136,18 @@ class categoryActions extends sfActions
     $category->unsubscribe($this->getUser()->getUser());
     $this->redirect('category/index?slug=' . $category->slug);
   }
+
+  /**
+   *
+   * @param sfWebRequest $request
+   */
+  public function executeDelete (sfWebRequest $request)
+  {
+  	$category = Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', ''));
+  	$this->forward404Unless($category instanceof Category, sprintf("Slug category '%s' unknown.", $request->getParameter('slug', '')));
+
+  	$category->userDelete($request->getParameter('erase_document', false));
+  	$this->getUser()->setFlash('notice', 'Category deleted.');
+  	$this->redirect('@homepage');
+  }
 }

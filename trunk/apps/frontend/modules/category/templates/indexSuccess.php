@@ -56,21 +56,32 @@
         <li class="edit"><a href="<?php echo url_for('category/edit?slug=' . $category->slug); ?>"><?php echo __('Edit'); ?></a></li>
         <li class="upload"><a href="<?php echo url_for('document/add?category_slug=' . $category->slug); ?>"><?php echo __('Upload'); ?></a></li>
         <li class="plus"><a href="<?php echo url_for('category/edit?parent_slug=' . $category->slug); ?>"><?php echo __('Add child category'); ?></a></li>
+        <li class="delete"><a href="#" onclick="jQuery('div#popup-delete-category').show(); return false;"><?php echo __('Delete category'); ?></a></li>
       <?php endif; ?>
+    </ul>
+  </div>
+  <div id="popup-delete-category" style="display: none;">
+    <strong><?php echo __("Deleted category")?></strong>
+    <ul>
+      <li><a href="<?php url_for('category/delete?slug=' . $category->slug . "&erase_document=1"); ?>"><?php echo __("Delete category & documents"); ?></a></li>
+      <li><a href="<?php url_for('category/delete?slug=' . $category->slug); ?>"><?php echo __("Delete only category"); ?></a></li>
+      <li><a href="#" onclick="jQuery('div#popup-delete-category').hide(); return false;"><?php echo __("Cancel"); ?></a></li>
     </ul>
   </div>
 <?php endif; ?>
 
-<div id="list_category">
-	<ul>
-		<?php foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->execute() as $sub_category): ?>
-		  <?php if (0 === $sub_category->countDocument(true, $sf_user->getUser()->getRawValue()) && !$sf_user->hasCredential('admin')) continue;?>
-		  <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
-		    <a class="border_stylehover" href="<?php echo url_for("category/index?slug=" . $sub_category->slug); ?>">&raquo; <?php echo $sub_category->getPublicTitle(); ?> <span><?php echo $sub_category->countDocument(); ?></span></a>
-		  </li>
-		<?php endforeach;?>
-	</ul>
-</div>
+<?php if ($category instanceof Category): ?>
+	<div id="list_category">
+		<ul>
+			<?php foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->execute() as $sub_category): ?>
+			  <?php if (0 === $sub_category->countDocument(true, $sf_user->getUser()->getRawValue()) && !$sf_user->hasCredential('admin')) continue;?>
+			  <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
+			    <a class="border_stylehover" href="<?php echo url_for("category/index?slug=" . $sub_category->slug); ?>">&raquo; <?php echo $sub_category->getPublicTitle(); ?> <span><?php echo $sub_category->countDocument(); ?></span></a>
+			  </li>
+			<?php endforeach;?>
+		</ul>
+	</div>
+<?php endif; ?>
 <div class="clear"></div>
 
 <?php include_partial('document/list', array('pager' => $pager, 'category' => $category)); ?>
