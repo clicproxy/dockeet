@@ -3,5 +3,5 @@ all:
     class: sfDoctrineDatabase
     param:
       dsn:      mysql:host=localhost;dbname=dockeet
-      username: root
-      password: root
+      username: toogproxy
+      password: woo4Quie

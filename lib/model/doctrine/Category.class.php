@@ -113,6 +113,9 @@ class Category extends BaseCategory
   	return $count_document;
   }
 
+  /**
+   * @return DoctrineCollection
+   */
   public function getChildren()
   {
     return Doctrine::getTable('Category')
@@ -121,6 +124,9 @@ class Category extends BaseCategory
       ->execute();
   }
 
+  /**
+   * @return array
+   */
   public function getDescendantsForAPI()
   {
     $descendants = array();
@@ -132,5 +138,26 @@ class Category extends BaseCategory
       );
     }
     return $descendants;
+  }
+
+  /**
+   * Delete category and, if $erase_document, its documents
+   * @param boolean $erase_document
+   */
+  public function userDelete($erase_document = false)
+  {
+  	foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $this->title . '|%')->execute() as $child_category)
+  	{
+  		if ($erase_document)
+  		{
+  			Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $child_category->id)->delete();
+  		}
+  		$child_category->delete();
+  	}
+    if ($erase_document)
+    {
+      Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->delete();
+    }
+    $this->delete();
   }
 }
