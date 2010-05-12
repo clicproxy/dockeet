@@ -150,13 +150,22 @@ class Category extends BaseCategory
   	{
   		if ($erase_document)
   		{
-  			Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $child_category->id)->delete();
+  			foreach ($child_category->Documents as $child_document)
+  			{
+  				$child_document->delete();
+  			}
+  			//die(var_export(Doctrine::getTable('Document')->createQuery('d')->where('d.id IN (SELECT d2.document_id FROM document_category d2 WHERE d2.category_id = ?)', $child_category->id)->delete()->getSqlQuery(), true));
+  			//Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $child_category->id)->delete();
   		}
   		$child_category->delete();
   	}
     if ($erase_document)
     {
-      Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->delete();
+      foreach ($this->Documents as $child_document)
+      {
+        $child_document->delete();
+      }
+     // Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->delete();
     }
     $this->delete();
   }
