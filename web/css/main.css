@@ -764,8 +764,11 @@ div#content div#sf_content div.control_box ul li.edit a {
 	background:url("../images/icons/edit.png") no-repeat scroll 33px 3px transparent;
 }
 div#content div#sf_content div.control_box_doc ul li.delete a,
-div#content div#sf_content div.control_box ul li.delete a{
+div#content div#sf_content div.control_box ul li.delete a {
 	background:url("../images/icons/delete.png") no-repeat scroll 49px 4px transparent;
+}
+div#content div#sf_content div#category_control_box ul li.delete a {
+  background-position: 100px 5px;
 }
 div#content div#sf_content div.control_box_doc ul li.unsubscribe a,
 div#content div#sf_content div.control_box ul li.unsubscribe a{
@@ -1121,7 +1124,8 @@ div#content div#sf_content div#popupaddcat ul li.root ul {
 	width: 511px;
 }
 div#content div#left div#category_box ul li.root ul li.title,
-div#content div#sf_content div#popupaddcat ul li.root ul li.title {
+div#content div#sf_content div#popupaddcat ul li.root ul li.title,
+div#boite-delete-category ul li.title {
 	background: url("../images/cat_top_popup.png") no-repeat top left;
 	display: block;
 	width: 491px;
@@ -1158,7 +1162,8 @@ div#content div#sf_content div#popupaddcat ul li.root ul li.title a:hover {
 	color: #fff;
 }
 div#content div#left div#category_box ul li.root ul li.sub_category,
-div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category {
+div#content div#sf_content div#popupaddcat ul li.root ul li.sub_category,
+div#boite-delete-category ul li.sub_category {
 	background: url("../images/cat_repeat_popup.png") repeat-y left;
 	text-align: left;
 	padding: 5px 0 2px 10px;
@@ -1189,7 +1194,8 @@ div#content div#sf_content div#popupaddcat ul li.root ul li.subcat_level_6 {
 	padding-left: 110px;
 }
 div#content div#left div#category_box ul li.root ul li.foot_sub_category,
-div#content div#sf_content div#popupaddcat ul li.root ul li.foot_sub_category {
+div#content div#sf_content div#popupaddcat ul li.root ul li.foot_sub_category,
+div#boite-delete-category ul li.foot_sub_category {
 	display: block;
 	height: 18px;
 	width: 511px;
@@ -1278,3 +1284,28 @@ div#foot ul li a:hover {
 	border: none;
 }
 /* @end */
+
+div#popup-delete-category {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: black;
+  z-index: 10000;
+  background: url("../images/pixel_popup.png") repeat;
+}
+
+div#boite-delete-category {
+  width: 511px;
+  height: 250px;
+  margin: 200px auto 0;
+}
+
+div#boite-delete-category ul li.sub_category {
+  padding: 10px 20px;
+}
+
+div#boite-delete-category ul li a.border_stylehover {
+  padding: 3px 10px;
+}

@@ -60,13 +60,17 @@
       <?php endif; ?>
     </ul>
   </div>
-  <div id="popup-delete-category" style="display: none;">
-    <strong><?php echo __("Deleted category")?></strong>
-    <ul>
-      <li><a href="<?php url_for('category/delete?slug=' . $category->slug . "&erase_document=1"); ?>"><?php echo __("Delete category & documents"); ?></a></li>
-      <li><a href="<?php url_for('category/delete?slug=' . $category->slug); ?>"><?php echo __("Delete only category"); ?></a></li>
-      <li><a href="#" onclick="jQuery('div#popup-delete-category').hide(); return false;"><?php echo __("Cancel"); ?></a></li>
-    </ul>
+  <div id="popup-delete-category" class="no-z" style="display: none;">
+    <div id="boite-delete-category">
+	    <ul>
+        <li class="title"><?php echo __("Deleted category")?></li>
+	      <li class="sub_category"><a class="border_stylehover" href="<?php echo url_for('category/delete?slug=' . $category->slug . "&erase_document=1"); ?>">» <?php echo __("Delete category & documents"); ?></a></li>
+	      <li class="sub_category"><a class="border_stylehover" href="<?php echo url_for('category/delete?slug=' . $category->slug); ?>">» <?php echo __("Delete only category"); ?></a></li>
+	      <li class="sub_category"><a class="border_stylehover" href="#" onclick="jQuery('div#popup-delete-category').hide(); return false;">» <?php echo __("Cancel"); ?></a></li>
+        <li class="foot_sub_category"></li>
+	    </ul>
+      <div class=""></div>
+    </div>
   </div>
 <?php endif; ?>
 
