@@ -1,4 +1,5 @@
 <?php
+ini_set('memory_limit', '64M');
 
 // this check prevents access to debug front controllers that are deployed by accident to production servers.
 // feel free to remove this, extend it or make something more sophisticated.
