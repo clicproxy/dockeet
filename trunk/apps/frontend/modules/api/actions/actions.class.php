@@ -79,7 +79,11 @@ class apiActions extends sfActions
     } 
     
     $document_query = $this->getUser()->getDocumentsQuery($documentsQuery);
-    $document_query->limit($request->getParameter('limit', 10));
+
+    if($request->getParameter('limit'))
+    {
+      $document_query->limit($request->getParameter('limit'));
+    }
 
     $document_yaml = array();
     foreach ($document_query->execute() as $document)
