@@ -14,6 +14,7 @@ class myUser extends sfBasicSecurityUser
       $this->addCredential('admin');
     }
     $this->setAuthenticated(true);
+    $this->user_connected = Doctrine::getTable('User')->findOneBy('username', $this->getAttribute('username', '', 'frontend'));
     return true;
   }
 
@@ -25,8 +26,15 @@ class myUser extends sfBasicSecurityUser
     $this->getAttributeHolder()->removeNamespace('frontend');
     $this->removeCredential('admin');
     $this->setAuthenticated(false);
+    $this->user_connected = null;
     return true;
   }
+
+  /**
+   *
+   * @var unknown_type
+   */
+  protected $user_connected = null;
 
   /**
    * Get the User Object
@@ -34,7 +42,11 @@ class myUser extends sfBasicSecurityUser
    */
   public function getUser()
   {
-    return $this->isAuthenticated() ? Doctrine::getTable('User')->findOneBy('username', $this->getAttribute('username', '', 'frontend')) : null;
+  	if (null === $this->user_connected)
+  	{
+  		$this->user_connected = $this->isAuthenticated() ? Doctrine::getTable('User')->findOneBy('username', $this->getAttribute('username', '', 'frontend')) : null;
+  	}
+    return $this->user_connected;
   }
 
   /**
@@ -44,8 +56,7 @@ class myUser extends sfBasicSecurityUser
    */
   public function getDocumentsQuery ($query = array())
   {
-
-// NOTE DE THOMAS ... c'est pas à mettre en grande partie dans le modèle ???
+  	// NOTE DE THOMAS ... c'est pas à mettre en grande partie dans le modèle ???
 
     $user = $this->getUser();
     $documents_query = Doctrine::getTable('Document')->createQuery('d');
@@ -93,17 +104,22 @@ class myUser extends sfBasicSecurityUser
     return $documents_query;
   }
 
-  public function getCategories ($root_only = false)
+  /**
+   *
+   * @param unknown_type $root_only
+   */
+  public function getCategories ($root_only = false, $parent = null)
   {
     $user = $this->getUser();
     $categories_query = Doctrine::getTable('Category')->createQuery('c')
       ->leftJoin('c.Documents d')
       ->select('c.*, count(d.id) AS count_documents')
       ->addGroupBy('c.id');
+
     if (! $user instanceof User || !$user->admin) $categories_query->where('d.public = ?', 1);
     if ($user instanceof User && !$user->admin) $categories_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
     if ($root_only) $categories_query->addWhere("title NOT LIKE ?", '%|%');
-
+    if (null !== $parent && !$root_only) $categories_query->addWhere("title LIKE ?", $parent . '|%');
     return $categories_query->execute();
   }
 

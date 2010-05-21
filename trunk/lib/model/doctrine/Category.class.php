@@ -97,6 +97,30 @@ class Category extends BaseCategory
    */
   public function countDocument($deep = false, User $user = null)
   {
+  	if (!$deep)
+  	{
+  	  $count_document = count($this->Documents);
+  	}
+  	else
+  	{
+  		if (null !== $user)
+  		{
+  			$count_document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->count();
+  		}
+  		else
+  		{
+  			$count_document = 0;
+  			foreach (Doctrine::getTable('Category')->createQuery('c')
+  			->leftJoin('c.Documents d')
+  			->select('c.*, count(d.id) AS count_documents')
+  			->addGroupBy('c.id')
+  			->where("title LIKE ?", $this->title . '%')->execute(array(), Doctrine_Core::HYDRATE_ARRAY) as $sub_category)
+  			{
+  				$count_document += $sub_category['count_documents'];
+  			}
+  		}
+  	}
+  	/*
   	$count_document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->count();
   	if ($deep)
   	{
@@ -109,7 +133,7 @@ class Category extends BaseCategory
   		{
   		  $count_document += Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $category_child->id)->count();
   		}
-  	}
+  	}*/
   	return $count_document;
   }
 
