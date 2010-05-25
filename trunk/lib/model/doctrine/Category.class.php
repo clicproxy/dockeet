@@ -120,20 +120,6 @@ class Category extends BaseCategory
   			}
   		}
   	}
-  	/*
-  	$count_document = Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->count();
-  	if ($deep)
-  	{
-  		$count_document_query = Doctrine::getTable('Category')->createQuery('c')->where('title LIKE ?', $this->title . '|%');
-  		if (null !== $user)
-  		{
-  		  $count_document_query->leftJoin('c.Users u')->andWhere('u.id = ?', $user->id);
-  		}
-  		foreach ($count_document_query->execute() as $category_child)
-  		{
-  		  $count_document += Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $category_child->id)->count();
-  		}
-  	}*/
   	return $count_document;
   }
 
@@ -178,8 +164,6 @@ class Category extends BaseCategory
   			{
   				$child_document->delete();
   			}
-  			//die(var_export(Doctrine::getTable('Document')->createQuery('d')->where('d.id IN (SELECT d2.document_id FROM document_category d2 WHERE d2.category_id = ?)', $child_category->id)->delete()->getSqlQuery(), true));
-  			//Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $child_category->id)->delete();
   		}
   		$child_category->delete();
   	}
@@ -189,7 +173,6 @@ class Category extends BaseCategory
       {
         $child_document->delete();
       }
-     // Doctrine::getTable('Document')->createQuery('d')->leftJoin('d.Categories c')->where('c.id = ?', $this->id)->delete();
     }
     $this->delete();
   }
