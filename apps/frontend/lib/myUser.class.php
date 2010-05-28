@@ -56,8 +56,6 @@ class myUser extends sfBasicSecurityUser
    */
   public function getDocumentsQuery ($query = array())
   {
-  	// NOTE DE THOMAS ... c'est pas à mettre en grande partie dans le modèle ???
-
     $user = $this->getUser();
     $documents_query = Doctrine::getTable('Document')->createQuery('d');
 
