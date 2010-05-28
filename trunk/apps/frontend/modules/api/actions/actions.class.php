@@ -66,18 +66,18 @@ class apiActions extends sfActions
   */
   public function executeList (sfWebRequest $request)
   {
-    
-    $documentsQuery = array();    
+
+    $documentsQuery = array();
     $documentsQuery['category'] = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
-    $documentsQuery['mime_types'] = $request->hasParameter('type') ? MimeMap::getMimeTypesForType($request->getParameter('type')) : array();
+    $documentsQuery['mime_types'] = $request->hasParameter('type') ? urldecode(unserialize($request->getParameter('type'))) : array();
     $documentsQuery['public'] = $request->getParameter('public', false);
 
     // order_by
     if ($request->hasParameter('order_by'))
     {
       $documentsQuery['order_by'] = 'd.'.$request->getParameter('order_by');
-    } 
-    
+    }
+
     $document_query = $this->getUser()->getDocumentsQuery($documentsQuery);
 
     if($request->getParameter('limit'))
