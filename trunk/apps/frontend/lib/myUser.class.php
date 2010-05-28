@@ -96,7 +96,12 @@ class myUser extends sfBasicSecurityUser
 
     if (isset($query['mime_types']) && !empty($query['mime_types']))
     {
-      $documents_query->andWhereIn('d.mime_type', $query['mime_types']);
+    	foreach ($query['mime_types'] as $index => $mime_type)
+    	{
+    		if(0 === $index) $documents_query->andWhere('d.mime_type LIKE ?', $mime_type);
+    		else $documents_query->orWhere('d.mime_type LIKE ?', $mime_type);
+    	}
+      //$documents_query->andWhereIn('d.mime_type', $query['mime_types']);
     }
 
     return $documents_query;
