@@ -69,7 +69,7 @@ class apiActions extends sfActions
 
     $documentsQuery = array();
     $documentsQuery['category'] = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
-    $documentsQuery['mime_types'] = $request->hasParameter('type') ? urldecode(unserialize($request->getParameter('type'))) : array();
+    $documentsQuery['mime_types'] = $request->hasParameter('type') ? $request->getParameter('type') : array();
     $documentsQuery['public'] = $request->getParameter('public', false);
 
     // order_by
