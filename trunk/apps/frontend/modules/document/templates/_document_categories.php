@@ -30,28 +30,24 @@
 	    <ul id="add_category" style="display: none;">
 	      <?php $max_i = count($sf_user->getCategories(true)) -1; ?>
 	      <?php foreach ($sf_user->getCategories(true) as $i => $category): ?>
-	        <?php if ('0' === $category->count_documents && !$sf_user->hasCredential('admin')) continue;?>
+	        <?php if ('0' === $category->countDocument(true) && !$sf_user->hasCredential('admin')) continue;?>
 	        <li class="root">
-	          <?php if (0 < Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ? AND category_id = ?', array($form->getObject()->id, $category->id))->count()): ?>
+	          <a href="#" onclick="documentCtrl.addCategory(<?php echo $category->id; ?>); return false;" <?php if (0 === $i): ?>class="first"<?php endif;?><?php if ($max_i === $i): ?>class="last"<?php endif;?>>
 	            <?php echo $category->getPublicTitle(); ?>
-	          <?php else: ?>
-	            <a href="#" onclick="documentCtrl.addCategory(<?php echo $category->id; ?>); return false;" <?php if (0 === $i): ?>class="first"<?php endif;?><?php if ($max_i === $i): ?>class="last"<?php endif;?>>
-	              <?php echo $category->getPublicTitle(); ?>
-	            </a>
-	          <?php endif; ?>
-	          <?php if (0 < Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->count()): ?>
+	          </a>
+
+	          <?php $sub_categories = $sf_user->getCategories(false, $category->title); ?>
+	          <?php if (0 < count($sub_categories)): ?>
 	            <ul>
-	            	<li class="title">
-                	<a href="<?php echo url_for("category/index?slug=" . $category->slug); ?>"><?php echo $category->getPublicTitle(); ?></a>
-                	<span class="cat_count"><?php echo $category->countDocument(); ?></span>
-              	</li>
-	              <?php foreach (Doctrine::getTable('Category')->createQuery('c')->where('c.title LIKE ?', $category->title . '|%')->execute() as $sub_category): ?>
+	              <li class="title">
+	                <a href="<?php echo url_for("category/index?slug=" . $category->slug); ?>"><?php echo $category->getPublicTitle(); ?></a>
+	                <span class="cat_count"><?php echo $category->countDocument(true); ?></span>
+	              </li>
+
+	              <?php foreach ($sub_categories as $sub_category): ?>
+	                <?php if (0 === $sub_category->count_documents && !$sf_user->hasCredential('admin')) continue;?>
 	                <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
-	                  <?php if (0 < Doctrine::getTable('DocumentCategory')->createQuery('d')->where('document_id = ? AND category_id = ?', array($form->getObject()->id, $sub_category->id))->count()): ?>
-	                    <?php echo $sub_category->getPublicTitle(); ?>
-	                  <?php else: ?>
-	                    <a class="border_stylehover" href="#" onclick="documentCtrl.addCategory(<?php echo $sub_category->id; ?>); return false;" >&raquo; <?php echo $sub_category->getPublicTitle(); ?><span><?php echo $sub_category->countDocument(); ?></span></a>	                    
-	                  <?php endif;  ?>
+	                  <a class="border_stylehover" href="#" onclick="documentCtrl.addCategory(<?php echo $sub_category->id; ?>); return false">&raquo; <?php echo $sub_category->getPublicTitle(); ?> <span><?php echo $sub_category->count_documents; ?></span></a>
 	                </li>
 	              <?php endforeach;?>
 	              <li class="foot_sub_category"></li>
