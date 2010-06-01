@@ -199,8 +199,7 @@ class documentActions extends sfActions
 
     if ($form->isValid())
     {
-      $documents_query = $this->getUser()->getDocumentsQuery();
-      $documents_query = Doctrine_Core::getTable('Document')->search($form->getValue('q'), $documents_query);
+      $documents_query = $this->getUser()->getDocumentsQuery(array('search' => $form->getValue('q')));
 
       $pager = new sfDoctrinePager('Document');
       $pager->setQuery($documents_query);

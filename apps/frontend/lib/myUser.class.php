@@ -104,6 +104,11 @@ class myUser extends sfBasicSecurityUser
       //$documents_query->andWhereIn('d.mime_type', $query['mime_types']);
     }
 
+    if (isset($query['search']) && !empty($query['search']))
+    {
+      $documents_query = Doctrine_Core::getTable('Document')->search($query['search'], $documents_query);
+    }
+
     return $documents_query;
   }
 
