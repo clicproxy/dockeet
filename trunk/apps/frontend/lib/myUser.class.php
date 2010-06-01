@@ -101,7 +101,16 @@ class myUser extends sfBasicSecurityUser
     		if(0 === $index) $documents_query->andWhere('d.mime_type LIKE ?', $mime_type);
     		else $documents_query->orWhere('d.mime_type LIKE ?', $mime_type);
     	}
-      //$documents_query->andWhereIn('d.mime_type', $query['mime_types']);
+    }
+
+    if (isset($query['tags']) && !empty($query['tags']))
+    {
+    	if (0 < explode(',', $query['tags'])) $documents_query->leftJoin('d.Tags t');
+      foreach (explode(',', $query['tags']) as $index => $tag)
+      {
+        if(0 === $index) $documents_query->andWhere('t.title LIKE ?', $tag);
+        else $documents_query->orWhere('t.title LIKE ?', $tag);
+      }
     }
 
     if (isset($query['search']) && !empty($query['search']))
