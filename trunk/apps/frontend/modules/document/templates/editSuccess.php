@@ -44,8 +44,7 @@
 <div id="document_categories">
   <?php include_partial('document_categories', array('form' => new DocumentCategoryAddForm($form->getObject()))); ?>
 </div>
-<!-- 
+
 <div id="document_tags">
-  <?php include_partial('document_tags', array('document' => $form->getObject())); ?>
+  <?php include_partial('document_tags', array('document' => $form->getObject(), 'form' => new DocumentTag)); ?>
 </div>
- -->

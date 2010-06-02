@@ -43,7 +43,7 @@
  * @package    dockeet
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class BaseUser extends sfDoctrineRecord
 {
@@ -54,22 +54,22 @@ abstract class BaseUser extends sfDoctrineRecord
              'notnull' => true,
              'type' => 'string',
              'unique' => true,
-             'length' => '255',
+             'length' => 255,
              ));
         $this->hasColumn('password', 'string', 255, array(
              'notnull' => true,
              'type' => 'string',
-             'length' => '255',
+             'length' => 255,
              ));
         $this->hasColumn('salt', 'string', 255, array(
              'notnull' => true,
              'type' => 'string',
-             'length' => '255',
+             'length' => 255,
              ));
         $this->hasColumn('email', 'string', 255, array(
              'notnull' => true,
              'type' => 'string',
-             'length' => '255',
+             'length' => 255,
              ));
         $this->hasColumn('admin', 'boolean', null, array(
              'notnull' => true,
@@ -78,7 +78,7 @@ abstract class BaseUser extends sfDoctrineRecord
              ));
         $this->hasColumn('culture', 'string', 5, array(
              'type' => 'string',
-             'length' => '5',
+             'length' => 5,
              ));
 
         $this->option('type', 'INNODB');

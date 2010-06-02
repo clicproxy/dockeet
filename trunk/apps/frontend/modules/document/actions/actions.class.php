@@ -310,7 +310,7 @@ class documentActions extends sfActions
       throw new sfException("Wrong Document slug.");
     }
 
-    $tag = Doctrine::getTable('Tags')->find($request->getParameter('tag_id'));
+    $tag = Doctrine::getTable('Tag')->find($request->getParameter('tag_id'));
     if (!$tag instanceof Tag)
     {
       throw new sfException("Wrong Tag Id.");
@@ -319,7 +319,7 @@ class documentActions extends sfActions
     $document->Tags[] = $tag;
     $document->save();
 
-    return $this->getPartial('document/document_tags', array('document' => $document));
+    return $this->renderPartial('document/document_tags', array('document' => $document));
   }
 
  /**
