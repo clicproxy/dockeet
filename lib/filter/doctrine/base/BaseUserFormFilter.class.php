@@ -6,7 +6,7 @@
  * @package    dockeet
  * @subpackage filter
  * @author     Your name here
- * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 24171 2009-11-19 16:37:50Z Kris.Wallsmith $
+ * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 29570 2010-05-21 14:49:47Z Kris.Wallsmith $
  */
 abstract class BaseUserFormFilter extends BaseFormFilterDoctrine
 {
@@ -61,8 +61,10 @@ abstract class BaseUserFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.UserCategory UserCategory')
-          ->andWhereIn('UserCategory.category_id', $values);
+    $query
+      ->leftJoin($query->getRootAlias().'.UserCategory UserCategory')
+      ->andWhereIn('UserCategory.category_id', $values)
+    ;
   }
 
   public function addDocumentsListColumnQuery(Doctrine_Query $query, $field, $values)
@@ -77,8 +79,10 @@ abstract class BaseUserFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.UserDocument UserDocument')
-          ->andWhereIn('UserDocument.document_id', $values);
+    $query
+      ->leftJoin($query->getRootAlias().'.UserDocument UserDocument')
+      ->andWhereIn('UserDocument.document_id', $values)
+    ;
   }
 
   public function getModelName()

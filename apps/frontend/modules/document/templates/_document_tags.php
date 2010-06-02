@@ -8,9 +8,9 @@
     <?php foreach($document->Tags as $tag):?>
       <span>
         <?php echo $tag->title; ?>
-        (<a href="<?php echo url_for('document/removeTag?slug=' . $document->slug . '&tag_id=' . $tag->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeTag(this); return false;">)
+        (<a href="<?php echo url_for('document/removeTag?slug=' . $document->slug . '&tag_id=' . $tag->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeTag(this); return false;">
           <?php echo __('remove'); ?>
-        </a>
+        </a>)
       </span>
     <?php endforeach; ?>
   </p>
@@ -20,5 +20,8 @@
 
 <em><?php echo __('Add another Tag'); ?></em>
 <?php foreach ($document->getOtherTags() as $other_tag): ?>
-  <a href="<?php echo url_for('document/addTag?slug=' . $document->slug . 'tag_id=' . $other_tag->id); ?>" onclick="documentCtrl.addTag(this); return false;"><?php $other_tag->title; ?></a>
+  <a href="<?php echo url_for('document/addTag?slug=' . $document->slug . '&tag_id=' . $other_tag->id); ?>" onclick="documentCtrl.addTag(this); return false;"><?php echo $other_tag->title; ?></a>
 <?php endforeach;?>
+<form action="<?php echo url_for('document/addTag?slug=' . $document->slug); ?>">
+  <input type="submit"/>
+</form>

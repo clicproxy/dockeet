@@ -19,7 +19,7 @@
  * @package    dockeet
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class BaseTag extends sfDoctrineRecord
 {
@@ -30,7 +30,7 @@ abstract class BaseTag extends sfDoctrineRecord
              'notnull' => true,
              'type' => 'string',
              'unique' => true,
-             'length' => '255',
+             'length' => 255,
              ));
 
         $this->option('type', 'INNODB');
