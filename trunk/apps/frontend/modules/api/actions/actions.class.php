@@ -72,6 +72,7 @@ class apiActions extends sfActions
     $documentsQuery['public'] = $request->getParameter('public', true);
     $documentsQuery['search'] = $request->getParameter('search');
     $documentsQuery['tags'] = $request->getParameter('tags');
+    $documentsQuery['deep'] = $request->getParameter('deep', false);
 
     // order_by
     if ($request->hasParameter('order_by'))

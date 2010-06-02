@@ -75,7 +75,14 @@ class myUser extends sfBasicSecurityUser
 
     if ($query['category'] instanceof Category)
     {
-      $documents_query->innerJoin('d.Categories c WITH c.id = ?', $query['category']->id);
+      if(isset($query['deep']) && $query['deep'])
+      {
+        $documents_query->innerJoin('d.Categories c WITH (c.id = ? OR c.title LIKE ?)', array($query['category']->id, $query['category']->title.'|%'));
+      }
+      else
+      {
+        $documents_query->innerJoin('d.Categories c WITH c.id = ?', $query['category']->id);
+      }
     }
 
     if (! $user instanceof User || !$user->admin) $documents_query->where('d.public = ?', 1);
