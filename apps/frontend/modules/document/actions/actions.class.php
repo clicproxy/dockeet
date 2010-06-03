@@ -309,8 +309,16 @@ class documentActions extends sfActions
     {
       throw new sfException("Wrong Document slug.");
     }
-
-    $tag = Doctrine::getTable('Tag')->find($request->getParameter('tag_id'));
+    
+    if ($request->hasParameter('tag_id')) $tag = Doctrine::getTable('Tag')->find($request->getParameter('tag_id'));
+    else
+    {
+    	$tag_title = $request->getParameter('tag');
+    	if (empty($tag_title)) throw new sfException("New tag empty");
+    	$tag = new Tag();
+    	$tag->title = $tag_title;
+    	$tag->save();
+    } 
     if (!$tag instanceof Tag)
     {
       throw new sfException("Wrong Tag Id.");
@@ -328,7 +336,20 @@ class documentActions extends sfActions
   */
   public function executeRemoveTag(sfWebRequest $request)
   {
-    // TODO
+    $document = Doctrine::getTable('Document')->findOneBy('slug', $request->getParameter('slug', ''));
+    if (!$document instanceof Document)
+    {
+      throw new sfException("Wrong Document slug.");
+    }
+
+    $tag = Doctrine::getTable('Tag')->find($request->getParameter('tag_id'));
+    if (!$tag instanceof Tag)
+    {
+      throw new sfException("Wrong Tag Id.");
+    }
+    
+    Doctrine::getTable('DocumentTag')->createQuery('d')->where('d.tag_id = ? AND d.document_id = ?', array($tag->id, $document->id))->delete()->execute();
+    return  $this->renderPartial('document/document_tags', array('document' => $document));
   }
 
 

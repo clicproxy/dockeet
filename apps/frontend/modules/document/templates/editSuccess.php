@@ -1,7 +1,7 @@
 <div id="title_box">
   <div id="title_top"></div>
   <div id="title_content">
-    <h2><?php echo __('Document'); ?></h2>
+    <h2><?php echo $form->getObject()->title; ?></h2>
   </div>
   <div id="title_bottom"></div>
 </div>
@@ -46,5 +46,5 @@
 </div>
 
 <div id="document_tags">
-  <?php include_partial('document_tags', array('document' => $form->getObject(), 'form' => new DocumentTag)); ?>
+  <?php include_partial('document_tags', array('document' => $form->getObject())); ?>
 </div>
