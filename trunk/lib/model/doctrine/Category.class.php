@@ -130,7 +130,9 @@ class Category extends BaseCategory
   {
     return Doctrine::getTable('Category')
       ->createQuery()
-      ->where('title REGEXP ?', '^'.str_replace('|', '\\|', $this->title).'\\|[^|]+$')
+      ->where('title LIKE ?', $this->title.'|%')
+      ->andWhere("(LENGTH(title) - LENGTH(REPLACE(title, '|', ''))) = ?", substr_count($this->title, '|') + 1)
+      ->orderBy('title ASC')
       ->execute();
   }
 
