@@ -8,9 +8,9 @@
     <?php foreach($document->Tags as $tag):?>
       <span>
         <?php echo $tag->title; ?>
-        (<a href="<?php echo url_for('document/removeTag?slug=' . $document->slug . '&tag_id=' . $tag->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeTag(this); return false;">
-          <?php echo __('remove'); ?>
-        </a>)
+        <a href="<?php echo url_for('document/removeTag?slug=' . $document->slug . '&tag_id=' . $tag->id); ?>" onclick="if (confirm('<?php echo __('Are you sure ?'); ?>')) documentCtrl.removeTag(this); return false;">
+          <span><?php echo __('remove'); ?></span>
+        </a>
       </span>
     <?php endforeach; ?>
   </p>
@@ -19,15 +19,15 @@
 <?php endif; ?>
 
 <p>
-	<em><?php echo __('Add exisiting tag'); ?></em> :
+	<em><?php echo __('Add exisiting tag'); ?></em> :<br/>
 	<?php foreach ($document->getOtherTags() as $i => $other_tag): ?>
 	  <?php if (0 != $i): ?>, <?php endif;?>
-	  <a href="<?php echo url_for('document/addTag?slug=' . $document->slug . '&tag_id=' . $other_tag->id); ?>" onclick="documentCtrl.addTag(this); return false;"><?php echo $other_tag->title; ?></a>
+	  <a href="<?php echo url_for('document/addTag?slug=' . $document->slug . '&tag_id=' . $other_tag->id); ?>" onclick="documentCtrl.addTag(this); return false;"><span><?php echo $other_tag->title; ?></span></a>
 	<?php endforeach;?>
 </p>
 
 <p>
-	<em><?php echo __('Add a new tag'); ?></em> :
+	<em><?php echo __('Add a new tag'); ?></em> :<br/>
 	<form action="<?php echo url_for('document/addTag?slug=' . $document->slug); ?>" onsubmit="documentCtrl.addNewTag(this); return false;">
 	  <input type="text" id="new-tag" name="new-tag" />
 	  <input type="submit"/>
