@@ -165,31 +165,39 @@ class Document extends BaseDocument
    */
   public function genThumbnail ($width, $height = null, $version_id = null)
   {
-  	$thumb_filename = $this->getThumbnailUrl($width, $height, true);
-  	if (! file_exists(sfConfig::get('sf_web_dir') . $thumb_filename))
-  	{
-	    $height = (null === $height) ? $width : $height;
+    $thumb_filename = $this->getThumbnailUrl($width, $height, true);
+    if (! file_exists(sfConfig::get('sf_web_dir') . $thumb_filename))
+    {
+      $height = (null === $height) ? $width : $height;
 
-	  	if (class_exists('finfo_open'))
-	  	{
-	  		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-	  		$mime_type = finfo_file($finfo, $this->getFilePath($version_id));
-	  	}
-	  	else
-	  	{
-	  		$mime_type = mime_content_type($this->getFilePath($version_id));
-	  	}
+      if (class_exists('finfo_open'))
+      {
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime_type = finfo_file($finfo, $this->getFilePath($version_id));
+      }
+      else
+      {
+        $mime_type = mime_content_type($this->getFilePath($version_id));
+      }
 
-			$adapterOptions = array();
-			if (in_array($mime_type, array('application/pdf')))
-			{
-			  $adapterOptions['extract'] = 1;
-			}
+      $adapterOptions = array();
+      if (in_array($mime_type, array('application/pdf')))
+      {
+        $adapterOptions['extract'] = 1;
+      }
 
-			$thumbnail = new sfThumbnail($width, $height, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
-			$thumbnail->loadFile($this->getFilePath($version_id));
-			$thumbnail->save(sfConfig::get('sf_web_dir') . $thumb_filename, 'image/png');
-  	}
-		return $thumb_filename;
+      try
+      {
+        $thumbnail = new sfThumbnail($width, $height, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
+        $thumbnail->loadFile($this->getFilePath($version_id));
+        $thumbnail->save(sfConfig::get('sf_web_dir') . $thumb_filename, 'image/png');
+      }
+      catch(Exception $e)
+      {
+        sfContext::getInstance()->getLogger()->debug($e->getMessage());
+      }
+    }
+    
+    return $thumb_filename;
   }
 }
