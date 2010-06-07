@@ -31,7 +31,6 @@ class CategoryFrontendForm extends CategoryForm
     {
       $defaults['path'] = substr($defaults['title'], 0, strrpos($defaults['title'], '|')+1);
       $defaults['title'] = substr($defaults['title'], strrpos($defaults['title'], '|')+1);
-      sfContext::getInstance()->getLogger()->info(var_export($defaults, true));
     }
 
   	return parent::setDefaults($defaults);
