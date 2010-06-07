@@ -138,12 +138,13 @@ class myUser extends sfBasicSecurityUser
     $categories_query = Doctrine::getTable('Category')->createQuery('c')
       ->leftJoin('c.Documents d')
       ->select('c.*, count(d.id) AS count_documents')
-      ->addGroupBy('c.id');
+      ->addGroupBy('c.id')
+      ->orderBy('c.title');
 
     if (! $user instanceof User || !$user->admin) $categories_query->where('d.public = ?', 1);
     if ($user instanceof User && !$user->admin) $categories_query->orWhereIn('c.id', $user->Categories->getPrimaryKeys());
-    if ($root_only) $categories_query->addWhere("title NOT LIKE ?", '%|%');
-    if (null !== $parent && !$root_only) $categories_query->addWhere("title LIKE ?", $parent . '|%');
+    if ($root_only) $categories_query->addWhere("c.title NOT LIKE ?", '%|%');
+    if (null !== $parent && !$root_only) $categories_query->addWhere("c.title LIKE ?", $parent . '|%');
     return $categories_query->execute();
   }
 
