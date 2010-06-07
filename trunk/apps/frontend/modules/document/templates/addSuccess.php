@@ -25,7 +25,7 @@ $(document).ready( function ()
   var uploader = new plupload.Uploader({
     runtimes : 'gears,html5,flash,silverlight,browserplus',
     browse_button : 'pickfiles',
-    max_file_size : '10mb',
+    max_file_size : '30mb',
     url : '<?php echo url_for("document/add?category_slug=" . $category->slug); ?>',
     unique_names : true,
     flash_swf_url : 'js/plupload.flash.swf',
