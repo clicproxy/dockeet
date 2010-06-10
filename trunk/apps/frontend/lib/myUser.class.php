@@ -170,8 +170,6 @@ class myUser extends sfBasicSecurityUser
     {
       $has_subscribed = $object->hasSubscribed($this->getUser());
     }
-
-    sfConfig::set('sf_web_debug', false);
     return $has_subscribed;
   }
 }

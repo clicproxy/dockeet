@@ -349,6 +349,10 @@ class documentActions extends sfActions
     }
     
     Doctrine::getTable('DocumentTag')->createQuery('d')->where('d.tag_id = ? AND d.document_id = ?', array($tag->id, $document->id))->delete()->execute();
+    if (0 === Doctrine::getTable('DocumentTag')->createQuery('d')->where('d.tag_id = ?', $tag->id)->count())
+    {
+    	$tag->delete();
+    }
     return  $this->renderPartial('document/document_tags', array('document' => $document));
   }
 
