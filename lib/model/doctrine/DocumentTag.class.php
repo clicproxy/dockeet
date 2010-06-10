@@ -12,4 +12,15 @@
  */
 class DocumentTag extends BaseDocumentTag
 {
+    /**
+     * Empty template method to provide concrete Record classes with the possibility
+     * to hook into the deletion procedure.
+     */
+    public function postDelete($event)
+    {
+	    if (0 === Doctrine::getTable('DocumentTag')->createQuery('d')->where('d.tag_id = ?', $this->tag_id)->count())
+	    {
+	      $this->Tag->delete();
+	    }
+    }
 }
