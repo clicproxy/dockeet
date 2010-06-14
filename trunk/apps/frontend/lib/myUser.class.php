@@ -129,8 +129,9 @@ class myUser extends sfBasicSecurityUser
   }
 
   /**
-   *
-   * @param unknown_type $root_only
+   * 
+   * @param bool $root_only
+   * @param string $parent
    */
   public function getCategories ($root_only = false, $parent = null)
   {

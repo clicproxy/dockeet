@@ -9,9 +9,9 @@ default:
     #language:     en
     #robots:       index, follow
 
-  stylesheets:    [main.css]
+  stylesheets:    [main.css, fg.menu.css, ui.theme.css]
 
-  javascripts:    [jquery, jquery.nmcDropDown.min.js]
+  javascripts:    [jquery, fg.menu.js]
 
   has_layout:     true
   layout:         layout
