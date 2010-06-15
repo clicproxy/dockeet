@@ -1,4 +1,0 @@
-editSuccess:
-  javascripts: [document]
-addSuccess:
-  javascripts: [plupload.full.min.js, gears_init.js]

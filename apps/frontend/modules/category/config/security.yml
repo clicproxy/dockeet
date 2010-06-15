@@ -1,6 +1,0 @@
-edit:
-  is_secure: true
-  credentials: admin
-
-subscribe:
-  is_secure: true

@@ -1,31 +1,17 @@
-Category:
-  Category_1:
-    title: Green
-    description: 'The green category'
-  Category_2:
-    title: Yellow
-    description: 'Yellow category'
-  Category_3:
-    title: Blue
-    description: 'The blue category'
-User:
-  User_1:
-    username: david
-    password: pass
-    email: david@willou.net
-    admin: true
-  User_2:
-    username: demo
-    password: demo
-    email: demo@demo.com
-    admin: false
-  User_3:
-    username: invite
-    password: invite
-    email: invite@invite.com
-    admin: false
-  User_4:
-    username: admin
-    password: admin
-    email: admin@admin.com
-    admin: true
+# # Populate this file with data to be loaded by your ORM's *:data-load task.
+# # You can create multiple files in this directory (i.e. 010_users.yml,
+# # 020_articles.yml, etc) which will be loaded in alphabetical order.
+# # 
+# # See documentation for your ORM's *:data-load task for more information.
+# 
+# User:
+#   fabien:
+#     username: fabien
+#     password: changeme
+#     name:     Fabien Potencier
+#     email:    fabien.potencier@symfony-project.com
+#   kris:
+#     username: Kris.Wallsmith
+#     password: changeme
+#     name:     Kris Wallsmith
+#     email:    kris.wallsmith@symfony-project.com

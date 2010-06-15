@@ -1,8 +1,0 @@
-all:
-  is_secure: true 
-  
-index:
-  credentials: admin
-
-delete:
-  credentials: admin

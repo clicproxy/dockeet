@@ -9,15 +9,6 @@
     <?php include_javascripts() ?>
   </head>
   <body>
-    <?php include_partial('navigation/top'); ?>
-      
-    <div id="content" class="column">
-      <?php include_partial('navigation/left');?>
-      <div id="sf_content">
-        <?php echo $sf_content ?>
-      </div>
-      <div class="clear"></div>
-    </div>
-    <?php include_partial('navigation/foot'); ?>
+    <?php echo $sf_content ?>
   </body>
 </html>

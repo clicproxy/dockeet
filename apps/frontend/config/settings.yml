@@ -1,3 +1,6 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/04-Settings
+
 prod:
   .settings:
     no_script_name:         true
@@ -22,31 +25,11 @@ test:
 all:
   .settings:
     # Form security secret (CSRF protection)
-    csrf_secret:            96fc2b3d5504ad4ad7c02a226fca3c9dfb261cd7
+    csrf_secret:            7e00aec88b2d76d7165c9402de9dce0310d0e206
 
     # Output escaping settings
     escaping_strategy:      true
     escaping_method:        ESC_SPECIALCHARS
 
-    # Cache settings
-    lazy_cache_key:         true
-
     # Enable the database manager
     use_database:           true
-    
-    standard_helpers: [Partial, Cache, I18N]
-    i18n: on
-    default_culture: fr_FR
-    
-    # Login
-    login_module:        navigation
-    login_action:        login
-    
-    # 404
-    error_404_action:    error404
-    error_404_module:    navigation
-    
-    # Secure
-    secure_action:       secure
-    secure_module:       navigation
-    
