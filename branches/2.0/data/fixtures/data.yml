@@ -1,0 +1,7 @@
+Library:
+  Library_1:
+    name: 'Dockeet 2.0'
+    host: dockeet2
+    prefix: dockeet2
+    created_at: '0000-00-00 00:00:00'
+    updated_at: '0000-00-00 00:00:00'

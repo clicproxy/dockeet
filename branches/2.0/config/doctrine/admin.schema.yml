@@ -1,0 +1,22 @@
+actAs: [Timestampable]
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+
+Admin:
+  columns:
+    login: string(255)
+    password: string(255)
+    salt: string(255)
+
+Library:
+  columns:
+    name: string(255)
+    host: string(255)
+    prefix: string(255)
+  indexes:
+    host_unique:
+      fields: [host]
+      type: unique
+
