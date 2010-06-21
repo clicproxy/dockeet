@@ -12,5 +12,6 @@ class ApiAccessForm extends BaseApiAccessForm
 {
   public function configure()
   {
+  	$this->useFields(array('api_key', 'api_secret', 'user_id'));
   }
 }

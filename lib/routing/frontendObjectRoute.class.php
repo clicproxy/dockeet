@@ -13,7 +13,7 @@ class frontendObjectRoute extends sfDoctrineRoute
       return false;
     }
     
-    $base = Doctrine::getTable('Base')->findOneBy('host', $context['host']);
+    $base = Doctrine::getTable('Library')->findOneBy('host', $context['host']);
     if (!$base instanceof Base)
     {
       return false;
@@ -22,7 +22,7 @@ class frontendObjectRoute extends sfDoctrineRoute
     $manager = Doctrine_Manager::getInstance();
     $manager->setAttribute(Doctrine_Core::ATTR_TBLNAME_FORMAT, $base->prefix . '_%s');
  
-    return array_merge(array('base_id' => $base->id), $parameters);
+    return $parameters;
   }
   
   

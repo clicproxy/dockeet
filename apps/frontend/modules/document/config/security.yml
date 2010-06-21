@@ -1,0 +1,6 @@
+edit:
+  is_secure:   true
+  credentials: admin
+add:
+  is_secure:   true
+  credentials: admin

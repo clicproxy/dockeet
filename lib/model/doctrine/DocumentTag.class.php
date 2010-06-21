@@ -8,8 +8,19 @@
  * @package    dockeet
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
  */
 class DocumentTag extends BaseDocumentTag
 {
+    /**
+     * Empty template method to provide concrete Record classes with the possibility
+     * to hook into the deletion procedure.
+     */
+    public function postDelete($event)
+    {
+	    if (0 === Doctrine::getTable('DocumentTag')->createQuery('d')->where('d.tag_id = ?', $this->tag_id)->count())
+	    {
+	      $this->Tag->delete();
+	    }
+    }
 }

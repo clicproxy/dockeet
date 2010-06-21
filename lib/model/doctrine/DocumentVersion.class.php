@@ -8,7 +8,7 @@
  * @package    dockeet
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 6716 2009-11-12 19:26:28Z jwage $
  */
 class DocumentVersion extends BaseDocumentVersion
 {

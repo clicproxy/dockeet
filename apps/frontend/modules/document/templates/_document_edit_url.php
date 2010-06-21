@@ -1,0 +1,1 @@
+<span class="upload_response"><?php echo __("Upload complete")?>, <a class="border_style editnow" href="<?php echo url_for('document/edit?id=' . $document->id); ?>"><?php echo __('edit now'); ?>.</a></span>
