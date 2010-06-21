@@ -8,8 +8,65 @@
  * @package    dockeet
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 6508 2009-10-14 06:28:49Z jwage $
  */
 class User extends BaseUser
 {
+  /**
+   * Return the username of the User
+   * @return string
+   */
+  public function __toString ()
+  {
+    return $this->username;
+  }
+  
+  /**
+   * Encrypte the password
+   * @param string $password
+   */
+  public function setPassword ($password)
+  {
+    if (!$password && 0 == strlen($password))
+    {
+      return;
+    }
+    
+    $this->salt = sha1(date('r'));
+    parent::_set('password', sha1($this->salt . $password));
+  }
+  
+  /**
+   * compare given password
+   *
+   * @param string $password
+   * @return boolean
+   */
+  public function login ($password)
+  {
+    return (sha1($this->salt . $password) === $this->password);
+  }
+  
+  /**
+   * 
+   * @param Category $category
+   */
+  public function getDocumentsUpdatesQuery (Category $category = null)
+  {
+    $document_query = Doctrine::getTable('Document')->createQuery('d');
+    
+    if (null !== $category)
+    {
+      $document_query->leftJoin('d.Categories c')->where('c.id = ?', $category->id);
+      $document_query->leftJoin('c.UserCategory u ON u.category_id = c.id')->andWhere('u.subscribe = 1')->andWhere('u.user_id = ?', $this->id);
+    }
+    else
+    {
+      $document_query->leftJoin('d.Users u')->where('u.username = ?', $this->username);
+    }
+    $document_query->orderBy('d.title');
+    $document_query->andWhere('TO_DAYS(NOW()) - TO_DAYS(d.updated_at) <= 1');
+    
+    return $document_query;
+  }
 }
