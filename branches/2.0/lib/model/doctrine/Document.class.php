@@ -19,7 +19,9 @@ class Document extends BaseDocument
 	 */
 	public function getFilePath($version_id = null)
 	{
-	  $file_path = sfConfig::get('sf_upload_dir') . '/documents/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+		if (sfContext::hasInstance() && sfContext::getInstance()->has('library')) $library = sfContext::getInstance()->get('library');
+		$prefix = ($library instanceof Library) ? '/' . $library->prefix : '';
+	  $file_path = sfConfig::get('sf_upload_dir') . $prefix . '/documents/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
 	  if (null === $version_id)
 	  {
 	    $file_path .= $this->file;
@@ -112,7 +114,9 @@ class Document extends BaseDocument
    */
   public function getThumbnailDirectory ()
   {
-    return sfConfig::get('sf_upload_dir') . '/thumbnail/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+    if (sfContext::hasInstance() && sfContext::getInstance()->has('library')) $library = sfContext::getInstance()->get('library');
+    $prefix = ($library instanceof Library) ? '/' . $library->prefix : '';
+    return sfConfig::get('sf_upload_dir') . $prefix . '/thumbnail/' . substr(str_pad($this->id, 2, '0', STR_PAD_LEFT), -2) . '/';
   }
 
   /**
@@ -127,6 +131,7 @@ class Document extends BaseDocument
     $thumbnail_web_directory = str_replace(sfConfig::get('sf_web_dir'), '', $this->getThumbnailDirectory());
     $thumbnail_url = $thumbnail_web_directory . $width . 'x' . $height . '_' . $this->file;
     $thumbnail_url = substr($thumbnail_url, 0, strrpos($thumbnail_url, '.')) . '.png';
+    sfContext::getInstance()->getLogger()->info(sprintf("##### %s", $thumbnail_url));
     if (!$dont_check && (!file_exists(sfConfig::get('sf_web_dir') . $thumbnail_url) || !is_readable(sfConfig::get('sf_web_dir') . $thumbnail_url)))
     {
       $thumbnail_url = '/images/content/no_thumbnail.png';

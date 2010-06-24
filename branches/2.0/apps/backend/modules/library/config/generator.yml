@@ -14,8 +14,15 @@ generator:
     config:
       actions: ~
       fields:  ~
-      list:    ~
-      filter:  ~
+      list:
+        title: Libraries - Dockeet backend
+        display: [=prefix, name, host]
+      filter:
+        display: [name, host, prefix]
       form:    ~
-      edit:    ~
-      new:     ~
+      edit:
+        title: Edit library - Dockeet backend
+        display: [name, host, prefix]
+      new:
+        title: New library - Dockeet backend
+        display: [name, host, prefix]

@@ -1,13 +1,14 @@
-# default rules
 homepage:
   url:   /
   param: { module: category, action: index }
+  class: frontendRoute
 
-# generic rules
-# please, remove them by adding more specific rules
 default_index:
   url:   /:module
   param: { action: index }
+  class: frontendRoute
 
 default:
   url:   /:module/:action/*
+  class: frontendRoute
+  
