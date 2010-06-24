@@ -178,4 +178,22 @@ class Category extends BaseCategory
     }
     $this->delete();
   }
+  
+  /**
+   * applies the changes made to this object into database
+   * this method is smart enough to know if any changes are made
+   * and whether to use INSERT or UPDATE statement
+   *
+   * this method also saves the related components
+   *
+   * @param Doctrine_Connection $conn     optional connection parameter
+   * @throws Exception                    if record is not valid and validation is active
+   * @return void
+   */
+  public function save(Doctrine_Connection $conn = null)
+  {
+  	$this->title = preg_replace('`\|+`', '|', $this->title);
+  	parent::save($conn);
+  }
+  
 }

@@ -23,6 +23,7 @@
 		                <?php $prev_level = substr_count($sub_category->title, '|'); ?>
 				          <?php endforeach;?>
 				          <?php for($i = 0; $i < $prev_level; $i++):?></ul></li><?php endfor; ?>
+				          </ul>
 	            </div>
 	            <script type="text/javascript">
 	            $(document).ready(function(){
