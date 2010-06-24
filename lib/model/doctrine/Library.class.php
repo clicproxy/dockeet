@@ -28,5 +28,7 @@ class Library extends BaseLibrary
 			$ligne_sql = str_replace(array('TABLE ', 'REFERENCES ', 'CONSTRAINT '),  array('TABLE ' . $this->prefix . '_', 'REFERENCES ' . $this->prefix . '_', 'CONSTRAINT ' . $this->prefix . '_'), $ligne_sql);
 		  $doctrine_connection_mysql->execute($ligne_sql);
 		}
+		$salt = sha1(date('r'));
+		$doctrine_connection_mysql->execute(sprintf('INSERT INTO %s_user (username, password, salt, email, admin, culture, created_at, updated_at) VALUES ("%s", "%s", "%s", "%s", %s, "%s", NOW(), NOW())', $this->prefix, 'admin', sha1($salt . 'admin'), $salt, 'admin@' . $this->host, 1, 'fr'));
 	}
 }

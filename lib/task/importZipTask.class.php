@@ -6,11 +6,12 @@ class importZipTask extends sfBaseTask
   {
     // // add your own arguments here
     $this->addArguments(array(
-      new sfCommandArgument('file', sfCommandArgument::REQUIRED, 'Zip file to import'),
+      new sfCommandArgument('library', sfCommandArgument::REQUIRED, 'Library prefix'),
+      new sfCommandArgument('file', sfCommandArgument::REQUIRED, 'Zip file to import')
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name'),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application name', 'frontend'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
       // add your own options here
@@ -29,9 +30,18 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+  	ini_set('memory_limit', '1024M');
     // initialize the database connection
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'] ? $options['connection'] : null)->getConnection();
+    $sf_filesystem = new sfFilesystem();
+    $library = Doctrine::getTable('Library')->findOneBy('prefix', $arguments['library']);
+    if (!$library instanceof Library)
+    {
+    	throw new sfException(sprintf("Library prefix '%s' unknown.", $arguments['library']));
+    }
+    $manager = Doctrine_Manager::getInstance();
+    $manager->setAttribute(Doctrine_Core::ATTR_TBLNAME_FORMAT, $library->prefix . '_%s');
 
     // add your code here
     $zip_archive = new ZipArchive();
@@ -47,8 +57,7 @@ EOF;
 		{
 			try
 			{
-				if (false !== strpos($filename, '__MACOSX')) continue;
-				if (false !== strpos($filename, 'DS_Store')) continue;
+				if (false !== strpos($filename, '__MACOSX') || false !== strpos($filename, 'DS_Store') || 0 === strpos(basename($filename), '.')) continue;
 
 				$relative_path = str_replace($extract_path, '', $filename);
 
@@ -88,20 +97,21 @@ EOF;
 					$document->file = $document_file;
 					$document->save();
 
-	        $path = dirname($document->getFilePath());
+	        $path = sfConfig::get('sf_upload_dir') . '/' . $library->prefix . '/documents/' . substr(str_pad($document->id, 2, '0', STR_PAD_LEFT), -2) . '/';
+	        $thumbnail_path = sfConfig::get('sf_upload_dir') . '/' . $library->prefix . '/thumbnail/' . substr(str_pad($document->id, 2, '0', STR_PAD_LEFT), -2);
 	        if (! is_dir($path)) mkdir($path, 0777, true);
 	        if (! is_writable($path)) throw new sfException("Write directory access denied");
 
-	        sfFileSystem::copy($filename, $path . '/' . $document_file);
+	        $sf_filesystem->copy($filename, $path . '/' . $document_file);
 
 		      if (class_exists('finfo_open'))
 		      {
 		        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-		        $mime_type = finfo_file($finfo, $document->getFilePath());
+		        $mime_type = finfo_file($finfo, $path . '/' . $document_file);
 		      }
 		      else
 		      {
-		        $mime_type = mime_content_type($document->getFilePath());
+		        $mime_type = mime_content_type($path . '/' . $document_file);
 		      }
 		      $document->mime_type = $mime_type;
 		      $document->size = $spl_file_info->getSize();
@@ -110,7 +120,7 @@ EOF;
 
 		      if (in_array($mime_type, array('image/jpeg', 'image/png', 'image/gif', 'application/pdf')))
 		      {
-		        if (!is_dir($document->getThumbnailDirectory())) mkdir($document->getThumbnailDirectory(), 0777, true);
+		        if (!is_dir($thumbnail_path)) mkdir($thumbnail_path, 0777, true);
 		        if (! is_writable($path)) throw new sfException("Write directory access denied");
 
 		        $adapterOptions = array();
@@ -121,16 +131,17 @@ EOF;
 		        //$maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array()
 		        $thumbnail = new sfThumbnail(125, 125, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
 		        $thumbnail->loadFile($path . '/' . $document_file);
-		        $thumbnail->save(sfConfig::get('sf_web_dir') . $document->getThumbnailUrl(125, 125, true), 'image/png');
+		        $thumbnail->save($thumbnail_path . '/125x125_' . substr($document->file, 0, strrpos($document->file, '.')) . '.png');
 		      }
 		      $document->save();
 				}
 			}
-			catch (Exception $e)
+			catch (exception $e)
 			{
 				echo sprintf("Erreur '%s' dans le fichier %s à la ligne %s\n", $e->getMessage(), $e->getFile(), $e->getLine());
 				continue;
 	    }
 		}
+		$sf_filesystem->remove(sfConfig::get('sf_cache_dir') . '/' . date('Y.m.d-H.i') . '/');
   }
 }

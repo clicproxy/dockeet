@@ -1,5 +1,5 @@
 <?php
-class frontendObjectRoute extends sfDoctrineRoute
+class frontendRoute extends sfRoute
 {
   /**
    * Add the 
@@ -12,18 +12,17 @@ class frontendObjectRoute extends sfDoctrineRoute
     {
       return false;
     }
-    
-    $base = Doctrine::getTable('Library')->findOneBy('host', $context['host']);
-    if (!$base instanceof Base)
+    $library = Doctrine::getTable('Library')->findOneBy('host', $context['host']);
+    if (!$library instanceof Library)
     {
       return false;
     }
     
     $manager = Doctrine_Manager::getInstance();
-    $manager->setAttribute(Doctrine_Core::ATTR_TBLNAME_FORMAT, $base->prefix . '_%s');
+    $manager->setAttribute(Doctrine_Core::ATTR_TBLNAME_FORMAT, $library->prefix . '_%s');
+    sfContext::getInstance()->set('library', $library);
  
     return $parameters;
   }
-  
-  
-}
+	 
+} 
