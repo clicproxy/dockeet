@@ -29,6 +29,7 @@ class Document extends BaseDocument
 	  else
 	  {
 	    $version = Doctrine::getTable('DocumentVersion')->find($version_id);
+	    if (!$version instanceof DocumentVersion) throw new sfException(sprintf("Version %s unknown.", $version_id));
 	    $file_path .= $version->file;
 	  }
     return $file_path;
@@ -52,7 +53,7 @@ class Document extends BaseDocument
    */
   public function preSave($event)
   {
-    if (in_array('file', $this->_modified, true))
+    if (in_array('file', $this->_modified, true) && !empty($this->id))
     {
       $document_version = new DocumentVersion();
       $document_version->document_id = $this->id;
@@ -144,7 +145,7 @@ class Document extends BaseDocument
    * @param Version $version
    * @return string
    */
-  public function getDownloadFilename (Version $version = null)
+  public function getDownloadFilename (DocumentVersion $version = null)
   {
     $filename = Doctrine_Inflector::urlize($this->title);
     $file = $version instanceof Version ? $version->file : $this->file;
