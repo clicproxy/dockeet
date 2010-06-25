@@ -163,8 +163,8 @@ Date:		September 2008 */
 	font-weight: normal;
 }
 .fg-menu a span {
-	display: block;
-	cursor: pointer;
+	cursor:pointer;
+	display:inline-block;
 }
 /* SUGGESTED STYLES - for use with jQuery UI Themeroller CSS */
 .fg-menu-indicator span {

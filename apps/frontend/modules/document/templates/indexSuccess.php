@@ -32,6 +32,12 @@
     <li><label><?php echo __("First upload"); ?></label><strong><?php echo date('d/m/Y', strtotime($document->created_at)); ?></strong></li>
   </ul>
   <h3><?php echo __('Description'); ?></h3>
+  <ul class="tags">
+  <?php foreach ($document->Tags as $i => $tag): ?>
+    <li><?php echo $tag->title; ?><?php if ($i < count($document->Tags)-1): ?>,<?php endif; ?></li>
+    
+  <?php endforeach; ?>
+  </ul>
   <p id="document_description"><?php echo $document->description; ?></p>
 </div>
 
@@ -39,7 +45,7 @@
   <h3><?php echo __('Previous versions')?> (<?php echo count($document->Versions) -1; ?>)</h3>
   <ul>
     <?php foreach($document->Versions as $version): ?>
-      <?php if (date('d/m/Y', strtotime($version->created_at)) === date('d/m/Y', strtotime($document->updated_at))) continue;?>
+      <?php if ($version->file === $document->file) continue;?>
       <li>
         <a href="<?php echo url_for('document/download?slug=' . $document->slug . '&version=' . $version->id); ?>"><?php echo date('d/m/Y', strtotime($version->created_at)); ?></a>
       </li>
