@@ -573,7 +573,8 @@ div#content div#sf_content div.control_box ul.listdoc {
 div#content div#sf_content div.control_box ul li {
 	display: inline;
 }
-div#content div#sf_content div.control_box ul li a {
+div#content div#sf_content div.control_box ul li a,
+a#new-category {
 	display: inline;
 	border: 1px solid #d8eefa;
   border-bottom-width: 0;
@@ -790,7 +791,8 @@ div#content div#sf_content div.control_box ul li.upload a {
 	background:url("../images/icons/upload.png") no-repeat scroll 52px 5px transparent;
 }
 div#content div#sf_content div.control_box_doc ul li.plus a,
-div#content div#sf_content div.control_box ul li.plus a {
+div#content div#sf_content div.control_box ul li.plus a,
+a#new-category {
 	background:url("../images/icons/plus.png") no-repeat scroll 115px 5px transparent;	
 }
 div#content div#sf_content div.control_box_doc ul li.edit a:hover,
@@ -824,9 +826,19 @@ div#content div#sf_content div.control_box ul li.upload a:hover {
 	background-color: #d8eefa;
 }
 div#content div#sf_content div.control_box_doc ul li.plus a:hover,
-div#content div#sf_content div.control_box ul li.plus a:hover {
+div#content div#sf_content div.control_box ul li.plus a:hover,
+a#new-category:hover {
 	background:url("../images/icons/plus_hover.png") no-repeat scroll 115px 5px transparent;
 	background-color: #d8eefa;
+}
+div#left div#category_box a#new-category {
+	display: block;
+	background-position: 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	padding:3px 6px 5px 20px;
+	border-width: 0 1px 1px;
+	width: 150px;
+	margin-left: 20px;
 }
 div#content div#sf_content div.control_box_doc ul li a {
 	display: inline;

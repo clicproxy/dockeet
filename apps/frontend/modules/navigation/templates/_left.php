@@ -38,6 +38,9 @@
         <?php endforeach; ?>
       </div>
     <div class="left_box_foot"></div>
+    <?php if ($sf_user->hasCredential('admin')): ?>
+      <a href="<?php echo url_for('category/edit'); ?>" id="new-category"><?php echo __('Add a new category'); ?></a>
+    <?php endif; ?>
   </div>
 
   <!--
