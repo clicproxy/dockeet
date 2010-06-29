@@ -12,5 +12,7 @@ class AdminForm extends BaseAdminForm
 {
   public function configure()
   {
+  	$this->useFields(array('login', 'password'));
+  	$this->setWidget('password', new sfWidgetFormInputPassword());
   }
 }
