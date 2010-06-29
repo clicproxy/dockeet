@@ -12,4 +12,37 @@
  */
 class Admin extends BaseAdmin
 {
+  /**
+   * Return the login of the Admin
+   * @return string
+   */
+  public function __toString ()
+  {
+    return $this->login;
+  }
+  
+	/**
+	 * Check login password
+	 * @param string $password
+	 * @return boolean
+	 */
+	public function login ($password)
+	{
+    return (sha1($this->salt . $password) === $this->password);
+	}
+
+  /**
+   * Encrypte the password
+   * @param string $password
+   */
+  public function setPassword ($password)
+  {
+    if (!$password && 0 == strlen($password))
+    {
+      return;
+    }
+    
+    $this->salt = sha1(date('r'));
+    parent::_set('password', sha1($this->salt . $password));
+  }
 }

@@ -1,0 +1,28 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Admin
+    theme:                 admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          admin
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        title: Admins - Dockeet backend
+        display: [=login]
+      filter:
+        display: [login]
+      form:    ~
+      edit:
+        title: Edit admin - Dockeet backend
+        display: [login, password]
+      new:
+        title: New admin - Dockeet backend
+        display: [login, password]
