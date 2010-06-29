@@ -20,6 +20,10 @@ class navigationActions extends sfActions
     $this->forward('@homepage');
   }
   
+  /**
+   * Execute Login action
+   * @param sfWebRequest
+   */
   public function executeLogin(sfWebRequest $request)
   {
   	if ($this->getUser()->isAuthenticated()) $this->forward('@homepage');
@@ -34,6 +38,15 @@ class navigationActions extends sfActions
         $this->redirect('@homepage');
       }
     }
-  	
+  }
+  
+  /**
+   * Execute Login action
+   * @param sfWebRequest
+   */
+  public function executeLogout(sfWebRequest $request)
+  {
+  	$this->getUser()->logout();
+  	$this->redirect('navigation/login');
   }
 }
