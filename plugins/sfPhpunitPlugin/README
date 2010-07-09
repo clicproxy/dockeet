@@ -1,0 +1,849 @@
+# sfPhpunitPlugin
+
+It's a plugin to join [Symfony](http://www.symfony-project.org) framework with a [PHPUnit](http://www.phpunit.de/) testing one.
+
+## Requirements
+
+* [Symfony](http://www.symfony-project.org) 1.2.x - 1.4.x
+* [PHPUnit](http://www.phpunit.de/) 3.4.x (also works with 3.3.x but there might be some bugs)
+* [SabreAMF](http://code.google.com/p/sabreamf/downloads/list) for amf testing (optional).
+* [Selenium](http://seleniumhq.org/) for functionals testing (optional).
+
+## Installation
+
+1.download:
+
+pear package
+       
+    php symfony plugin:install sfPhpunitPlugin
+    
+svn tag 
+
+    svn checkout http://svn.symfony-project.com/plugins/sfPhpunitPlugin/tags/sfPhpunitPlugin-1.0.11
+
+dev version:
+
+    svn checkout http://svn.symfony-project.com/plugins/sfPhpunitPlugin/branches/1.2-4
+ 
+2.enable it in ProjectConfiguration:
+
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        $this->enablePlugins('sfPhpunitPlugin');
+      }
+    }
+
+## Overview
+ 
+The main idea of the plugin is to integrate phpunit and symfony more closer. 
+Make the process of test writing more standard, flexible and easy for symfony developers. 
+Another idea is to allow developers use features that only they want and not to inflict any extra requirments. 
+  
+There are some main features. 
+
+* Flexible way to store and run tests. 
+* Manage fixtures, separate them to different folders. 
+* Manage symfony contexts.
+* Configure phpunit in a symfony configuration way. 
+* Create testing infrastructure in one touch.
+* Provide custom TestCases, for example, SeleniumTestCase, AmfTestCase.
+  
+## Example project
+
+We made a sendbox project with some unit and functional tests. 
+Also there is a lot of snapshots in project doc directory. 
+You can checkout the project:
+
+    svn checkout http://svn.symfony-project.com/plugins/sfPhpunitPlugin/branches/example-project
+  
+## Features
+
+### The plugin infrastructure
+
+The plugin needs some directories and files. 
+It can create them for itself automatically or you can create them manually, using command:
+
+    php symfony phpunit:init
+    
+This is the result of the command execution:
+
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/units
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/functionals
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/models
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/fixtures
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/fixtures/units
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/fixtures/functionals
+    >> phpunit   Created dir /home/maksim/tmp/sf_sandbox/test/phpunit/fixtures/models
+    >> phpunit   Generate file /home/maksim/tmp/sf_sandbox/test/phpunit/BasePhpunitTestSuite.php
+    >> phpunit   Generate file /home/maksim/tmp/sf_sandbox/test/phpunit/AllTests.php
+   
+As you can see some folders and files were created:
+
+*   The root dir for all tests and fixtures: sf_root_dir/test/phpunit
+*   A subdirectory called "fixtures" used to store all "fixture" data.
+*   Three subdirectory for tests: "models", "units", "functionals"
+*   BasePhpunitTestSuite.php is a root Suite for all the project tests. If you want to do something before (or after) all the tests running, _start method of this class just for you.
+*   AllTests.php - you need this file to run all the tests by standart phpunit command.
+
+### Test Running
+  
+You can run tests in several ways. Each of them has its pluses and minuses.  
+The most flexible way is to run tests using a symfony task: 
+  
+All project tests:
+    
+    php symfony phpunit:runtest
+
+All project tests and plugins ones.
+    
+    php symfony phpunit:runtest --and-plugins
+   
+All tests in folder (the absolute path is sf_root_dir/test/phpunit/foo):
+    
+    php symfony phpunit:runtest foo/
+    
+All tests in folder and subfolders (the absolute path is sf_root_dir/test/phpunit/foo):
+    
+    php symfony phpunit:runtest foo/*
+    
+A concret test:
+
+    php symfony phpunit:runtest foo/FooTestCase.php
+    
+The absolute path is also aceptable:
+
+    php symfony phpunit:runtest /path_to_the_project/test/phpunit/foo/*
+    
+And relative path from the project root as well:
+
+    php symfony phpunit:runtest 'test/phpunit/foo/*'    
+
+But in this case you cannot use any of the phpunit command options (like coverage or report generation).
+To solve this problem we have auto generated file test/phpunit/AllTest.php. 
+It can be used with a phpunit command to run all project tests.
+Example of calling all tests with extra phpunit options from the project root dir:
+
+    phpunit 
+      --log-junit=/path_to_log/phpunit.xml
+      --coverage-clover=/path_to_log/phpunit.coverage.xml 
+      --coverage-html=/path_to_log/coverage 
+      test/phpunit/AllTest.php
+
+If you are using [Eclipse PDT](http://www.eclipse.org/pdt/) 
+there is a way how to run a single test or all tests in a folder (just in a folder but not in sub folders) just from the Eclipse.
+All you want to do is to add "Extra Tool" called phpunit for example and with options as in the picture:
+
+![Eclipse PDT External tool screenshot](http://lh5.ggpht.com/_CglT1aSZJ0E/S-pLvfgl6KI/AAAAAAAAABc/PFJxqinMeWU/s640/EclipsePdt-ExternalTool.png)
+
+That's it. Now you can select a test file and run it from Eclipse.
+
+### Suite Handling
+
+To setup or teardown something, you should use _start and _end methods instead of phpunit standart's setUp and tearDown.
+If you overwrite setUp or tearDown methods you can miss/break some plugin functionality.
+The same is right for test case classes.
+Let's look at the BasePhpunitTestSuite.php in test/phpunit folder. Pay attention to _start and _end methods. 
+You have to use them.
+
+    <?php
+  
+    class BasePhpunitTestSuite extends sfBasePhpunitTestSuite
+      implements sfPhpunitContextInitilizerInterface
+    {
+       /**
+        * Dev hook for custom "setUp" stuff
+        */
+       protected function _start()
+       {
+         // do your initialization here
+       }
+    
+       /**
+        * Dev hook for custom "tearDown" stuff
+        */
+       protected function _end()
+       {
+         // clean up something here
+       }
+     }
+
+There is a test loader for collecting tests and building a tree. 
+If you choose a test and try to execute it the loader will do next job:
+
+*    the loader always starts its work from the root directory and go in the direction of the test which you want to run.
+*    on its way it looks for test suite file in each folder the loader visited.
+*    if the loader finds a testsuite in a folder it will add all tests in this folder to this suite and after that add the suite to the suite tree.
+*    if the loader does not find a testsuite, it will add all tests to the last suite that was found in a parent folder.
+
+If there is not any of your suites all tests will be added to the root suite BasePhpunitTestSuite.
+It was done this way to solve the problem of the same environment whether you run a single test or all tests, or just a sub folder.
+
+### Context Managing
+
+You can simply manage symfony's contexts. 
+What you need to do is: implement sfPhpunitContextInitilizerInterface to a TestSuite and implement required methods.
+For example the auto generated BasePhpunitTestSuite implement this interface for the first application, was found in your project.
+So all running tests will have a context with application 'frontend' and environment 'test'.
+You can change it, modifying the file.
+
+    <?php
+
+    class BasePhpunitTestSuite extends sfBasePhpunitTestSuite
+      implements sfPhpunitContextInitilizerInterface
+    {
+      
+      public function getApplication()
+      {
+        return 'frontend';
+      }
+      
+      /**
+       *
+       * This function is also required by the interface but implemented in the parent class: sfBasePhpunitTestSuite.
+       *You can always overwride it on your own.
+       */
+      //public function getEnvironment()
+      //{
+      //  return sfConfig::get('sf_environment', 'test');
+      //}
+    }
+ 
+If You don't need a context at all, you can remove the interface and methods from the testsuite. 
+If You want to init context just for a sub folder (for example models), create a testsuite with the interface implemented there, and all your model tests will have a sfContext initialized. 
+
+### Fixtures
+
+Very important thing in testing process is fixture managing. 
+It takes half time of all the test writing to create good environment. 
+So a good mechanism to work with them can save a lot of time. 
+Also it helps to keep tests simple and easy to understand.
+
+There are four places where you can save your fixtures.
+You can use all of them or just one.
+
+*    Own - Fixtures from this directory can be used only by the current (executing) test. 
+*    Package - Fixtures from this directory can be used only by tests from the same directory.
+*    Common - Fixtures from this directory can be used from every test case.
+*    Symfony - Fixtures from this directory, stored in standard symfony folder (data/fixtures), can be used from every test case.
+   
+First of all you have to choose which fixtures to use. 
+There are two types currently available:
+
+*    Doctrine 
+*    Propel
+
+It's a simple example how to define a fixture type you want to use. 
+As you can see it is very easy to tell what you want to use. 
+You have to implement one of the following interfaces to a testcase class.
+
+    <?php
+
+    class FooTestCase extends PHPUnit_Framework_TestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function getPackageFixtureDir()
+      {
+        // implement this method 
+      }
+
+      public function getOwnFixtureDir()
+      {
+        // implement this method
+      }
+  
+      public function getCommonFixtureDir()
+      {
+        // implement this method
+      }
+
+      public function getSymfonyFixtureDir()
+      {
+        // implement this method
+      }
+      
+      public function testFoo()
+      {
+        // create fixture object by hands:
+        $fixture = sfPhpunitFixture::build($this, $options = array());
+        
+        //now you can use fixture instance to work with fixtures.
+        $path = $fixture->getFileOwn('fixture-file.txt');
+      
+        // test code here
+      }
+    }
+ 
+After you finish this and run this test case you will see something like this:
+
+    >> phpunit   Created dir /home/maksim/projec...s/FooTestCase
+    >> phpunit   Created dir /home/maksim/projec...s/FooTestCase
+    PHPUnit 3.4.12 by Sebastian Bergmann.
+
+    .
+
+    Time: 7 seconds, Memory: 37.00Mb
+
+    OK (1 test, 8 assertions)
+    
+It is phpunit:init task which helps you with directories for fixture storing.
+It creates package and own directory if they do not exist.
+
+If you do not want to define any methods manually you can 
+extend from sfBasePhpunitTestCase (where all those methods are already implemented) and implement interface.
+sfBasePhpunitTestCase also contains fixture method which returns instance of sfPhpunitFixture, so you do not have to create it manually.
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      { 
+        $path = $this->fixture()->getFileOwn('fixture-file.txt');
+      
+        // test code here
+      }
+    }
+    
+In this case you get standard plugin fixture directories.
+All fixture directories are subdirectories of sf_root_dir/test/phpunit/fixtures dir.
+You can always overwrite any of those methods to change a directory target.
+   
+Let's say we have FooTestCase.php file in sf_root_dir/test/phpunit/units directory.
+Standard directories for the testcase will be:
+
+*    Own - sf_root_dir/test/phpunit/fixtures/units/FooTestCase
+*    Package - sf_root_dir/test/phpunit/fixtures/units
+*    Common - sf_root_dir/test/phpunit/fixtures/common
+*    Symfony - sf_root_dir/data/fixture
+
+#### File fixtures
+
+This example shows you how to get path to file stored in fixture directories.
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $path = $this->fixture()->getFileOwn('foo.zip');
+        // result: sf_root_dir/test/phpunit/fixtures/units/FooTestCase/foo.zip
+        
+        $path = $this->fixture()->getFilePackage('foo.zip');
+        // result: sf_root_dir/test/phpunit/fixtures/units/foo.zip
+        
+        $path = $this->fixture()->getFileCommon('foo.zip');
+        // result: sf_root_dir/test/phpunit/fixtures/common/foo.zip
+        
+        $path = $this->fixture()->getFileSymfony('foo.zip');
+        // result: sf_root_dir/data/fixture/foo.zip
+      }
+    }
+        
+If the file does not exist, an exception will be thrown.
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $path = $this->fixture()->getFileOwn('not-exist-file.zip');
+        // result: exception is thrown.
+      }
+    }
+
+The same idea works for directories as well: 
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $path = $this->fixture()->getDirOwn();
+        // result: sf_root_dir/test/phpunit/fixtures/units/FooTestCase
+      }
+    }
+
+#### Database fixtures
+
+You can even load fixtures to the database. 
+The database fixture file is standard propel\doctrine one.
+For example I'll show how to load users.doctrine.yml to the database.
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $path = $this->fixture()->loadOwn('users');
+        // load next file: sf_root_dir/test/phpunit/fixtures/units/FooTestCase/users.doctrine.yml
+        
+        $path = $this->fixture()->loadPackage('users');
+        // load next file: sf_root_dir/test/phpunit/fixtures/units/users.doctrine.yml
+        
+        $path = $this->fixture()->loadCommon('users');
+        // load next file: sf_root_dir/test/phpunit/fixtures/common/users.doctrine.yml
+        
+        $path = $this->fixture()->loadSymfony('users');
+        // load next file: sf_root_dir/data/fixture/users.doctrine.yml
+      }
+    }
+
+As you see you have to give only file name without extension.
+The same for propel, but extension will be *.propel.yml.    
+If the file does not exist, an exception will be thrown.
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $this->fixture()->loadOwn('not-exist-fixtures');
+        // result: exception is thrown.
+      }
+    }
+    
+For loadOwn, loadPackage, loadCommon, loadSymfony methods plugin supports [fluent interface](http://en.wikipedia.org/wiki/Fluent_interface)
+So you can do something like this:
+
+    <?php
+  
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $this->fixture()
+          ->loadOwn('users')
+          ->loadCommon('posts')
+          ->loadPackage('comments');
+      }
+    }
+    
+To clean the whole database and load new fixtures:
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $this->fixture()
+          ->clean()
+          // remove all data from the test database
+          ->loadOwn('users');
+          // only users will be in the database
+      }
+    }
+
+#### Snapshots
+
+It is very important to keep speed of the testing as fast as possible. 
+Yml fixture loading is an expensive operation and can slow down your testing.
+To avoid this you can use snapshot feature.
+
+And second thing where snapshots can be useful, group fixtures under a single name, load them in one command, using this name.
+
+For example you can create some snapshots in root test suite and use them in any test case later.
+
+    <?php
+    
+    class BasePhpunitTestSuite extends sfBasePhpunitTestSuite 
+      implements sfPhpunitFixturePropelAggregator
+    {
+      /**
+       * Dev hook for custom "setUp" stuff
+       */
+      protected function _start()
+      {          
+        $this->fixture()
+          ->clean()
+          
+          // clean up tables used for storing snapshot data.          
+          ->cleanSnapshots()
+          
+          ->loadCommon('users')
+          ->loadCommon('categories')
+          ->loadCommon('customers')
+            
+          ->doSnapshot('common');
+      }
+    }
+    
+Then load the snapshot in FooTestCase, for example.
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        $this->fixture()->clean()->loadSnapshot('common');
+        
+        //and some additional stuff if needed.
+        $this->fixture()->loadCommon('comments');
+        // load fixtures form file sf_root_dir/data/fixture/comments.doctrine.yml
+          
+        // test code here.
+      }
+    }
+
+To clean all snapshots use method 
+
+    $this->fixture()->cleanSnapshots();
+    
+It is better to use snapshots because they are kept in the test database and so work very fast.
+
+#### Customizing fixtures
+
+Fixture object can be init with some options such as file extension and database connection (by default it is taken from the sfContext).
+
+In future it can be done through the phpunit.yml but right now you have to rewrite _initFixture method:
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      protected function _initFixture(array $options = array())
+      {
+        $options = array(
+          'connection' => 'your connection',
+          'fixture_ext' => 'your database fixture extension. just *.yml for example',
+          'snapshot-table-prefix' => 'the table prefix used for snapshots',
+        );
+        
+        return parent::_initFixture($options);
+      }
+    }
+    
+#### ORM objects and database fixtures.
+
+This feature allows you to get Doctrine\Propel data object by its name in fixture file.
+For examlpe we have users.doctrine.yml file in the common fixture directory:
+
+    sfGuardUser:
+      TestUser:
+        username: user
+        password: test
+      RegistredUser2:
+        username: Lorne
+        password: Green    
+      sgu_admin:
+        username:       admin
+        password:       test
+        is_super_admin: true
+        
+And how it works in test case:
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+      implements sfPhpunitFixtureDoctrineAggregator
+      // for propel
+      //implements sfPhpunitFixturePropelAggregator
+    {
+      public function testFoo()
+      {
+        // loads users from sf_root_dir/test/phpunit/fixtures/common/users.doctrine.yml
+        $this->fixture()->clean()->loadCommon('users);
+        
+        // using method method get
+        $testUser = $this->fixture()->get('sfGuardUser_TestUser');
+        $this->assertType('sfGuardUser', $testUser);
+        
+        //shorter version
+        $registeredUser = $this->fixture('sfGuardUser_RegistredUser2');
+        $this->assertType('sfGuardUser', $registeredUser);
+      }
+    }      
+    
+This functionality works perfectly with Propel. For Doctrine there are some bugs known.
+      
+### Custom TestCases
+
+This test cases are not necessary to be used but can be very helpful.
+
+#### Selenium
+
+The sfBasePhpunitSeleniumTestCase class is extend of PHPUnit_Extensions_SeleniumTestCase standart phpunit class. 
+It allows you to set options of a selenium server in phpunit.yml file and they will be handled automaticaly by sfBasePhpunitSeleniumTestCase class.
+
+The selenium section of phpunit.yml config: 
+    
+    all:
+      selenium:
+        remote_project_dir:
+        #you can used it in case of the test application and selenium server are run on different computers.
+        #but you have to upload the file stored in fixtures through web page.
+        #You need to mount prj dir to selenium computer and define this option.
+        #From the test case use for example method fixture()->getDirOwnAsRemote()
+        coverage: 
+          collect: false
+          coverageScript: phpunit_coverage.php        
+        driver:
+          name: false
+          browser: '*firefox'
+          browser_url: false
+          host: false
+          port: false
+          timeout: false
+          http_timeout: false
+          sleep: false
+          wait: false
+        
+Create your own phpunit.yml file in sf_root_dir/config, for example, and define your own options there.
+The phpunit.yml file works in the same way as all other symfony configs (cascade, merging, project config dir, app config dir).
+
+The config can look like:  
+
+    all:
+      selenium:
+        driver:
+          browser: '*chrome'
+          browser_url: 'http://google.com'
+          timeout: 10
+          http_timeout: 10
+          host: selenium-server.com
+
+And test:
+
+    class GoogleTestCase extends sfBasePhpunitSeleniumTestCase
+    {
+      protected function _start()
+      {
+        //$this->setAutoStop(false);
+        $this->start();
+        $this->open('/');
+        $this->windowMaximize();
+      }
+      
+      public function testGoogle()
+      {
+        // your google test here
+      }
+    }
+    
+#### Amf
+
+The plugin also contains sfBasePhpunitAmfTestCase class for testing your [AMF](http://en.wikipedia.org/wiki/Action_Message_Format) services.
+It depends on [SabreAMF](http://code.google.com/p/sabreamf/downloads/list) library. 
+So you have to be sure you installed it before.
+
+It is a kind of functional test because it emulates Flex client and sends data through the network using http protocol.
+
+First you need to set an Amf endpoint in phpunit.yml. 
+It is highly recommended to make test in the same project (run test and send request on this server).
+
+    all:
+      amf:
+        endpoint: 'http://your-server.com/amfendpoint'
+
+##### Send request using _getClient method:
+      
+    class Amf_Service_ClientTestCase extends sfBasePhpunitAmfTestCase 
+      implements sfPhpunitFixturePropelAggregator
+    {
+      public function testNewClient()
+      {      
+        $service = 'Service_Test.testNewClient';
+        $params = array('test');  
+      
+        $response = $this->_getClient()->sendRequest($serviceName, $params);
+        
+        // test response from the service
+      }
+
+##### Send request using helper class sfPhpunitAmfService. 
+
+The example do the same as the one above:
+
+    class Amf_Service_ClientTestCase extends sfBasePhpunitAmfTestCase 
+      implements sfPhpunitFixturePropelAggregator
+    {
+    
+      // define a service name
+      protected $_amfservice = 'Service_Test';
+    
+      public function testNewClient()
+      {      
+        // testNewClient is handled by __call method. 
+        // It call Service_Test.testNewClient with one param 'test'
+        $response = $this->service()->testNewClient('test');
+        
+        // test response from the service
+      }
+    }
+    
+##### AMF Data Mapping 
+    
+If you use AMF data mapping, this method can be very helpful for you. 
+Rewrite it, keeping in mind the order of array parameters:
+
+    class Amf_Service_ClientTestCase extends sfBasePhpunitAmfTestCase 
+      implements sfPhpunitFixturePropelAggregator
+    {
+      public function testNewClient()
+      {      
+        // your amf test
+      }
+
+      protected function _getMappedClasses()
+      {
+        // array('flex_class' => 'php_class');
+        return array('ClientFlex' => 'ClientPHP');
+      }
+    }
+
+### Stubs data
+
+The sfBasePhpunitAmfTestCase class contains helpful method getStub. 
+It can be used only for making stub objects, not mocks.
+The method has the same interface as getMock method.
+
+This method allows you to create stub objects more simply then getMock method:
+
+Compare these two examples:
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+    {
+      public function testFoo()
+      { 
+        $stub = $this->getMock('DataManager', array('getFoo', 'getBar'));
+        $stub->expects($this->any())->method('getFoo')->will($this->returnValue('foo'));
+        $stub->expects($this->any())->method('getBar')->will($this->returnValue('bar'));
+      
+        // test code here
+      }
+    }
+  
+and:
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+    {
+      public function testFoo()
+      { 
+        $stub = $this->getStub('DataManager', array(
+          'getFoo' => 'foo', 
+          'getBar' => 'bar'));
+      
+        // test code here
+      }
+    }
+
+The getStub method used $this->any() method to set numbers of the stubbed methods called. 
+You can use more strict version of this method:
+  
+    $this->getStubStrict( ... );
+    
+This method used $this->atLeastOnce(),
+
+If you want to create two stubs with cross reference to each other, the next way can help you:
+
+    <?php
+
+    class FooTestCase extends sfBasePhpunitTestCase 
+    {
+      public function testFoo()
+      { 
+        $stubFoo = $this->getStub('Foo', array('getBar' => $this->stubLater()));
+        $stubBar = $this->getStub('Bar', array('getFoo' => $stubFoo));
+        
+        $stubFoo->expects($this->any())->method('getBar' => $stubBar);
+      
+        // test code here
+      }
+    }
+    
+### Plugins testing
+
+It not only is very important to test a project code but plugins code as well. 
+The plugin can run phpunit tests written for a symfony plugin.
+There are some restrictions:
+
+* the plugin looks for the tests in sf_plugin_dir/YOURPLUGIN/test/phpunit directory.
+* the plugin does not handle any bootstrap files so any init steps (like context or database init) should be done in suite.
+ 
+To run a plugin tests with a project ones use a command: 
+
+    php symfony phpunit:runtest --and-plugins
+
+### Good practices
+
+#### Use a different database for testing and dev (prod the same idea):
+    
+    test:
+      doctrine:
+        param:
+          dsn:      mysql:host=127.0.0.1;dbname=project_test
+          #dsn:     sqlite:////file_to/test.db?mode=0666
+          #dsn: "sqlite::memory:"
+
+    all:
+      doctrine:
+        class: sfDoctrineDatabase
+        param:
+          dsn:      mysql:host=127.0.0.1;dbname=project
+          username: mysqluser
+          password: mysqlpass
+
+### Plans
+
+* Finish DbUnit fixture
+* Fix auto loading bug in AllTests.php
+* Several drivers for selenium
+* Form testing
+* Fix retrieving objects by fixture name (doctrine)
+* More intelligent init task
+* Move models directory to units one
+* Fixture options to phpunit.yml config.
+* Standard phpunit config in phpunit.yml.
+* Fresh sfConfig for each test case. 
+* Functional test helpers. (for auto generated admin section, gmail and so on).
+* Simple recursive functional test. 
+
+### Feedback
+
+Any feedbacks with ideas, bugs, misunderstandings, troubles are very welcome.
+
+### Thanks
+
+I want to say a big thank the whole [FormaPro](http://www.forma-pro.com/) company.
+The people from there use the plugin from very early versions and  gives me very valuable feedbacks.
