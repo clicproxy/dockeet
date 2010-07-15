@@ -82,9 +82,15 @@ class DocumentForm extends BaseDocumentForm
           $adapterOptions['extract'] = 1;
         }
         //$maxWidth = null, $maxHeight = null, $scale = true, $inflate = true, $quality = 75, $adapterClass = null, $adapterOptions = array()
+        try {
         $thumbnail = new sfThumbnail(125, 125, true, true, 75, 'sfImageMagickAdapter', $adapterOptions);
         $thumbnail->loadFile($path . '/' . $filename);
         $thumbnail->save(sfConfig::get('sf_web_dir') . $this->getObject()->getThumbnailUrl(125, 125, true), 'image/png');
+        }
+        catch (Exception $exception)
+        {
+        	sfContext::getInstance()->getLogger()->err(sprintf('Image %s could not be identified.', $path . '/' . $filename));
+        }
       }
     }
   }
