@@ -961,7 +961,7 @@ div#content div#sf_content form .filechange_public input#document_file {
 	margin-top: 10px;
 }
 #user_edit a,
-#document_categories a.addcat {
+#document_categories a#addcat {
 	display: block;
 	padding: 1px 10px;
 }
@@ -977,7 +977,7 @@ div#content div#sf_content form .filechange_public input#document_file {
 	border: none;
 }
 #user_edit a.newuser,
-#document_categories a.addcat {
+#document_categories a#addcat {
 	background: url("../images/logbt.png") no-repeat scroll left top transparent;
 	color: #5F6060;
 	cursor: pointer;
@@ -991,16 +991,16 @@ div#content div#sf_content form .filechange_public input#document_file {
 	width: 108px;
 }
 #user_edit a.newuser span,
-#document_categories a.addcat span {
+#document_categories a#addcat span {
 	display: block;
 	padding-top: 17px;
 	text-align: center;
 }
-#document_categories a.addcat span {
+#document_categories a#addcat span {
 	padding-top: 8px;
 }
 #user_edit a.newuser:hover,
-#document_categories a.addcat:hover {
+#document_categories a#addcat:hover {
 	background-position: left bottom;
 }
 /* @end */
