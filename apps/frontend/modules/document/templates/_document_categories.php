@@ -25,36 +25,37 @@
   <?php echo $form['document_category']['category_id']->renderError(); ?>
   <?php echo $form['document_category']['category_id']; ?>
 
-  <a class="addcat" onclick="jQuery('ul#add_category').toggle(); $('ul#add_category').nmcDropDown(); return false;" href="#"><span><?php echo __("Add a category") ?></span></a>
-  	<div id="popupaddcat">
-	    <ul id="add_category" style="display: none;">
-	      <?php $max_i = count($sf_user->getCategories(true)) -1; ?>
-	      <?php foreach ($sf_user->getCategories(true) as $i => $category): ?>
-	        <?php if ('0' === $category->countDocument(true) && !$sf_user->hasCredential('admin')) continue;?>
-	        <li class="root">
-	          <a href="#" onclick="documentCtrl.addCategory(<?php echo $category->id; ?>); return false;" <?php if (0 === $i): ?>class="first"<?php endif;?><?php if ($max_i === $i): ?>class="last"<?php endif;?>>
-	            <?php echo $category->getPublicTitle(); ?>
-	          </a>
+  <a id="addcat"><span><?php echo __("Add a category") ?></span></a>
+  <div id="cat-add-menu" class="hidden">
+		<?php $sub_categories = $sf_user->getCategories(false); ?>
+		<?php if (0 < count($sub_categories)): ?>
+		  <ul>
+	      <?php $prev_level = 0; ?>
+	      <?php foreach ($sub_categories as $sub_category): ?>
+	        <?php if (0 === $sub_category->count_documents && !$sf_user->hasCredential('admin')) continue;?>
+	        <?php $current_level = substr_count($sub_category->title, '|'); ?>
+	        <?php if ($current_level >  $prev_level): ?><ul><?php endif; ?>
+	        <?php if ($current_level <=  $prev_level): ?></li><?php endif; ?>
+	        <?php for($i = 0; $i < $prev_level-$current_level; $i++):?></ul></li><?php endfor; ?>
+	        <li class="sub_category subcat_level_<?php echo $current_level; ?>">
+	          <a href="#" onclick="documentCtrl.addCategory(<?php echo $sub_category->id; ?>); return false"><?php echo $sub_category->getPublicTitle(); ?></a>
+	        <?php $prev_level = substr_count($sub_category->title, '|'); ?>
+	      <?php endforeach;?>
+	      <?php for($i = 0; $i < $prev_level; $i++):?></ul></li><?php endfor; ?>
+	      </ul>
+		  </ul>
+	  <?php endif; ?>
+  </div>
 
-	          <?php $sub_categories = $sf_user->getCategories(false, $category->title); ?>
-	          <?php if (0 < count($sub_categories)): ?>
-	            <ul>
-	              <li class="title">
-	                <a href="<?php echo url_for("category/index?slug=" . $category->slug); ?>"><?php echo $category->getPublicTitle(); ?></a>
-	                <span class="cat_count"><?php echo $category->countDocument(true); ?></span>
-	              </li>
+	<script type="text/javascript">
+	$(document).ready(function(){
+	    $('#addcat').menu({
+	      content: $('#cat-add-menu').html(),
+	      flyOut: true,
+	      width: 230
+	    });
+	  });
+	</script>
 
-	              <?php foreach ($sub_categories as $sub_category): ?>
-	                <?php if (0 === $sub_category->count_documents && !$sf_user->hasCredential('admin')) continue;?>
-	                <li class="sub_category subcat_level_<?php echo substr_count($sub_category->title, '|'); ?>">
-	                  <a class="border_stylehover" href="#" onclick="documentCtrl.addCategory(<?php echo $sub_category->id; ?>); return false">&raquo; <?php echo $sub_category->getPublicTitle(); ?> <span><?php echo $sub_category->count_documents; ?></span></a>
-	                </li>
-	              <?php endforeach;?>
-	              <li class="foot_sub_category"></li>
-	            </ul>
-	          <?php endif; ?>
-	        </li>
-	      <?php endforeach; ?>
-	    </ul>
-		</div>
+
 </form>
