@@ -110,6 +110,16 @@ class myUser extends sfBasicSecurityUser
     	}
     }
 
+    if (isset($query['last']) && !empty($query['last']))
+    {
+    	$documents_query->andWhere('d.updated_at > DATE_SUB(CURDATE(),INTERVAL ? DAY)', $query['last']);
+    }
+
+    if (isset($query['updated_after']) && !empty($query['updated_after']))
+    {
+    	$documents_query->andWhere('d.updated_at > ?', $query['updated_after']);
+    }
+
     if (isset($query['tags']) && !empty($query['tags']))
     {
     	if (0 < explode(',', $query['tags'])) $documents_query->leftJoin('d.Tags t');
@@ -124,7 +134,7 @@ class myUser extends sfBasicSecurityUser
     {
       $documents_query = Doctrine_Core::getTable('Document')->search($query['search'], $documents_query);
     }
-
+    
     return $documents_query;
   }
 
