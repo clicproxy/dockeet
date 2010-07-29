@@ -73,6 +73,9 @@ class apiActions extends sfActions
     $documentsQuery['search'] = $request->getParameter('search');
     $documentsQuery['tags'] = $request->getParameter('tags');
     $documentsQuery['deep'] = $request->getParameter('deep', false);
+    $documentsQuery['updated_after'] = $request->getParameter('updated_after');
+    $documentsQuery['last'] = $request->getParameter('last');
+    
 
     // order_by
     if ($request->hasParameter('order_by'))
