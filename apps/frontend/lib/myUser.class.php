@@ -122,14 +122,15 @@ class myUser extends sfBasicSecurityUser
 
     if (isset($query['tags']) && !empty($query['tags']))
     {
-    	if (0 < explode(',', $query['tags'])) $documents_query->leftJoin('d.Tags t');
-    	if (1 === explode(',', $query['tags']))
+    	$tags = is_array($query['tags']) ? $query['tags'][0] : $query['tags'];
+    	$documents_query->leftJoin('d.Tags t');
+    	if (0 < substr_count($tags, ','))
     	{
-    		$documents_query->andWhere('t.title LIKE ?', $query['tags'][0]);
+    		$documents_query->andWhere('t.title LIKE ?', $tags);
     	}
     	else 
     	{
-    		$documents_query->andWhereIn('t.title', $query['tags']);
+    		$documents_query->andWhereIn('t.title', explode(',', $tags));
     	}
     }
 
@@ -137,7 +138,7 @@ class myUser extends sfBasicSecurityUser
     {
       $documents_query = Doctrine_Core::getTable('Document')->search($query['search'], $documents_query);
     }
-    
+    sfContext::getInstance()->getLogger()->info($documents_query->getSqlQuery());
     return $documents_query;
   }
 
