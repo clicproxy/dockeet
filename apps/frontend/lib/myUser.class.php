@@ -73,6 +73,11 @@ class myUser extends sfBasicSecurityUser
       $documents_query->andWhere('d.public = 1');
     }
 
+    if (isset($query['limit']) && $query['limit'])
+    {
+      $documents_query->limit($query['limit']);
+    }
+
     if ($query['category'] instanceof Category)
     {
       if(isset($query['deep']) && $query['deep'])
