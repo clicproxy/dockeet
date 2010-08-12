@@ -70,6 +70,7 @@ class apiActions extends sfActions
     $documentsQuery['category'] = $request->hasParameter('slug') ? Doctrine::getTable('Category')->findOneBy('slug', $request->getParameter('slug', '')) : null;
     $documentsQuery['mime_types'] = $request->hasParameter('type') ? $request->getParameter('type') : array();
     $documentsQuery['public'] = $request->getParameter('public', true);
+    $documentsQuery['limit'] = $request->getParameter('limit', false);
     $documentsQuery['search'] = $request->getParameter('search');
     $documentsQuery['tags'] = $request->getParameter('tags');
     $documentsQuery['deep'] = $request->getParameter('deep', false);
