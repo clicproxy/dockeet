@@ -76,7 +76,7 @@ class apiActions extends sfActions
     $documentsQuery['deep'] = $request->getParameter('deep', false);
     $documentsQuery['updated_after'] = $request->getParameter('updated_after');
     $documentsQuery['last'] = $request->getParameter('last');
-    
+
 
     // order_by
     if ($request->hasParameter('order_by'))
@@ -89,6 +89,17 @@ class apiActions extends sfActions
     if($request->getParameter('limit'))
     {
       $document_query->limit($request->getParameter('limit'));
+    }
+
+    // Caches results
+//    ksort($documentsQuery);
+//    $document_query->useQueryCache(true, 604800)
+//                   ->useResultCache(true, 604800, 'docatl_'.Doctrine_Inflector::urlize(http_build_query($documentsQuery)).'_limit_'.$request->getParameter('limit'));
+
+    $count = $document_query->count();
+    if($count > 100)
+    {
+      $document_query->limit(100);
     }
 
     $document_yaml = array();
