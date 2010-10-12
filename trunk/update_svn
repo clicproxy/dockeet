@@ -13,6 +13,10 @@ echo "Mot de passe :"
 read PASSWD
 stty echo
 
+./symfony cc
+./symfony log:clear
+mysqldump -uroot -pIeth3Che -r /home/archives/backups-manuels/`date +%Y-%m-%d.%H-%M`-dockeet.sql docatl
+tar cfvz /home/archives/backups-manuels/`date +%Y-%m-%d.%H-%M`-dockeet.tar.gz apps/ config/ data/ doc/ lib/ plugins/ symfony test/ update_svn.sh  web/css/ web/images/ web/js/ web/*.???
 
 # Mise à jour
 svn export --username $1 --password $PASSWD https://dockeet.googlecode.com/svn/trunk/update_svn ./update_svn --force
