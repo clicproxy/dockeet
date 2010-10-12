@@ -86,7 +86,7 @@ class apiActions extends sfActions
 
     $document_query = $this->getUser()->getDocumentsQuery($documentsQuery);
 
-    if($request->getParameter('limit'))
+    if(false !== $request->getParameter('limit'))
     {
       $document_query->limit($request->getParameter('limit'));
     }
