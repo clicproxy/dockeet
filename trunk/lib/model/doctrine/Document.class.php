@@ -136,10 +136,10 @@ class Document extends BaseDocument
 
   /**
    * Return the name of the file downloaded
-   * @param Version $version
+   * @param DocumentVersion $version
    * @return string
    */
-  public function getDownloadFilename (Version $version = null)
+  public function getDownloadFilename (DocumentVersion $version = null)
   {
     $filename = Doctrine_Inflector::urlize($this->title);
     $file = $version instanceof Version ? $version->file : $this->file;
