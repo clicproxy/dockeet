@@ -50,16 +50,6 @@ DocumentCtrl = function ()
   {
     jQuery.get(jQuery(form).attr('action') + "/tag/" + jQuery('input#new-tag').val(), jQuery(form).serialize(), function(data) { jQuery('div#document_tags').html(data) });
   };
-  
-  /**
-   * Show all list element
-   * @param link
-   * @return
-   */
-  this.showAllVersion = function (link)
-  {
-    jQuery(link).closest('ul').find('li').show();
-  };
 };
 
 var documentCtrl = new DocumentCtrl();

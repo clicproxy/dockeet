@@ -41,12 +41,12 @@
     <?php $compteur = 0; ?>
     <?php foreach($document->Versions as $version): ?>
       <?php if ($document->file === $version->file) continue; ?>
-      <li <?php if (5 < $compteur):?>style="display: none"<?php endif; ?>>
+      <li <?php if (5 < ++$compteur):?>style="display: none"<?php endif; ?>>
         <a href="<?php echo url_for('document/download?slug=' . $document->slug . '&version=' . $version->id); ?>"><?php echo date('d/m/Y', strtotime($version->created_at)); ?></a>
       </li>
       <?php if (5 === $compteur):?>
       <li>
-        <a href="#" onclick="document.showAllVersion(); return false;"><?php echo __('Show all')?></a>
+        <a href="#" onclick="jQuery(this).closest('ul').find('li').show(); jQuery(this).hide(); return false;"><?php echo __('Show all')?></a>
       </li>
       <?php endif; ?>
     <?php endforeach; ?>
