@@ -1354,3 +1354,6 @@ div#content div#sf_content div#document_info ul.tags li {
 	font-size: 12px;
 	border-bottom: none;
 }
+.error {
+  color: red;
+}
