@@ -6,6 +6,10 @@
   <div id="title_bottom"></div>
 </div>
 
+<?php if ('' === exec('which convert')): ?>
+  <p class="error"><?php echo __("Incomplete installation, upload process can't work (ImageMagick not installed)"); ?></p>
+<?php endif;  ?>
+
   <div>
     <div id="filelist">No runtime found.</div>
     <br />
