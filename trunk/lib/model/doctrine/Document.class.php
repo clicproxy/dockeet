@@ -131,6 +131,12 @@ class Document extends BaseDocument
     {
       $thumbnail_url = '/images/content/no_thumbnail.png';
     }
+
+    if(!file_exists($thumbnail_url) && file_exists(sfConfig::get('sf_web_dir').'/images/formats/'.Doctrine_Inflector::urlize($this->mime_type).'.png'))
+    {
+      $thumbnail_url = '/images/formats/'.Doctrine_Inflector::urlize($this->mime_type).'.png';
+    }
+
     return $thumbnail_url;
   }
 
