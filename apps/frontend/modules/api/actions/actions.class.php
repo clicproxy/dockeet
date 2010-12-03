@@ -86,9 +86,9 @@ class apiActions extends sfActions
 
     $document_query = $this->getUser()->getDocumentsQuery($documentsQuery);
 
-    if(false !== $request->getParameter('limit'))
+    if($limit = $request->getParameter('limit'))
     {
-      $document_query->limit($request->getParameter('limit'));
+      $document_query->limit($limit);
     }
 
     // Caches results
@@ -112,7 +112,7 @@ class apiActions extends sfActions
         'description' => $document->description,
         'thumbnail' => $document->genThumbnail($request->getParameter('width', 125)),
         'mime_type' => $document->mime_type,
-        'download' => '/api/download?slug=' . $document->slug . '&api_key=' . $this->api_access->api_key . '&api_sig=' . md5($this->api_access->api_secret . 'api_key' . $this->api_access->api_key . 'slug' . $document->slug)
+        'download' => '/api/download?slug=' . $document->slug .($document->mime_type == 'application/x-shockwave-flash' ? '&attachment=0' : ''). '&api_key=' . $this->api_access->api_key . '&api_sig=' . md5($this->api_access->api_secret . 'api_key' . $this->api_access->api_key.($document->mime_type == 'application/x-shockwave-flash' ? 'attachment0' : '') . 'slug' . $document->slug)
       );
     }
 
@@ -146,8 +146,9 @@ class apiActions extends sfActions
     // Adding the file to the Response object
     $this->getResponse()->clearHttpHeaders();
     $this->getResponse()->setHttpHeader('Pragma: public', true);
-    $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename=' . $document->title . substr($document->file, strrpos($document->file, '.')));
+
     $this->getResponse()->setContentType(($version instanceof DocumentVersion) ? $version->mime_type : $document->mime_type);
+    $this->getResponse()->setHttpHeader('Content-Disposition', !$request->hasParameter('attachment') || $request->getParameter('attachment') == 1 ? 'attachment' : 'inline; filename=' . $document->title . substr($document->file, strrpos($document->file, '.')));
     $this->getResponse()->sendHttpHeaders();
     $this->getResponse()->setContent(readfile($file_path));
 
